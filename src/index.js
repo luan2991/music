@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SidebarLeft from './components/sidebarleft';
+import SidebarRight from './components/sidebarright';
 import './index.css';
-import App from './App';
+
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SidebarLeft />
+    <SidebarRight/>
   </React.StrictMode>,
   document.getElementById('root')
 );
