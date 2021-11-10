@@ -13,8 +13,10 @@ import MusicStatus from './components/musicstatus';
 const drawerWidth = 320;
 function SidebarRight(props) {
   const [pause, setPause] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(false);
-  
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorElMore, setAnchorElMore] = useState(null);
+  const open = Boolean(anchorEl);
+  const openMore = Boolean(anchorElMore);
   const onPause = () =>{
     pause === false ? setPause(true) : setPause(false);
   }
@@ -25,7 +27,16 @@ function SidebarRight(props) {
   const handlePopoverClose = () => {
     setAnchorEl(null);
   };
-  const open = Boolean(anchorEl);
+
+  const handlePopoverMoreOpen = (event) => {
+    setAnchorElMore(event.currentTarget);
+  };
+
+  const handlePopoverMoreClose = () => {
+    setAnchorElMore(null);
+  };
+  
+
   return (
     <Box bgcolor='rgba(0, 0, 0, 0.87)' sx={{ display: 'flex' }}>
       <Drawer
@@ -38,9 +49,13 @@ function SidebarRight(props) {
         anchor="right"
       >
         <MusicDisk isPause={pause}/>
-        <MusicStatus open={open} anchorEl={anchorEl}
+        <MusicStatus open={open}  anchorEl={anchorEl}
           handlePopoverOpen={handlePopoverOpen}
           handlePopoverClose={handlePopoverClose}
+          openMore={openMore}  
+          anchorElMore={anchorElMore}
+          handlePopoverMoreOpen={handlePopoverMoreOpen}
+          handlePopoverMoreClose={handlePopoverMoreClose}
         />
         <Button onClick={()=>onPause()  }>Pause</Button>
       </Drawer>
