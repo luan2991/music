@@ -1,8 +1,9 @@
 import { Drawer } from '@mui/material';
-import { Button } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import MusicDisk from './components/musicdisk';
+import MusicPlay from './components/musicplay';
+import MusicSlider from './components/musicslider';
 import MusicStatus from './components/musicstatus';
 
 // import PropTypes from 'prop-types';
@@ -13,13 +14,21 @@ import MusicStatus from './components/musicstatus';
 const drawerWidth = 320;
 function SidebarRight(props) {
   const [pause, setPause] = useState(false);
+  const [repeat, setRepeat] = useState(0);
+  const [random,setRandom]= useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElMore, setAnchorElMore] = useState(null);
   const open = Boolean(anchorEl);
   const openMore = Boolean(anchorElMore);
-  const onPause = () =>{
-    pause === false ? setPause(true) : setPause(false);
-  }
+  const onPause = (status) => {
+    setPause(status);
+  };
+  const onRandom = (stattus) => {
+    setRandom(stattus); 
+  };
+  const onRepeat = (status) => {
+    setRepeat(status);
+  };
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -35,29 +44,31 @@ function SidebarRight(props) {
   const handlePopoverMoreClose = () => {
     setAnchorElMore(null);
   };
-  
 
   return (
-    <Box bgcolor='rgba(0, 0, 0, 0.87)' sx={{ display: 'flex' }}>
+    <Box bgcolor="rgba(0, 0, 0, 0.87)" sx={{ display: 'flex' }}>
       <Drawer
         variant="permanent"
         sx={{
-          display: { xs:'none', sm: 'none', md: 'none', lg:'block' },
+          display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
         }}
         open
         anchor="right"
       >
-        <MusicDisk isPause={pause}/>
-        <MusicStatus open={open}  anchorEl={anchorEl}
+        <MusicDisk isPause={pause} />
+        <MusicStatus
+          open={open}
+          anchorEl={anchorEl}
           handlePopoverOpen={handlePopoverOpen}
           handlePopoverClose={handlePopoverClose}
-          openMore={openMore}  
+          openMore={openMore}
           anchorElMore={anchorElMore}
           handlePopoverMoreOpen={handlePopoverMoreOpen}
           handlePopoverMoreClose={handlePopoverMoreClose}
         />
-        <Button onClick={()=>onPause()  }>Pause</Button>
+        <MusicSlider />
+        <MusicPlay pause={pause} onPause={onPause} repeat={repeat} onRepeat={onRepeat} random={random} onRandom={onRandom} />
       </Drawer>
     </Box>
   );

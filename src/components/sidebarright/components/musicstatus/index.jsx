@@ -4,14 +4,12 @@ import { Box } from '@mui/system';
 import {
   Button,
   IconButton,
-  ListItemIcon,
-  ListItemText,
   Menu,
   MenuItem,
-  MenuList,
   Popover,
   Slider,
   Stack,
+  Typography,
 } from '@mui/material';
 import {
   InsertLink,
@@ -24,7 +22,26 @@ import {
 // MusicStatus.propTypes = {
 
 // };
-
+const style = {
+  typography: {
+    '&.MuiTypography-root': {
+      fontSize: '13px',
+      marginLeft: '5px',
+    },
+  },
+  menupaper: {
+    '& .MuiMenu-paper': {
+      bgcolor: 'rgb(24, 34, 45)',
+      color: 'rgba(244,246,248,0.5)',
+    },
+  },
+  popoverpaper: {
+    '& .MuiPopover-paper': {
+      borderRadius: '25px',
+      bgcolor: 'rgb(24, 34, 45)',
+    },
+  },
+};
 function MusicStatus({
   open,
   anchorEl,
@@ -38,16 +55,11 @@ function MusicStatus({
   return (
     <Box bgcolor="rgba(0, 0, 0, 0.87)" paddingTop="20px">
       <Box width="272px" margin="auto">
-        <Box display="flex" justifyContent="space-between">
+        <Box display="flex" justifyContent="center" alignItems='center'>
           <Stack direction="row" sx={{ mb: 1, px: 1 }} alignItems="center" spacing={2}>
             <Box>
               <Popover
-                sx={{
-                  '& .MuiPopover-paper': {
-                    borderRadius: '25px',
-                    bgcolor: 'rgb(24, 34, 45)',
-                  },
-                }}
+                sx={style.popoverpaper}
                 elevation={3}
                 open={open}
                 anchorEl={anchorEl}
@@ -83,9 +95,7 @@ function MusicStatus({
                       min={0}
                       aria-label="Small"
                       orientation="vertical"
-                      // getAriaValueText={valuetext}
                       defaultValue={30}
-                      // onKeyDown={preventHorizontalKeyboardNavigation}
                     />
                     <VolumeDownOutlined htmlColor="rgba(244,246,248,0.5)" />
                   </Stack>
@@ -116,11 +126,7 @@ function MusicStatus({
                 <MoreVert htmlColor="rgba(244,246,248,0.5)" />
               </IconButton>
               <Menu
-                sx={{
-                  '& .MuiMenu-paper': {
-                    bgcolor: 'rgb(24, 34, 45)',
-                  },
-                }}
+                sx={style.menupaper}
                 onClose={handlePopoverMoreClose}
                 open={openMore}
                 anchorEl={anchorElMore}
@@ -133,26 +139,18 @@ function MusicStatus({
                   horizontal: 'right',
                 }}
               >
-                <MenuList sx={{ color: 'rgba(244,246,248,0.5)' }}>
-                  <MenuItem>
-                    <ListItemText sx={{ paddingRight: '5px' }}>Thêm vào chờ phát</ListItemText>
-                    <ListItemIcon>
-                      <LibraryMusic htmlColor="rgba(244,246,248,0.5)" fontSize="small" />
-                    </ListItemIcon>
-                  </MenuItem>
-                  <MenuItem>
-                    <ListItemText sx={{ paddingRight: '5px' }}>Sao chép Link</ListItemText>
-                    <ListItemIcon>
-                      <InsertLink htmlColor="rgba(244,246,248,0.5)" fontSize="small" />
-                    </ListItemIcon>
-                  </MenuItem>
-                  <MenuItem>
-                    <ListItemText sx={{ paddingRight: '5px' }}>Đi đến bài hát</ListItemText>
-                    <ListItemIcon>
-                      <MusicNoteRounded htmlColor="rgba(244,246,248,0.5)" fontSize="small" />
-                    </ListItemIcon>
-                  </MenuItem>
-                </MenuList>
+                <MenuItem>
+                  <LibraryMusic htmlColor="rgba(244,246,248,0.5)" fontSize="small" />
+                  <Typography sx={style.typography}>Thêm vào chờ phát</Typography>
+                </MenuItem>
+                <MenuItem>
+                  <InsertLink htmlColor="rgba(244,246,248,0.5)" fontSize="small" />
+                  <Typography sx={style.typography}>Sao chép Link</Typography>
+                </MenuItem>
+                <MenuItem>
+                  <MusicNoteRounded htmlColor="rgba(244,246,248,0.5)" fontSize="small" />
+                  <Typography sx={style.typography}>Đi đến bài hát</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Stack>
