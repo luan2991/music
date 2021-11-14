@@ -7,21 +7,67 @@ import {
   SkipNext,
   SkipPrevious,
 } from '@mui/icons-material';
-import { IconButton, Stack } from '@mui/material';
+import { IconButton, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
+import PopoverPlay from './popover';
 // import PropTypes from 'prop-types';
 
 // MusicPlay.propTypes = {
 
 // };
+const stylePopover = {
+  pointerEvents: 'none',
+  '& .MuiPopover-paper': {
+    bgcolor: 'rgb(24, 34, 45)',
+    color: 'rgba(244,246,248,0.5)',
+    padding: '5px 5px 5px 5px',
+    fontSize: '6px',
+  },
+};
 const iconColor = 'rgba(244,246,248,0.5)';
 
-function MusicPlay({ pause, onPause, repeat, onRepeat, random, onRandom }) {
+const anchorOrigin = {
+  vertical: 'bottom',
+  horizontal: 'center',
+};
+const transformOrigin = {
+  vertical: 'top',
+  horizontal: 'center',
+};
+
+function MusicPlay({
+  pause,
+  onPause,
+  repeat,
+  onRepeat,
+  random,
+  onRandom,
+  openRandom,
+  openPrev,
+  openPlay,
+  openNext,
+  openRepeat,
+  anchorElRandom,
+  anchorElPrev,
+  anchorElPlay,
+  anchorElNext,
+  anchorElRepeat,
+  handlePopoverRandomOpen,
+  handlePopoverRandomClose,
+  handlePopoverPrevOpen,
+  handlePopoverPrevClose,
+  handlePopoverPlayOpen,
+  handlePopoverPlayClose,
+  handlePopoverNextOpen,
+  handlePopoverNextClose,
+  handlePopoverRepeatOpen,
+  handlePopoverRepeatClose,
+}) {
   return (
     <Box
       bgcolor="rgba(0, 0, 0, 0.87)"
-      paddingBottom={2}
+      paddingBottom={10}
       color="rgba(244,246,248,0.5)"
       paddingTop="10px"
     >
@@ -34,29 +80,113 @@ function MusicPlay({ pause, onPause, repeat, onRepeat, random, onRandom }) {
             alignItems="center"
             spacing={2}
           >
-            <IconButton>
-              {random === false && <Shuffle onClick={() => onRandom(true)} htmlColor={iconColor} />}
-              {random === true && <Shuffle onClick={() => onRandom(false)} color='primary'/>}
-            </IconButton>
-            <IconButton>
+            {/*Random Button */}
+            <Box onMouseEnter={handlePopoverRandomOpen} onMouseLeave={handlePopoverRandomClose}>
+              {random === false && (
+                <IconButton onClick={() => onRandom(true)}>
+                  <Shuffle htmlColor={iconColor} />
+                </IconButton>
+              )}
+              {random === true && (
+                <IconButton onClick={() => onRandom(false)}>
+                  <Shuffle color="primary" />
+                </IconButton>
+              )}
+            </Box>
+            {/*Button Random Music  popover*/}
+            <PopoverPlay
+              sx={stylePopover}
+              open={openRandom}
+              anchorEl={anchorElRandom}
+              transformOrigin={transformOrigin}
+              anchorOrigin={anchorOrigin}
+              onClose={handlePopoverRandomClose}
+              child={<Typography>Ngẫu nhiên</Typography>}
+            />
+            {/*Prev Button*/}
+            <IconButton onMouseEnter={handlePopoverPrevOpen} onMouseLeave={handlePopoverPrevClose}>
               <SkipPrevious htmlColor={iconColor} />
             </IconButton>
-            <IconButton>
+            {/*Prev Button Popover*/}
+            <PopoverPlay
+              sx={stylePopover}
+              open={openPrev}
+              anchorEl={anchorElPrev}
+              transformOrigin={transformOrigin}
+              anchorOrigin={anchorOrigin}
+              onClose={handlePopoverPrevClose}
+              child={<Typography>Bài trước</Typography>}
+            />
+            {/*Button Play Music*/}
+            <Box onMouseEnter={handlePopoverPlayOpen} onMouseLeave={handlePopoverPlayClose}>
               {pause === false && (
-                <PlayCircleOutlined onClick={() => onPause(true)} color='primary' />
+                <IconButton onClick={() => onPause(true)}>
+                  <PlayCircleOutlined color="primary" fontSize='large'/>
+                </IconButton>
               )}
               {pause === true && (
-                <PauseCircleOutlined onClick={() => onPause(false)} htmlColor={iconColor} />
+                <IconButton onClick={() => onPause(false)}>
+                  <PauseCircleOutlined htmlColor={iconColor} fontSize='large' />
+                </IconButton>
               )}
-            </IconButton>
-            <IconButton>
+            </Box>
+            {/*Button Play Music popover*/}
+            <PopoverPlay
+              sx={stylePopover}
+              open={openPlay}
+              anchorEl={anchorElPlay}
+              transformOrigin={transformOrigin}
+              anchorOrigin={anchorOrigin}
+              onClose={handlePopoverPlayClose}
+              child={
+                <>
+                  {pause === false && <Typography>Tạm dừng</Typography>}
+                  {pause === true && <Typography>Phát</Typography>}
+                </>
+              }
+            />
+            {/*Next Button*/}
+            <IconButton onMouseEnter={handlePopoverNextOpen} onMouseLeave={handlePopoverNextClose}>
               <SkipNext htmlColor={iconColor} />
             </IconButton>
-            <IconButton>
-              {repeat === 0 && <RepeatRounded onClick={() => onRepeat(1)} htmlColor={iconColor} />}
-              {repeat === 1 && <RepeatRounded onClick={() => onRepeat(2)} color="primary" />}
-              {repeat === 2 && <RepeatOneRounded onClick={() => onRepeat(0)} color="primary" />}
-            </IconButton>
+            {/*Next Button Popover*/}
+            <PopoverPlay
+              sx={stylePopover}
+              open={openNext}
+              anchorEl={anchorElNext}
+              transformOrigin={transformOrigin}
+              anchorOrigin={anchorOrigin}
+              onClose={handlePopoverNextClose}
+              child={<Typography>Bài sau</Typography>}
+            />
+            {/*Repeat Button*/}
+            <Box onMouseEnter={handlePopoverRepeatOpen} onMouseLeave={handlePopoverRepeatClose}>
+              {repeat === 0 && (
+                <IconButton onClick={() => onRepeat(1)}>
+                  <RepeatRounded htmlColor={iconColor} />
+                </IconButton>
+              )}
+              {repeat === 1 && (
+                <IconButton onClick={() => onRepeat(2)}>
+                  <RepeatRounded color="primary" />
+                </IconButton>
+              )}
+              {repeat === 2 && (
+                <IconButton onClick={() => onRepeat(0)}>
+                  <RepeatOneRounded color="primary" />
+                </IconButton>
+              )}
+            </Box>
+            {/*Repeat Button Popover*/}
+            <PopoverPlay
+              sx={stylePopover}
+              open={openRepeat}
+              anchorEl={anchorElRepeat}
+              transformOrigin={transformOrigin}
+              anchorOrigin={anchorOrigin}
+              onClose={handlePopoverRepeatClose}
+              child={<Typography>Lặp lại</Typography>}
+            />
           </Stack>
         </Box>
       </Box>
