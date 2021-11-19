@@ -16,7 +16,7 @@ const style={
 
 function MusicSlider(props) {
   return (
-    <Box bgcolor="rgba(0, 0, 0, 0.87)" color='rgba(244,246,248,0.5)' paddingTop="10px">
+    <Box sx={{backgroundColor:'rgb(24, 34, 45)'}} color='rgba(244,246,248,0.5)' paddingTop="10px">
       <Box width="272px" margin="auto">
         <Box display="flex" justifyContent="space-between" alignItems='center'>
           <Stack
