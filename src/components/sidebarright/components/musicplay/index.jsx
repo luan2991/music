@@ -22,7 +22,6 @@ const stylePopover = {
     bgcolor: 'rgb(24, 34, 45)',
     color: 'rgba(244,246,248,0.5)',
     padding: '5px 5px 5px 5px',
-    fontSize: '6px',
   },
 };
 const iconColor = 'rgba(244,246,248,0.5)';
@@ -66,7 +65,8 @@ function MusicPlay({
 }) {
   return (
     <Box
-      bgcolor="rgba(0, 0, 0, 0.87)"
+    sx={{backgroundColor:'rgb(24, 34, 45)'}}
+     
       paddingBottom={10}
       color="rgba(244,246,248,0.5)"
       paddingTop="10px"
@@ -101,7 +101,7 @@ function MusicPlay({
               transformOrigin={transformOrigin}
               anchorOrigin={anchorOrigin}
               onClose={handlePopoverRandomClose}
-              child={<Typography>Ngẫu nhiên</Typography>}
+              child={<Typography variant="caption">Ngẫu nhiên</Typography>}
             />
             {/*Prev Button*/}
             <IconButton onMouseEnter={handlePopoverPrevOpen} onMouseLeave={handlePopoverPrevClose}>
@@ -115,7 +115,7 @@ function MusicPlay({
               transformOrigin={transformOrigin}
               anchorOrigin={anchorOrigin}
               onClose={handlePopoverPrevClose}
-              child={<Typography>Bài trước</Typography>}
+              child={<Typography variant="caption">Bài trước</Typography>}
             />
             {/*Button Play Music*/}
             <Box onMouseEnter={handlePopoverPlayOpen} onMouseLeave={handlePopoverPlayClose}>
@@ -140,8 +140,8 @@ function MusicPlay({
               onClose={handlePopoverPlayClose}
               child={
                 <>
-                  {pause === false && <Typography>Tạm dừng</Typography>}
-                  {pause === true && <Typography>Phát</Typography>}
+                  {pause === false && <Typography variant="caption"  >Tạm dừng</Typography>}
+                  {pause === true && <Typography variant="caption"  >Phát</Typography>}
                 </>
               }
             />
@@ -157,7 +157,7 @@ function MusicPlay({
               transformOrigin={transformOrigin}
               anchorOrigin={anchorOrigin}
               onClose={handlePopoverNextClose}
-              child={<Typography>Bài sau</Typography>}
+              child={<Typography variant="caption">Bài sau</Typography>}
             />
             {/*Repeat Button*/}
             <Box onMouseEnter={handlePopoverRepeatOpen} onMouseLeave={handlePopoverRepeatClose}>
@@ -185,7 +185,7 @@ function MusicPlay({
               transformOrigin={transformOrigin}
               anchorOrigin={anchorOrigin}
               onClose={handlePopoverRepeatClose}
-              child={<Typography>Lặp lại</Typography>}
+              child={<Typography variant="caption">Lặp lại</Typography>}
             />
           </Stack>
         </Box>

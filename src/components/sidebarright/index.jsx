@@ -6,6 +6,7 @@ import MusicDisk from './components/musicdisk';
 import MusicPlay from './components/musicplay';
 import MusicSlider from './components/musicslider';
 import MusicStatus from './components/musicstatus';
+import PlayList from './components/playlist';
 
 // import PropTypes from 'prop-types';
 
@@ -25,6 +26,7 @@ function SidebarRight(props) {
   const [anchorElPlay, setAnchorElPlay] = useState(null);
   const [anchorElNext, setAnchorElNext] = useState(null);
   const [anchorElRepeat, setAnchorElRepeat] = useState(null);
+  const [anchorElList, setAnchorElList] = useState(null);
 
   const onPause = (status) => {
     setPause(status);
@@ -85,6 +87,9 @@ function SidebarRight(props) {
   const handlePopoverRepeatClose = () => {
     setAnchorElRepeat(null);
   };
+  const handlePopper=(event)=>{
+    setAnchorElList(anchorElList ? null : event.currentTarget);
+  }
   const open = Boolean(anchorEl);
   const openMore = Boolean(anchorElMore);
   const openRandom = Boolean(anchorElRandom);
@@ -92,8 +97,9 @@ function SidebarRight(props) {
   const openPlay = Boolean(anchorElPlay);
   const openNext = Boolean(anchorElNext);
   const openRepeat = Boolean(anchorElRepeat);
+  const openList = Boolean(anchorElList);
   return (
-    <Box bgcolor="rgba(0, 0, 0, 0.87)" sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', backgroundColor:'rgb(24, 34, 45)'}}>
       <Drawer
         variant="permanent"
         sx={{
@@ -104,6 +110,7 @@ function SidebarRight(props) {
         anchor="right"
       >
         <MusicDisk isPause={pause} />
+        <PlayList open={openList} anchorEl={anchorElList}/>
         <MusicStatus
           open={open}
           anchorEl={anchorEl}
@@ -113,6 +120,8 @@ function SidebarRight(props) {
           anchorElMore={anchorElMore}
           handlePopoverMoreOpen={handlePopoverMoreOpen}
           handlePopoverMoreClose={handlePopoverMoreClose}
+          openList={openList}
+          handlePopper={handlePopper}
         />
         <MusicSlider />
         <MusicPlay
@@ -143,7 +152,6 @@ function SidebarRight(props) {
           handlePopoverRepeatOpen={handlePopoverRepeatOpen}
           handlePopoverRepeatClose={handlePopoverRepeatClose}
         />
-        
       </Drawer>
     </Box>
   );

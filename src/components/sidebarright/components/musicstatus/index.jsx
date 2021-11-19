@@ -19,6 +19,7 @@ import {
   VolumeDownOutlined,
 } from '@mui/icons-material';
 
+
 // MusicStatus.propTypes = {
 
 // };
@@ -47,16 +48,18 @@ function MusicStatus({
   anchorEl,
   openMore,
   anchorElMore,
+  openList,
   handlePopoverOpen,
   handlePopoverClose,
   handlePopoverMoreOpen,
   handlePopoverMoreClose,
+  handlePopper,
 }) {
   return (
-    <Box bgcolor="rgba(0, 0, 0, 0.87)" paddingTop="20px">
-      <Box width="272px" margin="auto">
-        <Box display="flex" justifyContent="center" alignItems='center'>
-          <Stack direction="row" sx={{ mb: 1, px: 1 }} alignItems="center" spacing={2}>
+    <Box sx={{backgroundColor:'rgb(24, 34, 45)'}} paddingTop="20px">
+      <Box width="272px"  margin='auto'>
+        <Box  display="flex" justifyContent="space-around" alignItems='center' >
+          <Stack direction="row" alignItems='center' spacing={2}>
             <Box>
               <Popover
                 sx={style.popoverpaper}
@@ -106,16 +109,21 @@ function MusicStatus({
                 htmlColor="rgba(244,246,248,0.5)"
               />
             </Box>
+            
             <Button
               style={{
                 borderRadius: 50,
                 backgroundColor: 'rgba(244,246,248,0.02)',
                 color: 'rgba(244,246,248,0.5)',
               }}
+              onClick={handlePopper}
               variant="contained"
             >
-              Danh sách phát
+             {!openList && (<Typography variant="caption">Danh sách phát</Typography>)  } 
+             { openList && (<Typography variant="caption">Đang phát</Typography>)  }
             </Button>
+            
+           
             <Box>
               <IconButton
                 aria-haspopup="true"

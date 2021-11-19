@@ -9,7 +9,7 @@ import React from 'react';
 
 const useStyles = makeStyles(() => ({
   backgroundBox: {
-    backgroundColor: 'rgba(0, 0, 0, 0.87)',
+    backgroundColor: 'rgb(24, 34, 45)',
     justifyContent: 'center',
     height: '100vh',
   },
@@ -58,11 +58,11 @@ const useStyles = makeStyles(() => ({
     animation: '$rotate 8s linear infinite',
   },
 }));
-function MusicDisk({ isPause, onPause }) {
+function MusicDisk({ isPause }) {
   const classes = useStyles();
   return (
     <Box className={classes.backgroundBox}>
-      <Box display='flex'>
+      <Box display="flex">
         <Box className={classes.whBox}>
           <Box className={classes.rdBox}>
             <Box className={classes.whoutBox}>
