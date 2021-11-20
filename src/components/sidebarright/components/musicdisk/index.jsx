@@ -58,7 +58,7 @@ const useStyles = makeStyles(() => ({
     animation: '$rotate 8s linear infinite',
   },
 }));
-function MusicDisk({ isPause }) {
+function MusicDisk({ isPlay }) {
   const classes = useStyles();
   return (
     <Box className={classes.backgroundBox}>
@@ -68,11 +68,11 @@ function MusicDisk({ isPause }) {
             <Box className={classes.whoutBox}>
               <Box
                 className={`${classes.whinBox}+${classes.boxRotate}`}
-                style={{ animationPlayState: `${isPause === true ? 'paused' : 'running'}` }}
+                style={{ animationPlayState: `${isPlay === true ? 'running' : 'paused'}` }}
               >
                 <img
                   className={`${classes.imgRotate}`}
-                  style={{ animationPlayState: `${isPause === true ? 'paused' : 'running'}` }}
+                  style={{ animationPlayState: `${isPlay === true ? 'running' : 'paused'}` }}
                   alt="default disk"
                   src={require('./../../components/musicdisk/note.jpg').default}
                 />

@@ -6,19 +6,23 @@ import { Slider, Stack, Typography } from '@mui/material';
 // MusicSlider.propTypes = {
 
 // };
-const style={
-  typographyroot:{
+const style = {
+  typographyroot: {
     '&.MuiTypography-root': {
       fontSize: '13px',
     },
   },
 };
 
-function MusicSlider(props) {
+function MusicSlider({ formatDuration, duration, currentTime, handleTimeSliderChange }) {
   return (
-    <Box sx={{backgroundColor:'rgb(24, 34, 45)'}} color='rgba(244,246,248,0.5)' paddingTop="10px">
+    <Box
+      sx={{ backgroundColor: 'rgb(24, 34, 45)' }}
+      color="rgba(244,246,248,0.5)"
+      paddingTop="10px"
+    >
       <Box width="272px" margin="auto">
-        <Box display="flex" justifyContent="space-between" alignItems='center'>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
           <Stack
             direction="row"
             width="272px"
@@ -26,22 +30,17 @@ function MusicSlider(props) {
             alignItems="center"
             spacing={1}
           >
-            <Typography
-              sx={style.typographyroot}
-            >
-              00:00
-            </Typography>
+            <Typography sx={style.typographyroot}>{formatDuration(currentTime)}</Typography>
             <Slider
-              //   max={100}
-              //   min={0}
+              max={duration}
+              value={currentTime}
+              min={0}
+              step={1}
+              onChange={(_, value) => handleTimeSliderChange(value)}
               aria-label="Default"
               size="small"
             />
-            <Typography
-              sx={style.typographyroot}
-            >
-              00:00
-            </Typography>
+            <Typography sx={style.typographyroot}>{formatDuration(duration)}</Typography>
           </Stack>
         </Box>
       </Box>

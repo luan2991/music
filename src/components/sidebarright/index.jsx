@@ -1,13 +1,14 @@
 import { Drawer } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
+import { useRef } from 'react';
 
 import MusicDisk from './components/musicdisk';
 import MusicPlay from './components/musicplay';
 import MusicSlider from './components/musicslider';
 import MusicStatus from './components/musicstatus';
 import PlayList from './components/playlist';
-
+import audios from './audio';
 // import PropTypes from 'prop-types';
 
 // index.propTypes = {
@@ -16,7 +17,11 @@ import PlayList from './components/playlist';
 
 const drawerWidth = 320;
 function SidebarRight(props) {
-  const [pause, setPause] = useState(false);
+  const audioRef = useRef();
+  const [audioIndex, setAudioIndex] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isPlay, setPlay] = useState(false);
   const [repeat, setRepeat] = useState(0);
   const [random, setRandom] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -27,15 +32,79 @@ function SidebarRight(props) {
   const [anchorElNext, setAnchorElNext] = useState(null);
   const [anchorElRepeat, setAnchorElRepeat] = useState(null);
   const [anchorElList, setAnchorElList] = useState(null);
+  console.log(audioIndex);
 
-  const onPause = (status) => {
-    setPause(status);
+  const formatDuration = (value) => {
+    const minute = Math.floor(value / 60);
+    const secondLeft = parseInt(value) - minute * 60;
+    return `${minute}:${secondLeft <= 9 ? `0${secondLeft}` : secondLeft}`;
+  };
+  const handleLoadedData = () => {
+    setDuration(audioRef.current.duration);
+
+    if (isPlay) audioRef.current.play();
+  };
+  const handlePausePlayClick = () => {
+    if (isPlay) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setPlay(!isPlay);
+  };
+
+  const handleTimeSliderChange = (value) => {
+    audioRef.current.currentTime = value;
+    setCurrentTime(value);
+
+    if (!isPlay) {
+      setPlay(true);
+      audioRef.current.play();
+    }
+  };
+  const handlePrevNextClick = (value) => {
+    setAudioIndex(() => {
+      let audioIdx = (audioIndex + value) % audios.length;
+      if (audioIdx < 0) audioIdx = audios.length - 1;
+
+      return audioIdx;
+    });
+  };
+  const handleRepeatRandom = () => {
+    if (random === false) {
+      if (repeat === 0) {
+        setPlay(false);
+      }
+      if (repeat === 1) {
+        handlePrevNextClick(1);
+      }
+      if (repeat === 2) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
+      }
+    }
+    if (random === true) {
+      setAudioIndex(() => {
+        let audio = randomAudio(audios);
+        let audioIdx = audios.indexOf(audio);
+        while (audioIdx === audioIndex){
+          audio = randomAudio(audios);
+          audioIdx = audios.indexOf(audio);
+        } 
+        return audioIdx;
+      });
+    }
+  };
+  const randomAudio = (list) => {
+    let audio = list[Math.floor(Math.random() * list.length)];
+    return audio;
   };
   const onRandom = (stattus) => {
     setRandom(stattus);
   };
   const onRepeat = (status) => {
     setRepeat(status);
+    setRandom(false);
   };
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -87,9 +156,9 @@ function SidebarRight(props) {
   const handlePopoverRepeatClose = () => {
     setAnchorElRepeat(null);
   };
-  const handlePopper=(event)=>{
+  const handlePopper = (event) => {
     setAnchorElList(anchorElList ? null : event.currentTarget);
-  }
+  };
   const open = Boolean(anchorEl);
   const openMore = Boolean(anchorElMore);
   const openRandom = Boolean(anchorElRandom);
@@ -99,7 +168,7 @@ function SidebarRight(props) {
   const openRepeat = Boolean(anchorElRepeat);
   const openList = Boolean(anchorElList);
   return (
-    <Box sx={{ display: 'flex', backgroundColor:'rgb(24, 34, 45)'}}>
+    <Box sx={{ display: 'flex', backgroundColor: 'rgb(24, 34, 45)' }}>
       <Drawer
         variant="permanent"
         sx={{
@@ -109,8 +178,8 @@ function SidebarRight(props) {
         open
         anchor="right"
       >
-        <MusicDisk isPause={pause} />
-        <PlayList open={openList} anchorEl={anchorElList}/>
+        <MusicDisk isPlay={isPlay} />
+        <PlayList open={openList} anchorEl={anchorElList} />
         <MusicStatus
           open={open}
           anchorEl={anchorEl}
@@ -123,10 +192,16 @@ function SidebarRight(props) {
           openList={openList}
           handlePopper={handlePopper}
         />
-        <MusicSlider />
+        <MusicSlider
+          formatDuration={formatDuration}
+          duration={duration}
+          currentTime={currentTime}
+          handleTimeSliderChange={handleTimeSliderChange}
+        />
         <MusicPlay
-          pause={pause}
-          onPause={onPause}
+          isPlay={isPlay}
+          handlePausePlayClick={handlePausePlayClick}
+          handlePrevNextClick={handlePrevNextClick}
           repeat={repeat}
           onRepeat={onRepeat}
           random={random}
@@ -153,6 +228,13 @@ function SidebarRight(props) {
           handlePopoverRepeatClose={handlePopoverRepeatClose}
         />
       </Drawer>
+      <audio
+        ref={audioRef}
+        src={audios[audioIndex].src}
+        onLoadedData={handleLoadedData}
+        onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
+        onEnded={handleRepeatRandom}
+      />
     </Box>
   );
 }

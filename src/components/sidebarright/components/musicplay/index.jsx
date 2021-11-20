@@ -36,8 +36,9 @@ const transformOrigin = {
 };
 
 function MusicPlay({
-  pause,
-  onPause,
+  isPlay,
+  handlePausePlayClick,
+  handlePrevNextClick,
   repeat,
   onRepeat,
   random,
@@ -65,8 +66,7 @@ function MusicPlay({
 }) {
   return (
     <Box
-    sx={{backgroundColor:'rgb(24, 34, 45)'}}
-     
+      sx={{ backgroundColor: 'rgb(24, 34, 45)' }}
       paddingBottom={10}
       color="rgba(244,246,248,0.5)"
       paddingTop="10px"
@@ -104,7 +104,7 @@ function MusicPlay({
               child={<Typography variant="caption">Ngẫu nhiên</Typography>}
             />
             {/*Prev Button*/}
-            <IconButton onMouseEnter={handlePopoverPrevOpen} onMouseLeave={handlePopoverPrevClose}>
+            <IconButton onClick={()=>handlePrevNextClick(-1)} onMouseEnter={handlePopoverPrevOpen} onMouseLeave={handlePopoverPrevClose}>
               <SkipPrevious htmlColor={iconColor} />
             </IconButton>
             {/*Prev Button Popover*/}
@@ -119,16 +119,12 @@ function MusicPlay({
             />
             {/*Button Play Music*/}
             <Box onMouseEnter={handlePopoverPlayOpen} onMouseLeave={handlePopoverPlayClose}>
-              {pause === false && (
-                <IconButton onClick={() => onPause(true)}>
-                  <PlayCircleOutlined color="primary" fontSize='large'/>
-                </IconButton>
-              )}
-              {pause === true && (
-                <IconButton onClick={() => onPause(false)}>
-                  <PauseCircleOutlined htmlColor={iconColor} fontSize='large' />
-                </IconButton>
-              )}
+              <IconButton onClick={handlePausePlayClick}>
+                {isPlay === true && <PlayCircleOutlined color="primary" fontSize="large" />}
+                {isPlay === false &&  <PauseCircleOutlined htmlColor={iconColor} fontSize='large' />}
+              </IconButton>
+              
+             
             </Box>
             {/*Button Play Music popover*/}
             <PopoverPlay
@@ -140,13 +136,13 @@ function MusicPlay({
               onClose={handlePopoverPlayClose}
               child={
                 <>
-                  {pause === false && <Typography variant="caption"  >Tạm dừng</Typography>}
-                  {pause === true && <Typography variant="caption"  >Phát</Typography>}
+                  {isPlay === true && <Typography variant="caption">Tạm dừng</Typography>}
+                  {isPlay === false && <Typography variant="caption">Phát</Typography>}
                 </>
               }
             />
             {/*Next Button*/}
-            <IconButton onMouseEnter={handlePopoverNextOpen} onMouseLeave={handlePopoverNextClose}>
+            <IconButton  onClick={()=>handlePrevNextClick(1)} onMouseEnter={handlePopoverNextOpen} onMouseLeave={handlePopoverNextClose}>
               <SkipNext htmlColor={iconColor} />
             </IconButton>
             {/*Next Button Popover*/}
