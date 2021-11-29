@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import React from 'react';
@@ -12,6 +13,7 @@ const useStyles = makeStyles(() => ({
     backgroundColor: 'rgb(24, 34, 45)',
     justifyContent: 'center',
     height: '100vh',
+    color: 'rgba(244, 246, 248, 0.5)',
   },
   whBox: {
     width: '272px',
@@ -58,10 +60,10 @@ const useStyles = makeStyles(() => ({
     animation: '$rotate 8s linear infinite',
   },
 }));
-function MusicDisk({ isPlay }) {
+function MusicDisk({ isPlay, titleAudio, artistAudio }) {
   const classes = useStyles();
   return (
-    <Box className={classes.backgroundBox}>
+    <Box className={classes.backgroundBox} sx={{position:'relative',zIndex:0,top:0, left:0}}>
       <Box display="flex">
         <Box className={classes.whBox}>
           <Box className={classes.rdBox}>
@@ -76,6 +78,12 @@ function MusicDisk({ isPlay }) {
                   alt="default disk"
                   src={require('./../../components/musicdisk/note.jpg').default}
                 />
+              </Box>
+              <Box mt={2}>
+                <Typography sx={{ color: 'rgba(244,246,248,0.88)' }}>
+                  Bài hát: {titleAudio}
+                </Typography>
+                <Typography variant="caption"> Ca sĩ: {artistAudio}</Typography>
               </Box>
             </Box>
           </Box>
