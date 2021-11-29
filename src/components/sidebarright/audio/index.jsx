@@ -8,33 +8,33 @@ import ThienSu from './ThienSu.mp3';
 const audios = [
   {
     src: MuMit,
-    title: 'Xuân Ơi Ở Lại Chơi',
-    artist: 'Tăng Nhật Tuệ - Hoàng Yến Chibi - Tino',
+    title: 'Mù Mịt',
+    artist: 'Luân Tang',
   },
   {
     src: ThiTranCoTich,
-    title: 'Ngày Xuân Long Phụng Sum Vầy',
-    artist: 'Bích Phương',
+    title: 'Thị Trấn Cổ Tích Thị Trấn Cổ Tích',
+    artist: 'Tam Vô',
   },
   {
     src: ThucSac,
-    title: 'Đoản Xuân Ca',
-    artist: 'Bích Phương',
+    title: 'Thực Sắc',
+    artist: 'Âm Khuyết Thi Thính, Thanh Lộng',
   },
   {
     src: DongTay,
-    title: 'aaa',
-    artist: 'Bích Phương',
+    title: 'Đông Tây',
+    artist: 'Lâm Tuấn Trình',
   },
   {
     src: NhanSinh,
-    title: 'bbb',
-    artist: 'Bích Phương',
+    title: 'Nhân Sinh Độc Nhất',
+    artist: 'Lư Diệm',
   },
   {
     src: ThienSu,
-    title: 'xx',
-    artist: 'Bích Phương',
+    title: 'Thiên Sứ Bình Phàm',
+    artist: 'Đặng Tử Kỳ',
   },
 ];
 

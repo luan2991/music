@@ -17,8 +17,9 @@ import {
   MoreVert,
   MusicNoteRounded,
   VolumeDownOutlined,
+  VolumeMuteOutlined,
+  VolumeUpOutlined,
 } from '@mui/icons-material';
-
 
 // MusicStatus.propTypes = {
 
@@ -54,12 +55,14 @@ function MusicStatus({
   handlePopoverMoreOpen,
   handlePopoverMoreClose,
   handlePopper,
+  volume,
+  handleVolumeAudio,
 }) {
   return (
-    <Box sx={{backgroundColor:'rgb(24, 34, 45)'}} paddingTop="20px">
-      <Box width="272px"  margin='auto'>
-        <Box  display="flex" justifyContent="space-around" alignItems='center' >
-          <Stack direction="row" alignItems='center' spacing={2}>
+    <Box sx={{ backgroundColor: 'rgb(24, 34, 45)' }} paddingTop="20px">
+      <Box width="272px" margin="auto">
+        <Box display="flex" justifyContent="space-around" alignItems="center">
+          <Stack direction="row" alignItems="center" spacing={2}>
             <Box>
               <Popover
                 sx={style.popoverpaper}
@@ -98,18 +101,26 @@ function MusicStatus({
                       min={0}
                       aria-label="Small"
                       orientation="vertical"
-                      defaultValue={30}
+                      value={volume * 100}
+                      onChange={(_, value) => handleVolumeAudio(value)}
                     />
-                    <VolumeDownOutlined htmlColor="rgba(244,246,248,0.5)" />
+                    {volume >= 0.6 && <VolumeUpOutlined htmlColor="rgba(244,246,248,0.5)" />}
+                    {volume > 0.0 && volume < 0.6 && (
+                      <VolumeDownOutlined htmlColor="rgba(244,246,248,0.5)" />
+                    )}
+                    {volume === 0.0 && <VolumeMuteOutlined htmlColor="rgba(244,246,248,0.5)" />}
                   </Stack>
                 </Box>
               </Popover>
-              <VolumeDownOutlined
-                onMouseEnter={handlePopoverOpen}
-                htmlColor="rgba(244,246,248,0.5)"
-              />
+              <Box onMouseEnter={handlePopoverOpen}>
+                {volume >= 0.6 && <VolumeUpOutlined htmlColor="rgba(244,246,248,0.5)" />}
+                {volume > 0.0 && volume < 0.6 && (
+                  <VolumeDownOutlined htmlColor="rgba(244,246,248,0.5)" />
+                )}
+                {volume === 0.0 && <VolumeMuteOutlined htmlColor="rgba(244,246,248,0.5)" />}
+              </Box>
             </Box>
-            
+
             <Button
               style={{
                 borderRadius: 50,
@@ -119,11 +130,10 @@ function MusicStatus({
               onClick={handlePopper}
               variant="contained"
             >
-             {!openList && (<Typography variant="caption">Danh sách phát</Typography>)  } 
-             { openList && (<Typography variant="caption">Đang phát</Typography>)  }
+              {!openList && <Typography variant="caption">Danh sách phát</Typography>}
+              {openList && <Typography variant="caption">Đang phát</Typography>}
             </Button>
-            
-           
+
             <Box>
               <IconButton
                 aria-haspopup="true"

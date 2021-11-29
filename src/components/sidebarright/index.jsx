@@ -21,7 +21,10 @@ function SidebarRight(props) {
   const [audioIndex, setAudioIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [volumeAudio, setVolumeAudio] = useState(1);
   const [isPlay, setPlay] = useState(false);
+  const [titleAudio, setTitleAudio] = useState('');
+  const [artistAudio, setArtistAudio] = useState('');
   const [repeat, setRepeat] = useState(0);
   const [random, setRandom] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -32,16 +35,25 @@ function SidebarRight(props) {
   const [anchorElNext, setAnchorElNext] = useState(null);
   const [anchorElRepeat, setAnchorElRepeat] = useState(null);
   const [anchorElList, setAnchorElList] = useState(null);
-  console.log(audioIndex);
 
+  const add3Dots = (text, limit) => {
+    return text.length > limit ? `${text.substring(0, limit)}...` : text;
+  };
   const formatDuration = (value) => {
     const minute = Math.floor(value / 60);
     const secondLeft = parseInt(value) - minute * 60;
     return `${minute}:${secondLeft <= 9 ? `0${secondLeft}` : secondLeft}`;
   };
+  const handleVolumeAudio = (value) => {
+    const volume = value / 100;
+    audioRef.current.volume = volume;
+    setVolumeAudio(volume);
+  };
   const handleLoadedData = () => {
     setDuration(audioRef.current.duration);
-
+    setTitleAudio(audios[audioIndex].title);
+    setArtistAudio(audios[audioIndex].artist);
+    audioRef.current.volume = volumeAudio;
     if (isPlay) audioRef.current.play();
   };
   const handlePausePlayClick = () => {
@@ -87,10 +99,10 @@ function SidebarRight(props) {
       setAudioIndex(() => {
         let audio = randomAudio(audios);
         let audioIdx = audios.indexOf(audio);
-        while (audioIdx === audioIndex){
+        while (audioIdx === audioIndex) {
           audio = randomAudio(audios);
           audioIdx = audios.indexOf(audio);
-        } 
+        }
         return audioIdx;
       });
     }
@@ -159,6 +171,9 @@ function SidebarRight(props) {
   const handlePopper = (event) => {
     setAnchorElList(anchorElList ? null : event.currentTarget);
   };
+  const onClickChangeMusic = (index) => {
+    setAudioIndex(index);
+  };
   const open = Boolean(anchorEl);
   const openMore = Boolean(anchorElMore);
   const openRandom = Boolean(anchorElRandom);
@@ -167,6 +182,7 @@ function SidebarRight(props) {
   const openNext = Boolean(anchorElNext);
   const openRepeat = Boolean(anchorElRepeat);
   const openList = Boolean(anchorElList);
+
   return (
     <Box sx={{ display: 'flex', backgroundColor: 'rgb(24, 34, 45)' }}>
       <Drawer
@@ -178,8 +194,17 @@ function SidebarRight(props) {
         open
         anchor="right"
       >
-        <MusicDisk isPlay={isPlay} />
-        <PlayList open={openList} anchorEl={anchorElList} />
+        <MusicDisk isPlay={isPlay} titleAudio={titleAudio} artistAudio={artistAudio} add3Dots={add3Dots} />
+        <PlayList
+          open={openList}
+          anchorEl={anchorElList}
+          titleAudio={titleAudio}
+          artistAudio={artistAudio}
+          handlePopper={handlePopper}
+          musiclist={audios}
+          onClickChangeMusic={onClickChangeMusic}
+          add3Dots={add3Dots}
+        />
         <MusicStatus
           open={open}
           anchorEl={anchorEl}
@@ -191,6 +216,8 @@ function SidebarRight(props) {
           handlePopoverMoreClose={handlePopoverMoreClose}
           openList={openList}
           handlePopper={handlePopper}
+          volume={volumeAudio}
+          handleVolumeAudio={handleVolumeAudio}
         />
         <MusicSlider
           formatDuration={formatDuration}
@@ -198,6 +225,7 @@ function SidebarRight(props) {
           currentTime={currentTime}
           handleTimeSliderChange={handleTimeSliderChange}
         />
+
         <MusicPlay
           isPlay={isPlay}
           handlePausePlayClick={handlePausePlayClick}
