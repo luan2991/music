@@ -1,29 +1,25 @@
 import { Drawer } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useState } from 'react';
+import React from 'react';
 import MenuSideBar from './components/menusidebar';
 // import PropTypes from 'prop-types';
 
 // index.propTypes = {
 
-const drawerWidth = 240;
+// const drawerWidth = 240;
 function SidebarLeft(props) {
-  const [open, setOpen] = useState(false);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
-
   return (
     <Box>
       <Drawer
         sx={{
-          width: drawerWidth,
+          width: { xs: 50, sm: 50, md: 50, lg: 240 },
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: drawerWidth,
+            width: { xs: 50, sm: 50, md: 50, lg: 240 },
             boxSizing: 'border-box',
             bgcolor: 'rgb(24, 34, 45)',
+            overflowX: 'hidden',
+            transition: 'width 0.2s',
           },
         }}
         variant="permanent"
@@ -38,7 +34,7 @@ function SidebarLeft(props) {
             fontSize: '8px',
           }}
         >
-          <MenuSideBar open={open} handleClick={handleClick} />
+          <MenuSideBar />
         </Box>
       </Drawer>
     </Box>

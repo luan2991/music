@@ -18,6 +18,7 @@ import PopoverPlay from './popover';
 // };
 const stylePopover = {
   pointerEvents: 'none',
+  display:{ xs: 'none', sm: 'none', md: 'none', lg: 'block'},
   '& .MuiPopover-paper': {
     bgcolor: 'rgb(24, 34, 45)',
     color: 'rgba(244,246,248,0.5)',
@@ -120,8 +121,8 @@ function MusicPlay({
             {/*Button Play Music*/}
             <Box onMouseEnter={handlePopoverPlayOpen} onMouseLeave={handlePopoverPlayClose}>
               <IconButton onClick={handlePausePlayClick}>
-                {isPlay === true && <PlayCircleOutlined color="primary" fontSize="large" />}
-                {isPlay === false &&  <PauseCircleOutlined htmlColor={iconColor} fontSize='large' />}
+                {!isPlay  && <PlayCircleOutlined htmlColor={iconColor} sx={{fontSize:45}} />}
+                {isPlay &&  <PauseCircleOutlined color="primary" sx={{fontSize:45}}  />}
               </IconButton>
               
              

@@ -9,6 +9,10 @@ import MusicSlider from './components/musicslider';
 import MusicStatus from './components/musicstatus';
 import PlayList from './components/playlist';
 import audios from './audio';
+import SideBarBot from '../sidebarbot';
+import PlayListBot from '../sidebarbot/component/playlistbot';
+// import KeyboardEventHandler from 'react-keyboard-event-handler';
+
 // import PropTypes from 'prop-types';
 
 // index.propTypes = {
@@ -16,9 +20,10 @@ import audios from './audio';
 // };
 
 const drawerWidth = 320;
-function SidebarRight(props) {
+function SidebarRight() {
   const audioRef = useRef();
   const [audioIndex, setAudioIndex] = useState(0);
+  const [drawerBotPL, setDrawerBotPL] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volumeAudio, setVolumeAudio] = useState(1);
@@ -35,9 +40,22 @@ function SidebarRight(props) {
   const [anchorElNext, setAnchorElNext] = useState(null);
   const [anchorElRepeat, setAnchorElRepeat] = useState(null);
   const [anchorElList, setAnchorElList] = useState(null);
-
+  const [hoverVolumnBot, setHoverVolumnBot] = useState(false);
+  const [active, setActiveAudio] = useState(null);
   const add3Dots = (text, limit) => {
     return text.length > limit ? `${text.substring(0, limit)}...` : text;
+  };
+  const hanldBotStatusList = (index) => {
+    setActiveAudio(index);
+  };
+  const changeHoverVolumnBot = (status) => {
+    setHoverVolumnBot(status);
+  };
+  const handleDrawerBotPlayList = () => {
+    setDrawerBotPL(!drawerBotPL);
+  };
+  const handleDrawerBotPlayListClose = (state) => {
+    setDrawerBotPL(state);
   };
   const formatDuration = (value) => {
     const minute = Math.floor(value / 60);
@@ -107,12 +125,18 @@ function SidebarRight(props) {
       });
     }
   };
+
+  // const handlePausePlay = (key) => {
+  //   if(key==='space')
+  //   handlePausePlayClick();
+  // };
+
   const randomAudio = (list) => {
     let audio = list[Math.floor(Math.random() * list.length)];
     return audio;
   };
-  const onRandom = (stattus) => {
-    setRandom(stattus);
+  const onRandom = (status) => {
+    setRandom(status);
   };
   const onRepeat = (status) => {
     setRepeat(status);
@@ -173,6 +197,7 @@ function SidebarRight(props) {
   };
   const onClickChangeMusic = (index) => {
     setAudioIndex(index);
+    setPlay(true);
   };
   const open = Boolean(anchorEl);
   const openMore = Boolean(anchorElMore);
@@ -184,17 +209,27 @@ function SidebarRight(props) {
   const openList = Boolean(anchorElList);
 
   return (
-    <Box sx={{ display: 'flex', backgroundColor: 'rgb(24, 34, 45)' }}>
+    <Box
+      sx={{ display: 'flex', backgroundColor: 'rgb(24, 34, 45)', '&:focus': { outline: 'none' } }}
+    >
       <Drawer
         variant="permanent"
         sx={{
-          display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          // display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' },
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
+            width: { xs: 0, sm: 0, md: 0, lg: drawerWidth },
+            transition: 'width 0.2s',
+          },
         }}
-        open
         anchor="right"
       >
-        <MusicDisk isPlay={isPlay} titleAudio={titleAudio} artistAudio={artistAudio} add3Dots={add3Dots} />
+        <MusicDisk
+          isPlay={isPlay}
+          titleAudio={titleAudio}
+          artistAudio={artistAudio}
+          add3Dots={add3Dots}
+        />
         <PlayList
           open={openList}
           anchorEl={anchorElList}
@@ -204,6 +239,7 @@ function SidebarRight(props) {
           musiclist={audios}
           onClickChangeMusic={onClickChangeMusic}
           add3Dots={add3Dots}
+          isPlay={isPlay}
         />
         <MusicStatus
           open={open}
@@ -256,6 +292,64 @@ function SidebarRight(props) {
           handlePopoverRepeatClose={handlePopoverRepeatClose}
         />
       </Drawer>
+
+      <PlayListBot
+        drawerBotPL={drawerBotPL}
+        handleDrawerBotPlayListClose={handleDrawerBotPlayListClose}
+        audios={audios}
+        add3Dots={add3Dots}
+        audioIndex={audioIndex}
+        onClickChangeMusic={onClickChangeMusic}
+        isPlay={isPlay}
+        hanldBotStatusList={hanldBotStatusList}
+        active={active}
+      />
+      <SideBarBot
+        isPlay={isPlay}
+        titleAudio={titleAudio}
+        artistAudio={artistAudio}
+        add3Dots={add3Dots}
+        formatDuration={formatDuration}
+        duration={duration}
+        currentTime={currentTime}
+        handleTimeSliderChange={handleTimeSliderChange}
+        handlePausePlayClick={handlePausePlayClick}
+        handlePrevNextClick={handlePrevNextClick}
+        repeat={repeat}
+        onRepeat={onRepeat}
+        random={random}
+        onRandom={onRandom}
+        openRandom={openRandom}
+        openPrev={openPrev}
+        openPlay={openPlay}
+        openNext={openNext}
+        openRepeat={openRepeat}
+        anchorElRandom={anchorElRandom}
+        anchorElPrev={anchorElPrev}
+        anchorElPlay={anchorElPlay}
+        anchorElNext={anchorElNext}
+        anchorElRepeat={anchorElRepeat}
+        handlePopoverRandomOpen={handlePopoverRandomOpen}
+        handlePopoverRandomClose={handlePopoverRandomClose}
+        handlePopoverPrevOpen={handlePopoverPrevOpen}
+        handlePopoverPrevClose={handlePopoverPrevClose}
+        handlePopoverPlayOpen={handlePopoverPlayOpen}
+        handlePopoverPlayClose={handlePopoverPlayClose}
+        handlePopoverNextOpen={handlePopoverNextOpen}
+        handlePopoverNextClose={handlePopoverNextClose}
+        handlePopoverRepeatOpen={handlePopoverRepeatOpen}
+        handlePopoverRepeatClose={handlePopoverRepeatClose}
+        volume={volumeAudio}
+        handleVolumeAudio={handleVolumeAudio}
+        hoverVolumnBot={hoverVolumnBot}
+        changeHoverVolumnBot={changeHoverVolumnBot}
+        drawerBotPL={drawerBotPL}
+        handleDrawerBotPlayList={handleDrawerBotPlayList}
+      />
+
+      {/* <KeyboardEventHandler  handleKeys={['space']} onKeyEvent={(key, e) =>{
+ handlePausePlay()
+      }} /> */}
       <audio
         ref={audioRef}
         src={audios[audioIndex].src}

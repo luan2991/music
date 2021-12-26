@@ -1,4 +1,4 @@
-import { KeyboardArrowDownRounded, MoreVertRounded } from '@mui/icons-material';
+import { KeyboardArrowDownRounded, MoreVertRounded, Pause, PlayArrow } from '@mui/icons-material';
 import { Divider, Grow, IconButton, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
@@ -18,17 +18,18 @@ function PlayList({
   musiclist,
   onClickChangeMusic,
   add3Dots,
+  isPlay
 }) {
   return (
     <Box>
-      <Grow in={open} timeout={500} transformOrigin="bottom">
+      <Grow in={open} timeout={500} transformOrigin="bottom" >
         <Box
           sx={{
             position: 'absolute',
             top: 0,
             left: 0,
             zIndex: 1,
-            height: 'calc(100vh - 15em)',
+            height: 'calc(100vh - 16em)',
             overflow: 'scroll',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -59,12 +60,16 @@ function PlayList({
                     alignItems="center"
                     spacing={1}
                   >
-                    <Box
+                    <Box 
+                    position='relative'
                       width="40px"
                       height="40px"
                       bgcolor="yellow"
                       sx={{ borderRadius: '5px' }}
-                    ></Box>
+                    >
+                    {!isPlay &&  <PlayArrow fontSize='small' htmlColor='#FFFFFF' sx={{position:'absolute', bottom: 0, right:0}}/>}
+                    {isPlay &&  <Pause fontSize='small' htmlColor='#FFFFFF' sx={{position:'absolute', bottom: 0, right:0}}/>}
+                    </Box>
                     <Box>
                       <Typography sx={{ color: 'rgba(244,246,248,0.88)', fontSize: '14px' }}>
                         {add3Dots(titleAudio, 27)}
