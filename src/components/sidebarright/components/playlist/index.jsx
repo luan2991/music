@@ -11,7 +11,7 @@ import MusicItem from './components/item';
 // };
 
 function PlayList({
-  open,
+  openList, 
   titleAudio,
   artistAudio,
   handlePopper,
@@ -22,13 +22,13 @@ function PlayList({
 }) {
   return (
     <Box>
-      <Grow in={open} timeout={500} transformOrigin="bottom" >
+      <Grow in={openList} timeout={500} transformOrigin="bottom" >
         <Box
           sx={{
             position: 'absolute',
             top: 0,
             left: 0,
-            zIndex: 1,
+            // zIndex: 1,
             height: 'calc(100vh - 16em)',
             overflow: 'scroll',
             scrollbarWidth: 'none',

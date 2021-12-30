@@ -1,15 +1,23 @@
+import { Box } from '@mui/system';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import DrawerAudio from './components/draweraudio';
+import HeaderBar from './components/header';
 import SidebarLeft from './components/sidebarleft';
-import SidebarRight from './components/sidebarright';
+import HomeFeature from './features/HomeFeature';
+
 import './index.css';
 
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <SidebarLeft />
-    <SidebarRight/>
+    <Box >
+      <HeaderBar />
+      <SidebarLeft />
+      <HomeFeature/>
+      <DrawerAudio />
+    </Box>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -19,7 +19,7 @@ function BotAudioList({
 }) {
   return (
     <Box>
-      <Box width={330} margin="auto">
+      <Box width={320} margin="auto">
         <Stack
           paddingTop={2}
           direction="column"

@@ -7,7 +7,7 @@ import BotAudioList from './components/list';
 // PlayListBot.propTypes = {
 
 // };
-const drawerWidth = 330;
+const drawerWidth = 320;
 function PlayListBot({
   drawerBotPL,
   handleDrawerBotPlayListClose,
@@ -24,14 +24,16 @@ function PlayListBot({
       <Drawer
         BackdropProps={{ style: { opacity: 0 } }}
         sx={{
-          width: drawerWidth,
+          width:{xs: drawerWidth, sm: drawerWidth, md: drawerWidth, lg:0},
 
           flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
+          '& .MuiDrawer-paper': { 
+            width:{xs: drawerWidth, sm: drawerWidth, md: drawerWidth, lg:0},
             bgcolor: 'rgb(24, 34, 45)',
             boxSizing: 'border-box',
+            transition: 'width 0.8s',
           },
+          
         }}
         anchor="right"
         open={drawerBotPL}
