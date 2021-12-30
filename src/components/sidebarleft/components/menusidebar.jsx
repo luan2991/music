@@ -17,13 +17,13 @@ const style = {
   button: {
     fontSize: '0.8rem',
     '&:hover': {
-      bgcolor: 'rgba(244,246,248,0.02);',
+      backgroundColor: 'rgba(51, 153, 255, 0.24)',
     },
   },
   topbutton: {
     pl: 7,
     '&:hover': {
-      bgcolor: 'rgba(244,246,248,0.02);',
+      backgroundColor: 'rgba(51, 153, 255, 0.24)',
       '& .opacityIcon': {
         color: '#1976d2',
         transition: 'color 0.5s ease',
