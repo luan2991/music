@@ -1,23 +1,28 @@
-import { Box } from '@mui/system';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DrawerAudio from './components/draweraudio';
 import HeaderBar from './components/header';
 import SidebarLeft from './components/sidebarleft';
 import HomeFeature from './features/HomeFeature';
-
+import TopMusicFeature from './features/TopMusicFeature';
+import TopRankMusic from './features/TopRankMusic';
 import './index.css';
 
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Box >
+    <BrowserRouter>
       <HeaderBar />
       <SidebarLeft />
-      <HomeFeature/>
+      <Routes>
+        <Route path="/" element={<HomeFeature />} />
+        <Route path="/top100/:area/:topic" element={<TopMusicFeature />} />
+        <Route path="/rank/:area" element={<TopRankMusic />} />
+      </Routes>
       <DrawerAudio />
-    </Box>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -4,7 +4,6 @@ import { Box } from '@mui/system';
 import { Stack, Typography } from '@mui/material';
 import { Pause, PlayArrow } from '@mui/icons-material';
 
-
 // PlayListItemBot.propTypes = {
 
 // };
@@ -49,12 +48,19 @@ function PlayListItemBot({ item, add3Dots, isPlay, audioIndex, index, active }) 
               />
             )}
           </Box>
-          <Box>
-            <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#f5f5f5' }}>
-              {add3Dots(item.title, 35)}
+          <Box
+            sx={{
+              width:'230px',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            <Typography noWrap sx={{ fontSize: '14px', fontWeight: 500, color: '#f5f5f5' }}>
+              {item.title}
             </Typography>
-            <Typography sx={{ fontSize: '11px', fontWeight: 500, color: '#9fa0a1' }}>
-              {add3Dots(item.artist, 35)}
+            <Typography noWrap sx={{ fontSize: '11px', fontWeight: 500, color: '#9fa0a1' }}>
+              {item.artist}
             </Typography>
           </Box>
         </Stack>
