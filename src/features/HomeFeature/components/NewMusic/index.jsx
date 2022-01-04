@@ -1,7 +1,7 @@
 import React from 'react';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-import { Box, Skeleton, Stack, /*Typography*/ } from '@mui/material';
+
+import { Box, Skeleton, Stack, Typography, /*Typography*/ } from '@mui/material';
+import { NavigateNext } from '@mui/icons-material';
 // import { NavigateNext } from '@mui/icons-material';
 // import PropTypes from 'prop-types';
 // NewMusic.propTypes = {
@@ -9,11 +9,7 @@ import { Box, Skeleton, Stack, /*Typography*/ } from '@mui/material';
 // };
 
 function NewMusic(props) {
-  const theme = useTheme();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
-  const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
-  const matchesLG = useMediaQuery(theme.breakpoints.down('lg'));
-  const matchesXL = useMediaQuery(theme.breakpoints.down('xl'));
+ 
   return (
     <Box width="100%" marginTop="30px">
       <Box
@@ -30,7 +26,7 @@ function NewMusic(props) {
           },
         }}
       >
-        {/* <Box
+        <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -66,27 +62,32 @@ function NewMusic(props) {
             Tất cả
             <NavigateNext />
           </Typography>
-        </Box> */}
-        <Skeleton
+        </Box>
+        {/* <Skeleton
           animation="wave"
+          variant="rectangular"
           sx={{
-            height: { xs: '60px', sm: '60px', md: '60px', lg: '60px' },
+            borderRadius:'50px',
+            height: '40px',
             width: { xs: '260px', sm: '180px', md: '220px', lg: '260px' },
             bgcolor: '#353535',
           }}
-        />
-        <Box marginTop="-50px" position="relative">
+        /> */}
+        <Box mt={2} position="relative">
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             {Array.from(
-              { length: matchesSM ? 2 : matchesMD ? 3 : matchesLG ? 4 : matchesXL ? 4 : 4 },
+              { length: 4 },
               (index) => (
                 <Skeleton
                   key={index}
                   animation="wave"
+                  variant="rectangular"
                   sx={{
-                    height: { xs: '300px', sm: '300px', md: '300px', lg: '300px' },
-                    width: { xs: '240px', sm: '160px', md: '200px', lg: '220px' },
+                    borderRadius:'10px',
+                    height: { xs: '140px', sm: '160px', md: '180px', lg: '200px' },
+                    width: '23%',
                     bgcolor: '#353535',
+                    transition:'height 0.2s',
                   }}
                 />
               )

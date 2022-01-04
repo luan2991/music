@@ -8,15 +8,25 @@ import { Skeleton, Stack } from '@mui/material';
 
 function HotCarousel(props) {
   return (
-    <Stack direction="row" spacing={1} justifyContent="space-around" alignItems="center">
+    <Stack
+      mt={2}
+      height="300px"
+      direction="row"
+      spacing={1}
+      justifyContent="space-around"
+      alignItems="center"
+    >
       {Array.from({ length: 3 }, (index) => (
         <Skeleton
           key={index}
           animation="wave"
+          variant="rectangular"
           sx={{
-            height: { xs: '180px', sm: '200px', md: '230px', lg: '300px' },
-            width: { xs: '200px', sm: '220px', md: '280px', lg: '300px' },
+            borderRadius:'10px',
+            height: { xs: '140px', sm: '160px', md: '180px', lg: '200px' },
+            width: '30% ',
             bgcolor: '#353535',
+            transition:'height 0.2s',
           }}
         />
       ))}

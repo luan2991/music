@@ -21,11 +21,11 @@ function MusicItem({ item, add3Dots, onClickChangeMusic, index }) {
         }}
         onClick={() => onClickChangeMusic(index)}
       >
-        <Typography sx={{ fontSize: '14px', fontWeight: 500, color: 'rgba(244,246,248,0.88)' }}>
-          {add3Dots(item.title, 27)}
+        <Typography noWrap sx={{ fontSize: '14px', fontWeight: 500, color: 'rgba(244,246,248,0.88)' }}>
+          {item.title}
         </Typography>
-        <Typography sx={{ fontSize: '14px', fontWeight: 500, color: 'rgba(244, 246, 248, 0.5)' }}>
-          {add3Dots(item.artist, 27)}
+        <Typography noWrap sx={{ fontSize: '14px', fontWeight: 500, color: 'rgba(244, 246, 248, 0.5)' }}>
+          {item.artist}
         </Typography>
       </Box>
       <IconButton

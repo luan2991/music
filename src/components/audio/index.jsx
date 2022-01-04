@@ -13,38 +13,13 @@ const audios = [
   },
   {
     src: ThiTranCoTich,
-    title: 'Thị Trấn Cổ Tích Thị Trấn Cổ Tích Thị Trấn Cổ Tích',
+    title: 'Thị Trấn Cổ Tích',
     artist: 'Tam Vô',
   },
   {
     src: ThucSac,
     title: 'Thực Sắc',
     artist: 'Âm Khuyết Thi Thính, Thanh Lộng',
-  },
-  {
-    src: ThucSac,
-    title: 'Thực Sắc',
-    artist: 'Âm Khuyết Thi Thính, Thanh Lộng',
-  },
-  {
-    src: ThucSac,
-    title: 'Thực Sắc',
-    artist: 'Âm Khuyết Thi Thính, Thanh Lộng',
-  },
-  {
-    src: MuMit,
-    title: 'Mù Mịt',
-    artist: 'Luân Tang',
-  },
-  {
-    src: MuMit,
-    title: 'Mù Mịt',
-    artist: 'Luân Tang',
-  },
-  {
-    src: MuMit,
-    title: 'Mù Mịt',
-    artist: 'Luân Tang',
   },
   {
     src: DongTay,
@@ -61,7 +36,6 @@ const audios = [
     title: 'Thiên Sứ Bình Phàm',
     artist: 'Đặng Tử Kỳ',
   },
-  
 ];
 
 export default audios;
