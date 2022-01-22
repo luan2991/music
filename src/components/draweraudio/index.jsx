@@ -19,15 +19,17 @@ function DrawerAudio() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volumeAudio, setVolumeAudio] = useState(1);
+  const [volumeStatus, setVolumeStatus] = useState(false);
   const [isPlay, setPlay] = useState(false);
   const [titleAudio, setTitleAudio] = useState('');
   const [artistAudio, setArtistAudio] = useState('');
   const [repeat, setRepeat] = useState(0);
   const [random, setRandom] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [openMore, setOpenMore] = useState(false);
   const [anchorElMore, setAnchorElMore] = useState(null);
   const [anchorElList, setAnchorElList] = useState(null);
-  const [hoverVolumnBot, setHoverVolumnBot] = useState(false);
+  const [hoverVolumeBot, setHoverVolumeBot] = useState(false);
   const [active, setActiveAudio] = useState(null);
   const add3Dots = (text, limit) => {
     return text.length > limit ? `${text.substring(0, limit)}...` : text;
@@ -35,8 +37,8 @@ function DrawerAudio() {
   const hanldBotStatusList = (index) => {
     setActiveAudio(index);
   };
-  const changeHoverVolumnBot = (status) => {
-    setHoverVolumnBot(status);
+  const changeHoverVolumeBot = (status) => {
+    setHoverVolumeBot(status);
   };
   const handleDrawerBotPlayList = () => {
     setDrawerBotPL(!drawerBotPL);
@@ -53,6 +55,10 @@ function DrawerAudio() {
     const volume = value / 100;
     audioRef.current.volume = volume;
     setVolumeAudio(volume);
+  };
+  const handleVolumeStatus = () => {
+    audioRef.current.volume = !volumeStatus ?  0 : volumeAudio;
+    setVolumeStatus(!volumeStatus);
   };
   const handleLoadedData = () => {
     setDuration(audioRef.current.duration);
@@ -129,12 +135,12 @@ function DrawerAudio() {
     setAnchorEl(null);
   };
 
-  const handlePopoverMoreOpen = (event) => {
+  const handlePopperMoreOpen = (event) => {
     setAnchorElMore(event.currentTarget);
+    setOpenMore(!openMore);
   };
-
-  const handlePopoverMoreClose = () => {
-    setAnchorElMore(null);
+  const handlePopperMoreClose = () => {
+    setOpenMore(false);
   };
 
   const handlePopper = (event) => {
@@ -145,7 +151,6 @@ function DrawerAudio() {
     setPlay(true);
   };
   const open = Boolean(anchorEl);
-  const openMore = Boolean(anchorElMore);
   const openList = Boolean(anchorElList);
   return (
     <Box>
@@ -163,12 +168,14 @@ function DrawerAudio() {
         handlePopper={handlePopper}
         handlePopoverOpen={handlePopoverOpen}
         handlePopoverClose={handlePopoverClose}
-        handlePopoverMoreOpen={handlePopoverMoreOpen}
-        handlePopoverMoreClose={handlePopoverMoreClose}
+        handlePopperMoreOpen={handlePopperMoreOpen}
+        handlePopperMoreClose={handlePopperMoreClose}
         audios={audios}
         onClickChangeMusic={onClickChangeMusic}
         volumeAudio={volumeAudio}
         handleVolumeAudio={handleVolumeAudio}
+        volumeStatus={volumeStatus}
+        handleVolumeStatus={handleVolumeStatus}
         formatDuration={formatDuration}
         duration={duration}
         currentTime={currentTime}
@@ -208,8 +215,10 @@ function DrawerAudio() {
         onRandom={onRandom}
         volume={volumeAudio}
         handleVolumeAudio={handleVolumeAudio}
-        hoverVolumnBot={hoverVolumnBot}
-        changeHoverVolumnBot={changeHoverVolumnBot}
+        volumeStatus={volumeStatus}
+        handleVolumeStatus={handleVolumeStatus}
+        hoverVolumeBot={hoverVolumeBot}
+        changeHoverVolumeBot={changeHoverVolumeBot}
         drawerBotPL={drawerBotPL}
         handleDrawerBotPlayList={handleDrawerBotPlayList}
       />

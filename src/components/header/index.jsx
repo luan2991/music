@@ -1,7 +1,8 @@
 import React from 'react';
 import { Box, styled } from '@mui/system';
-import { AppBar,  InputUnstyled, Stack,} from '@mui/material';
+import { AppBar, IconButton, InputUnstyled, Stack } from '@mui/material';
 import { AccountCircle, Search, Settings } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 // Header.propTypes = {
 
@@ -28,15 +29,14 @@ const StyledInputElement = styled('input')(
   &:focus {
     outline: none;
   }
-`,
+`
 );
 
 const CustomInput = React.forwardRef(function CustomInput(props, ref) {
-  return (
-    <InputUnstyled components={{ Input: StyledInputElement }} {...props} ref={ref} />
-  );
+  return <InputUnstyled components={{ Input: StyledInputElement }} {...props} ref={ref} />;
 });
 function HeaderBar(props) {
+  const navigate= useNavigate();
   return (
     <Box>
       <AppBar
@@ -53,7 +53,6 @@ function HeaderBar(props) {
           marginRight: { xs: '0px', sm: '0px', md: '0px', lg: '320px' },
           boxShadow: 'none',
           transition: 'width 0.2s ',
-          
         }}
       >
         <Stack direction="row" spacing={1} justifyContent="space-between" alignItems="center">
@@ -63,8 +62,8 @@ function HeaderBar(props) {
               marginLeft: '20px',
               paddingLeft: '8px',
               marginTop: '12px',
-              width:'320px',
-              borderRadius:'40px',
+              width: '320px',
+              borderRadius: '40px',
             }}
             direction="row"
             spacing={2}
@@ -72,14 +71,19 @@ function HeaderBar(props) {
             alignItems="center"
           >
             <Search htmlColor="#626262" />
-            <CustomInput
-              size='small'
-              placeholder="Nhập tên bài hát, ca sĩ"            
-            />
+            <CustomInput size="small" placeholder="Nhập tên bài hát, ca sĩ" />
           </Stack>
-          <Stack sx={{paddingRight: '8px',}} direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
-          <Settings sx={{fontSize:'40px'}}/>
-          <AccountCircle sx={{fontSize:'40px',}}/>
+          <Stack
+            sx={{ paddingRight: '8px' }}
+            direction="row"
+            spacing={1}
+            justifyContent="flex-end"
+            alignItems="center"
+          >
+            <Settings sx={{ fontSize: '40px' }} />
+            <IconButton onClick={()=>navigate('account')}>
+              <AccountCircle sx={{ fontSize: '40px' }} htmlColor='#FFFFFF' titleAccess='Tài Khoản' />
+            </IconButton>
           </Stack>
         </Stack>
       </AppBar>

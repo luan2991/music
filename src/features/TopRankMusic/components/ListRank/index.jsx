@@ -21,13 +21,12 @@ function ListRank(props) {
         width="100%"
         height={200}
       />
-    
 
       <Box width="100%" mt={1}>
-          {Array.from({ length: 4 }, (index) => (
-            <ItemRank />
-          ))}
-        </Box>
+        {Array.from({ length: 4 }, (index) => (
+          <ItemRank />
+        ))}
+      </Box>
     </Box>
   );
 }
