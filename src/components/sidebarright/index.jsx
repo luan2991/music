@@ -26,7 +26,7 @@ function SidebarRight(props) {
           // display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
-            borderColor:'rgb(24, 56, 50)',
+            borderColor: 'rgb(24, 56, 50)',
             width: { xs: 0, sm: 0, md: 0, lg: drawerWidth },
             transition: 'width 0.2s',
           },
@@ -52,18 +52,16 @@ function SidebarRight(props) {
           isPlay={props.isPlay}
         />
         <MusicStatus
-          open={props.open}
-          anchorEl={props.anchorEl}
-          handlePopoverOpen={props.handlePopoverOpen}
-          handlePopoverClose={props.handlePopoverClose}
           openMore={props.openMore}
           anchorElMore={props.anchorElMore}
-          handlePopoverMoreOpen={props.handlePopoverMoreOpen}
-          handlePopoverMoreClose={props.handlePopoverMoreClose}
+          handlePopperMoreOpen={props.handlePopperMoreOpen}
+          handlePopperMoreClose={props.handlePopperMoreClose}
           openList={props.openList}
           handlePopper={props.handlePopper}
           volume={props.volumeAudio}
           handleVolumeAudio={props.handleVolumeAudio}
+          volumeStatus={props.volumeStatus}
+          handleVolumeStatus={props.handleVolumeStatus}
         />
         <MusicSlider
           formatDuration={props.formatDuration}

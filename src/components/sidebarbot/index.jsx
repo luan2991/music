@@ -50,9 +50,11 @@ function SideBarBot({
   handlePopoverRepeatClose,
   volume,
   handleVolumeAudio,
-  hoverVolumnBot,
-  changeHoverVolumnBot,
+  hoverVolumeBot,
+  changeHoverVolumeBot,
   handleDrawerBotPlayList,
+  volumeStatus,
+  handleVolumeStatus,
 }) {
   return (
     <Box>
@@ -131,20 +133,21 @@ function SideBarBot({
                 justifyContent="flex-end"
                 spacing={1}
               >
-              <BotVolumn
-                volume={volume}
-                handleVolumeAudio={handleVolumeAudio}
-                hoverVolumnBot={hoverVolumnBot}
-                changeHoverVolumnBot={changeHoverVolumnBot}
-                
-              />
-               <IconButton
-          onClick={()=>handleDrawerBotPlayList()}
-          sx={{ '&:hover': { backgroundColor: 'rgba(244,246,248,0.02)' } }}
-          color="primary"
-        >
-          <QueueMusic onClick={()=>handleDrawerBotPlayList()}/>
-        </IconButton>
+                <BotVolumn
+                  volume={volume}
+                  handleVolumeAudio={handleVolumeAudio}
+                  hoverVolumeBot={hoverVolumeBot}
+                  changeHoverVolumeBot={changeHoverVolumeBot}
+                  volumeStatus={volumeStatus}
+                  handleVolumeStatus={handleVolumeStatus}
+                />
+                <IconButton
+                  onClick={() => handleDrawerBotPlayList()}
+                  sx={{ '&:hover': { backgroundColor: 'rgba(244,246,248,0.02)' } }}
+                  color="primary"
+                >
+                  <QueueMusic onClick={() => handleDrawerBotPlayList()} />
+                </IconButton>
               </Stack>
             </Box>
           </Stack>

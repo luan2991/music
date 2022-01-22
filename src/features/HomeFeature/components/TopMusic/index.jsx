@@ -10,7 +10,7 @@ Typography} from '@mui/material';
 
 function TopMusic(props) {
   return (
-    <Box width="100%" marginTop="30px">
+    <Box width="100%" marginTop="30px" height={500}>
       <Box
         sx={{
           flexGrow: 1,

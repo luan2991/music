@@ -20,11 +20,12 @@ const useStyles = makeStyles(() => ({
     height: 'calc(100vh - 20em)',
     overflow: 'hidden',
     margin: '0 auto',
+    borderRadius: '12px',
   },
   rdBox: {
     marginTop: '16px',
     padding: '12px 0',
-    borderRadius: '4px',
+
     backgroundColor: 'rgba(244,246,248,0.02)',
   },
   whoutBox: {
@@ -63,7 +64,10 @@ const useStyles = makeStyles(() => ({
 function MusicDisk({ isPlay, titleAudio, artistAudio }) {
   const classes = useStyles();
   return (
-    <Box className={classes.backgroundBox} sx={{position:'relative',zIndex:0,top:0, left:0}}>
+    <Box
+      className={classes.backgroundBox}
+      sx={{ position: 'relative', zIndex: 0, top: 0, left: 0 }}
+    >
       <Box display="flex">
         <Box className={classes.whBox}>
           <Box className={classes.rdBox}>
