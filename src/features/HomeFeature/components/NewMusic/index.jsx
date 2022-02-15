@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Box, Skeleton, Stack, Typography, /*Typography*/ } from '@mui/material';
-import { NavigateNext } from '@mui/icons-material';
+import { Box, Skeleton, Stack, Typography /*Typography*/ } from '@mui/material';
+
 // import { NavigateNext } from '@mui/icons-material';
 // import PropTypes from 'prop-types';
 // NewMusic.propTypes = {
@@ -9,7 +9,6 @@ import { NavigateNext } from '@mui/icons-material';
 // };
 
 function NewMusic(props) {
- 
   return (
     <Box width="100%" marginTop="30px">
       <Box
@@ -31,37 +30,18 @@ function NewMusic(props) {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            
           }}
         >
           <Typography
             sx={{
-              color: '#FFFFFF',
+              color: props.darkMode ? '#FFFFFF':'#353535',
             }}
             variant="h4"
             component="div"
           >
             Nhạc mới
           </Typography>
-          <Typography
-            variant="h5"
-            component="div"
-            className="allNew"
-            sx={{
-              color: '#c662ef',
-              fontSize: '12px',
-              fontWeight: '500',
-              textTransform: 'uppercase',
-              display: 'flex',
-              alignItems: 'center',
-              opacity: 0,
-              transform: 'translateX(-20px)',
-              transition: 'opacity .5s ease-in-out,transform .5s ease-in-out',
-            }}
-          >
-            Tất cả
-            <NavigateNext />
-          </Typography>
+          {props.allNewMusic('Tất cả')}
         </Box>
         {/* <Skeleton
           animation="wave"
@@ -75,23 +55,20 @@ function NewMusic(props) {
         /> */}
         <Box mt={2} position="relative">
           <Stack direction="row" justifyContent="space-between" alignItems="center">
-            {Array.from(
-              { length: 4 },
-              (index) => (
-                <Skeleton
-                  key={index}
-                  animation="wave"
-                  variant="rectangular"
-                  sx={{
-                    borderRadius:'10px',
-                    height: { xs: '140px', sm: '160px', md: '180px', lg: '200px' },
-                    width: '23%',
-                    bgcolor: '#353535',
-                    transition:'height 0.2s',
-                  }}
-                />
-              )
-            )}
+            {Array.from({ length: 4 }, (index) => (
+              <Skeleton
+                key={index}
+                animation="wave"
+                variant="rectangular"
+                sx={{
+                  borderRadius: '10px',
+                  height: { xs: '140px', sm: '160px', md: '180px', lg: '200px' },
+                  width: '23%',
+                  bgcolor: props.darkMode ? '#353535' : '',
+                  transition: 'height 0.2s',
+                }}
+              />
+            ))}
           </Stack>
         </Box>
       </Box>

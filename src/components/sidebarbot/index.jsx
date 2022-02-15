@@ -7,17 +7,36 @@ import BotAudioPlay from './component/botaudioplay';
 import BotAudioSlider from './component/botslider';
 import BotVolumn from './component/botvolumn';
 
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-// SideBarBot.propTypes = {
-
-// };
+SideBarBot.propTypes = {
+  isPlay:PropTypes.bool.isRequired,
+  titleAudio:PropTypes.string,
+  artistAudio:PropTypes.string,
+  formatDuration:PropTypes.func.isRequired,
+  duration:PropTypes.number,
+  currentTime:PropTypes.number,
+  handleTimeSliderChange:PropTypes.func.isRequired,
+  handlePausePlayClick:PropTypes.func.isRequired,
+  handlePrevNextClick:PropTypes.func.isRequired,
+  repeat:PropTypes.number,
+  onRepeat:PropTypes.func.isRequired,
+  random:PropTypes.bool,
+  onRandom:PropTypes.func.isRequired,
+  volume:PropTypes.number,
+  handleVolumeAudio:PropTypes.func.isRequired,
+  hoverVolumeBot:PropTypes.bool,
+  changeHoverVolumeBot:PropTypes.func.isRequired,
+  handleDrawerBotPlayList:PropTypes.func.isRequired,
+  volumeStatus:PropTypes.bool,
+  handleVolumeStatus:PropTypes.func.isRequired,
+  darkMode:PropTypes.bool,
+};
 const drawerHeight = 80;
 function SideBarBot({
   isPlay,
   titleAudio,
   artistAudio,
-  add3Dots,
   formatDuration,
   duration,
   currentTime,
@@ -28,26 +47,6 @@ function SideBarBot({
   onRepeat,
   random,
   onRandom,
-  openRandom,
-  openPrev,
-  openPlay,
-  openNext,
-  openRepeat,
-  anchorElRandom,
-  anchorElPrev,
-  anchorElPlay,
-  anchorElNext,
-  anchorElRepeat,
-  handlePopoverRandomOpen,
-  handlePopoverRandomClose,
-  handlePopoverPrevOpen,
-  handlePopoverPrevClose,
-  handlePopoverPlayOpen,
-  handlePopoverPlayClose,
-  handlePopoverNextOpen,
-  handlePopoverNextClose,
-  handlePopoverRepeatOpen,
-  handlePopoverRepeatClose,
   volume,
   handleVolumeAudio,
   hoverVolumeBot,
@@ -55,6 +54,7 @@ function SideBarBot({
   handleDrawerBotPlayList,
   volumeStatus,
   handleVolumeStatus,
+  darkMode,
 }) {
   return (
     <Box>
@@ -67,7 +67,7 @@ function SideBarBot({
             boxSizing: 'border-box',
             height: drawerHeight,
             zIndex: 1201,
-            backgroundColor: 'rgb(24, 34, 45)',
+            backgroundColor:darkMode? 'rgb(24, 34, 45)':'#fff',
           },
         }}
         open
@@ -76,12 +76,7 @@ function SideBarBot({
         <Box padding="0 2rem 0 2rem" display="flex" alignItems="center" height={drawerHeight}>
           {/*Stack side bar bot full*/}
           <Stack width="100%" direction="row" justifyContent="space-between" alignItems="center">
-            <BotAudioDisk
-              isPlay={isPlay}
-              titleAudio={titleAudio}
-              artistAudio={artistAudio}
-              add3Dots={add3Dots}
-            />
+            <BotAudioDisk titleAudio={titleAudio} artistAudio={artistAudio} darkMode={darkMode}/>
             <Stack direction="column" alignItems="center">
               <BotAudioPlay
                 isPlay={isPlay}
@@ -91,32 +86,14 @@ function SideBarBot({
                 onRepeat={onRepeat}
                 random={random}
                 onRandom={onRandom}
-                openRandom={openRandom}
-                openPrev={openPrev}
-                openPlay={openPlay}
-                openNext={openNext}
-                openRepeat={openRepeat}
-                anchorElRandom={anchorElRandom}
-                anchorElPrev={anchorElPrev}
-                anchorElPlay={anchorElPlay}
-                anchorElNext={anchorElNext}
-                anchorElRepeat={anchorElRepeat}
-                handlePopoverRandomOpen={handlePopoverRandomOpen}
-                handlePopoverRandomClose={handlePopoverRandomClose}
-                handlePopoverPrevOpen={handlePopoverPrevOpen}
-                handlePopoverPrevClose={handlePopoverPrevClose}
-                handlePopoverPlayOpen={handlePopoverPlayOpen}
-                handlePopoverPlayClose={handlePopoverPlayClose}
-                handlePopoverNextOpen={handlePopoverNextOpen}
-                handlePopoverNextClose={handlePopoverNextClose}
-                handlePopoverRepeatOpen={handlePopoverRepeatOpen}
-                handlePopoverRepeatClose={handlePopoverRepeatClose}
+                darkMode={darkMode}
               />
               <BotAudioSlider
                 formatDuration={formatDuration}
                 duration={duration}
                 currentTime={currentTime}
                 handleTimeSliderChange={handleTimeSliderChange}
+                darkMode={darkMode}
               />
             </Stack>
             <Box>
@@ -140,10 +117,11 @@ function SideBarBot({
                   changeHoverVolumeBot={changeHoverVolumeBot}
                   volumeStatus={volumeStatus}
                   handleVolumeStatus={handleVolumeStatus}
+                  darkMode={darkMode}
                 />
                 <IconButton
                   onClick={() => handleDrawerBotPlayList()}
-                  sx={{ '&:hover': { backgroundColor: 'rgba(244,246,248,0.02)' } }}
+                  sx={{ '&:hover': { backgroundColor: darkMode ?'rgba(244,246,248,0.02)' :'rgba(0, 0, 0, 0.08)' } }}
                   color="primary"
                 >
                   <QueueMusic onClick={() => handleDrawerBotPlayList()} />

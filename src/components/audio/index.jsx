@@ -28,8 +28,8 @@ const audios = [
   },
   {
     src: NhanSinh,
-    title: 'Nhân Sinh Độc Nhất',
-    artist: 'Lư Diệm',
+    title: 'Nhân Sinh Độc Nhất Nhân Sinh Độc Nhất',
+    artist: 'Lư Diệm, Âm Khuyết Thi Thính, Thanh Lộng',
   },
   {
     src: ThienSu,

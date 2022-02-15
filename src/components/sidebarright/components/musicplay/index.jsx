@@ -17,7 +17,9 @@ import React from 'react';
 
 // };
 
-const iconColor = 'rgba(244,246,248,0.5)';
+const iconColorDark = 'rgba(244,246,248,0.5)';
+
+const iconColorLight = 'rgba(28,30,32,0.5)';
 
 function MusicPlay({
   isPlay,
@@ -27,12 +29,13 @@ function MusicPlay({
   onRepeat,
   random,
   onRandom,
+  darkMode,
 }) {
   return (
     <Box
-      sx={{ backgroundColor: 'rgb(24, 34, 45)' }}
+      sx={{ backgroundColor: darkMode ?'rgb(24, 34, 45)' : '#fff' }}
       paddingBottom={10}
-      color="rgba(244,246,248,0.5)"
+      // color={darkMode ? 'rgba(244,246,248,0.5)':'#353535'}
       paddingTop="10px"
     >
       <Box width="272px" margin="auto">
@@ -49,7 +52,7 @@ function MusicPlay({
               <Box>
                 {random === false && (
                   <IconButton onClick={() => onRandom(true)}>
-                    <Shuffle htmlColor={iconColor} />
+                    <Shuffle htmlColor={darkMode ? iconColorDark:iconColorLight} />
                   </IconButton>
                 )}
                 {random === true && (
@@ -63,7 +66,7 @@ function MusicPlay({
             {/*Prev Button*/}
             <Tooltip title="Bài trước" placement="bottom">
               <IconButton onClick={() => handlePrevNextClick(-1)}>
-                <SkipPrevious htmlColor={iconColor} />
+                <SkipPrevious htmlColor={darkMode ? iconColorDark:iconColorLight} />
               </IconButton>
             </Tooltip>
 
@@ -71,7 +74,7 @@ function MusicPlay({
             <Tooltip title={isPlay ? 'Tạm dừng' : 'Phát'} placement="bottom">
               <Box>
                 <IconButton onClick={handlePausePlayClick}>
-                  {!isPlay && <PlayCircleOutlined htmlColor={iconColor} sx={{ fontSize: 45 }} />}
+                  {!isPlay && <PlayCircleOutlined htmlColor={darkMode ? iconColorDark:iconColorLight} sx={{ fontSize: 45 }} />}
                   {isPlay && <PauseCircleOutlined color="primary" sx={{ fontSize: 45 }} />}
                 </IconButton>
               </Box>
@@ -82,7 +85,7 @@ function MusicPlay({
             {/*Next Button*/}
             <Tooltip title="Bài sau" placement="bottom">
               <IconButton onClick={() => handlePrevNextClick(1)}>
-                <SkipNext htmlColor={iconColor} />
+                <SkipNext htmlColor={darkMode ? iconColorDark:iconColorLight} />
               </IconButton>
             </Tooltip>
 
@@ -94,7 +97,7 @@ function MusicPlay({
               <Box>
                 {repeat === 0 && (
                   <IconButton onClick={() => onRepeat(1)}>
-                    <RepeatRounded htmlColor={iconColor} />
+                    <RepeatRounded htmlColor={darkMode ? iconColorDark : iconColorLight} />
                   </IconButton>
                 )}
                 {repeat === 1 && (

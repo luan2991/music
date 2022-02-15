@@ -11,14 +11,15 @@ import { PlayCircleFilled } from '@mui/icons-material';
 
 function NewMusicFeature(props) {
   return (
-    <Box>
-      <Box mt="60px" width="100%" >
+    <Box sx={{minHeight:'100vh'}}> 
+      <Box mt="4em" width="100%" >
         <Box
           width="100%"
           height="120px"
           sx={{
-            background:
-              'linear-gradient(38deg, rgba(2,0,36,1) 0%, rgba(0,29,154,1) 50%, rgba(48,88,96,1) 100%)',
+            background: props.darkMode ?
+              'linear-gradient(38deg, rgba(2,0,36,1) 0%, rgba(0,29,154,1) 50%, rgba(48,88,96,1) 100%)':
+              'linear-gradient(354deg, rgba(232,254,178,1) 0%, rgba(191,202,39,1) 35%, rgba(190,191,192,1) 100%)',
           }}
         >
           <Stack
@@ -30,7 +31,7 @@ function NewMusicFeature(props) {
           >
             <Box ml={2}>
               <Typography
-                sx={{ fontSize: '40px', fontWeight: '500', color: 'rgba(244,246,248,0.88)' }}
+                sx={{ fontSize: '40px', fontWeight: '500', color: props.darkMode? 'rgba(244,246,248,0.88)' : '#353535' }}
               >
                 Danh Sách Nhạc Mới
               </Typography>
@@ -39,13 +40,13 @@ function NewMusicFeature(props) {
           <Tooltip title="Phát Toàn Bộ" arrow placement="right">
             <PlayCircleFilled
               sx={{ fontSize: '50px', marginLeft: 2 }}
-              htmlColor="rgba(244,246,248,0.88)"
+              htmlColor={ props.darkMode? 'rgba(244,246,248,0.88)':'#353535'}
             />
           </Tooltip>
         </Box>
         <Box width="100%" mt={1}>
-          {Array.from({ length: 6 }, (index) => (
-            <NewMusicItem />
+          {Array.from({ length: 8 }, (index) => (
+            <NewMusicItem  darkMode={props.darkMode}/>
           ))}
         </Box>
       </Box>

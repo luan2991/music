@@ -1,4 +1,4 @@
-import { Box, Skeleton, Stack } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
 import React from 'react';
 import ItemRank from '../ItemRank';
 
@@ -15,7 +15,7 @@ function ListRank(props) {
     // </>
     <Box width="100%">
       <Skeleton
-        sx={{ backgroundColor: 'rgba(244,246,248,0.06)' }}
+        sx={{ backgroundColor: props.darkMode ? 'rgba(244,246,248,0.06)' : '' }}
         animation="wave"
         variant="rectangular"
         width="100%"
@@ -24,7 +24,7 @@ function ListRank(props) {
 
       <Box width="100%" mt={1}>
         {Array.from({ length: 4 }, (index) => (
-          <ItemRank />
+          <ItemRank  darkMode={props.darkMode}/>
         ))}
       </Box>
     </Box>

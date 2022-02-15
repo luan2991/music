@@ -1,14 +1,18 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Box } from '@mui/system';
 import { Stack, Typography } from '@mui/material';
 import { Pause, PlayArrow } from '@mui/icons-material';
 
-// PlayListItemBot.propTypes = {
+PlayListItemBot.propTypes = {
+  item:PropTypes.any,
+  isPlay:PropTypes.bool,
+  audioIndex:PropTypes.number,
+  index:PropTypes.number,
+  active:PropTypes.bool,
+};
 
-// };
-
-function PlayListItemBot({ item, add3Dots, isPlay, audioIndex, index, active }) {
+function PlayListItemBot({ item, isPlay, audioIndex, index, active }) {
   return (
     <Box width="100%" padding="8px">
       <Box>
@@ -50,7 +54,7 @@ function PlayListItemBot({ item, add3Dots, isPlay, audioIndex, index, active }) 
           </Box>
           <Box
             sx={{
-              width:'230px',
+              width: '230px',
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',

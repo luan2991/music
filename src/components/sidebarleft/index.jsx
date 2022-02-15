@@ -1,6 +1,7 @@
 import { Drawer } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import MenuSideBar from './components/menusidebar';
 // import PropTypes from 'prop-types';
 
@@ -8,6 +9,7 @@ import MenuSideBar from './components/menusidebar';
 
 // const drawerWidth = 240;
 function SidebarLeft(props) {
+  const darkMode = useSelector((state) => state.theme.darkMode);
   return (
     <Box>
       <Drawer
@@ -17,7 +19,7 @@ function SidebarLeft(props) {
           '& .MuiDrawer-paper': {
             width: { xs: 50, sm: 50, md: 50, lg: 240 },
             boxSizing: 'border-box',
-            bgcolor: 'rgb(24, 34, 45)',
+            bgcolor: darkMode ? 'rgb(24, 34, 45)' : '#fff',
             overflowX: 'hidden',
             transition: 'width 0.2s',
           },
@@ -29,12 +31,10 @@ function SidebarLeft(props) {
           sx={{
             width: '100%',
             maxWidth: 360,
-            bgcolor: 'background.paper',
-            color: 'rgba(244,246,248,0.5)',
             fontSize: '8px',
           }}
         >
-          <MenuSideBar />
+          <MenuSideBar darkMode={darkMode} />
         </Box>
       </Drawer>
     </Box>

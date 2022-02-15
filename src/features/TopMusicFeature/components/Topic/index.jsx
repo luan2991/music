@@ -9,11 +9,11 @@ import React from 'react';
 
 // };
 
-function TopicMusic({topicList}) {
+function TopicMusic({topicList,darkMode}) {
   return (
     <Stack spacing={2} direction="row" justifyContent="center" alignItems="flex-start">
       {topicList.map((item, index) => (
-        <Typography sx={{ color: 'rgba(244,246,248,0.88)' }} key={index}>
+        <Typography sx={{ color: darkMode ? 'rgba(244,246,248,0.88)':'#353535' }} key={index}>
           {item.title}
         </Typography>
       ))}

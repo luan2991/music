@@ -12,14 +12,14 @@ function ItemRank(props) {
         <Box width="100%" mt={1}>
         <Stack direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={1}>
           <Skeleton
-            sx={{ backgroundColor: 'rgba(244,246,248,0.06)' }}
+            sx={{ backgroundColor: props.darkMode ? 'rgba(244,246,248,0.06)' :''}}
             animation="wave"
             variant="circular"
             width={40}
             height={40}
           />
           <Skeleton
-            sx={{ backgroundColor: 'rgba(244,246,248,0.06)' }}
+            sx={{ backgroundColor: props.darkMode ? 'rgba(244,246,248,0.06)' :'' }}
             animation="wave"
             variant="rectangular"
             width="100%"

@@ -25,7 +25,7 @@ function HotCarousel(props) {
             borderRadius:'10px',
             height: { xs: '140px', sm: '160px', md: '180px', lg: '200px' },
             width: '30% ',
-            bgcolor: '#353535',
+            bgcolor: props.darkMode ? '#353535' : '',
             transition:'height 0.2s',
           }}
         />

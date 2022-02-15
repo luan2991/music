@@ -15,7 +15,7 @@ function TopMusicFeature(props) {
   let { area, topic } = useParams();
   let navigate = useNavigate();
   return (
-    <Box>
+    <Box sx={{ minHeight: '100vh' }}>
       <Stack
         justifyContent="center"
         alignItems="center"
@@ -37,8 +37,12 @@ function TopMusicFeature(props) {
           </Button>
         </ButtonGroup>
       </Stack>
-      <TopicMusic topicList={area === 'vn' ? topicVN : area === 'usuk' ? topicUSUK : topicAsia} />
+      <TopicMusic
+        darkMode={props.darkMode}
+        topicList={area === 'vn' ? topicVN : area === 'usuk' ? topicUSUK : topicAsia}
+      />
       <ListTop
+        darkMode={props.darkMode}
         area={area === 'vn' ? topicVN : area === 'usuk' ? topicUSUK : topicAsia}
         topic={topic}
       />

@@ -18,7 +18,7 @@ const drawerWidth = 320;
 function SidebarRight(props) {
   return (
     <Box
-      sx={{ display: 'flex', backgroundColor: 'rgb(24, 34, 45)', '&:focus': { outline: 'none' } }}
+      sx={{ display: 'flex', backgroundColor: props.darkMode ? 'rgb(24, 34, 45)' : '#fff', '&:focus': { outline: 'none' } }}
     >
       <Drawer
         variant="permanent"
@@ -26,7 +26,7 @@ function SidebarRight(props) {
           // display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
-            borderColor: 'rgb(24, 56, 50)',
+            borderColor: props.darkMode ? 'rgb(24, 56, 50)':'rgba(28,30,32,0.05)',
             width: { xs: 0, sm: 0, md: 0, lg: drawerWidth },
             transition: 'width 0.2s',
           },
@@ -38,7 +38,7 @@ function SidebarRight(props) {
           isPlay={props.isPlay}
           titleAudio={props.titleAudio}
           artistAudio={props.artistAudio}
-          add3Dots={props.add3Dots}
+          darkMode={props.darkMode}
         />
         <PlayList
           openList={props.openList}
@@ -48,8 +48,8 @@ function SidebarRight(props) {
           handlePopper={props.handlePopper}
           musiclist={props.audios}
           onClickChangeMusic={props.onClickChangeMusic}
-          add3Dots={props.add3Dots}
           isPlay={props.isPlay}
+          darkMode={props.darkMode}
         />
         <MusicStatus
           openMore={props.openMore}
@@ -62,12 +62,14 @@ function SidebarRight(props) {
           handleVolumeAudio={props.handleVolumeAudio}
           volumeStatus={props.volumeStatus}
           handleVolumeStatus={props.handleVolumeStatus}
+          darkMode={props.darkMode}
         />
         <MusicSlider
           formatDuration={props.formatDuration}
           duration={props.duration}
           currentTime={props.currentTime}
           handleTimeSliderChange={props.handleTimeSliderChange}
+          darkMode={props.darkMode}
         />
 
         <MusicPlay
@@ -98,6 +100,7 @@ function SidebarRight(props) {
           handlePopoverNextClose={props.handlePopoverNextClose}
           handlePopoverRepeatOpen={props.handlePopoverRepeatOpen}
           handlePopoverRepeatClose={props.handlePopoverRepeatClose}
+          darkMode={props.darkMode}
         />
       </Drawer>
     </Box>

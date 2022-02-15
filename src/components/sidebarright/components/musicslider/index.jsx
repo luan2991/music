@@ -14,11 +14,11 @@ const style = {
   },
 };
 
-function MusicSlider({ formatDuration, duration, currentTime, handleTimeSliderChange }) {
+function MusicSlider({ formatDuration, duration, currentTime, handleTimeSliderChange,darkMode }) {
   return (
     <Box
-      sx={{ backgroundColor: 'rgb(24, 34, 45)' }}
-      color="rgba(244,246,248,0.5)"
+      sx={{ backgroundColor: darkMode ? 'rgb(24, 34, 45)':'#fff' }}
+      color={darkMode ? 'rgba(244,246,248,0.5)':'#353535'}
       paddingTop="10px"
     >
       <Box width="272px" margin="auto">
