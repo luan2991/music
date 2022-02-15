@@ -1,8 +1,8 @@
-import { Skeleton, Stack, Tab, Tabs } from '@mui/material';
+import { Skeleton, Stack,  } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
-import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+
+
 import LibraryList from './components/LibraryList';
 
 // import PropTypes from 'prop-types';
@@ -11,40 +11,40 @@ import LibraryList from './components/LibraryList';
 // };
 
 function AccountFeature(props) {
-  const [valueTab, setValueTab] = useState(0);
-  const [loadingSkeleton, setLoadingSkeleton] = useState(false);
-  const handleChangeTab = (event, newValue) => {
-    setValueTab(newValue);
-  };
+  // const [valueTab, setValueTab] = useState(0);
+  // const [loadingSkeleton, setLoadingSkeleton] = useState(false);
+  // const handleChangeTab = (event, newValue) => {
+  //   setValueTab(newValue);
+  // };
   return (
     <Box>
       <Stack
         direction="column"
         spacing={2}
-        justifyContent="center"
+        justifyContent="flex-start"
         alignItems="center"
         width="100%"
-        height={300}
+        
       >
         <Skeleton
-          sx={{ bgcolor: '#353535' }}
+          sx={{ bgcolor: props.darkMode ? '#353535' :'' }}
           animation="wave"
           variant="circular"
           width={200}
           height={200}
         />
         <Skeleton
-          sx={{ bgcolor: '#353535' }}
+          sx={{borderRadius:'20em' , bgcolor: props.darkMode ? '#353535' :'' }}
           animation="wave"
-          variant="text"
+          variant="rectangular"
           width={180}
           height={15}
         />
 
         <Skeleton
-          sx={{ bgcolor: '#353535' }}
+          sx={{borderRadius:'20em' , bgcolor: props.darkMode ? '#353535' :'' }}
           animation="wave"
-          variant="text"
+          variant="rectangular"
           width={130}
           height={15}
         />
@@ -61,14 +61,16 @@ function AccountFeature(props) {
         </Tabs> */}
        
         <Skeleton
-          sx={{ bgcolor: '#353535' }}
+          sx={{ bgcolor: props.darkMode ? '#353535' :'' }}
           animation="wave"
           variant="rectangular"
           width="80%"
-          height={300}
+          height={120}
         />
       </Stack>
-      <LibraryList />
+      <Box mt={4} pb={12}>
+      <LibraryList darkMode={props.darkMode}/>
+      </Box>
     </Box>
   );
 }

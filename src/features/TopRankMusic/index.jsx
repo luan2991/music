@@ -1,6 +1,6 @@
 import React from 'react';
-import { ranklist } from './toprank';
-import { useParams, useNavigate } from 'react-router-dom';
+// import { ranklist } from './toprank';
+import {useNavigate } from 'react-router-dom';
 import { Box } from '@mui/system';
 import { Button, ButtonGroup, Stack } from '@mui/material';
 import ListRank from './components/ListRank';
@@ -10,10 +10,10 @@ import ListRank from './components/ListRank';
 // };
 
 function TopRankMusic(props) {
-  let { area } = useParams();
+
   let navigate = useNavigate();
   return (
-    <Box>
+    <Box sx={{minHeight:'100vh',}}>
       <Stack
         justifyContent="center"
         alignItems="center"
@@ -35,7 +35,7 @@ function TopRankMusic(props) {
           </Button>
         </ButtonGroup>
       </Stack>
-      <ListRank />
+      <ListRank darkMode={props.darkMode}/>
     </Box>
   );
 }

@@ -6,6 +6,7 @@ import SideBarBot from '../sidebarbot';
 import PlayListBot from '../sidebarbot/component/playlistbot';
 import SidebarRight from '../sidebarright';
 import audios from './../audio';
+import { useSelector } from 'react-redux';
 // import PropTypes from 'prop-types';
 
 // DrawerAudio.propTypes = {
@@ -13,6 +14,7 @@ import audios from './../audio';
 // };
 
 function DrawerAudio() {
+  const darkMode = useSelector((state) => state.theme.darkMode);
   const audioRef = useRef();
   const [audioIndex, setAudioIndex] = useState(0);
   const [drawerBotPL, setDrawerBotPL] = useState(false);
@@ -31,9 +33,8 @@ function DrawerAudio() {
   const [anchorElList, setAnchorElList] = useState(null);
   const [hoverVolumeBot, setHoverVolumeBot] = useState(false);
   const [active, setActiveAudio] = useState(null);
-  const add3Dots = (text, limit) => {
-    return text.length > limit ? `${text.substring(0, limit)}...` : text;
-  };
+
+
   const hanldBotStatusList = (index) => {
     setActiveAudio(index);
   };
@@ -57,7 +58,7 @@ function DrawerAudio() {
     setVolumeAudio(volume);
   };
   const handleVolumeStatus = () => {
-    audioRef.current.volume = !volumeStatus ?  0 : volumeAudio;
+    audioRef.current.volume = !volumeStatus ? 0 : volumeAudio;
     setVolumeStatus(!volumeStatus);
   };
   const handleLoadedData = () => {
@@ -158,7 +159,6 @@ function DrawerAudio() {
         isPlay={isPlay}
         titleAudio={titleAudio}
         artistAudio={artistAudio}
-        add3Dots={add3Dots}
         open={open}
         openMore={openMore}
         anchorEl={anchorEl}
@@ -186,23 +186,23 @@ function DrawerAudio() {
         onRepeat={onRepeat}
         random={random}
         onRandom={onRandom}
+        darkMode={darkMode}
       />
       <PlayListBot
         drawerBotPL={drawerBotPL}
         handleDrawerBotPlayListClose={handleDrawerBotPlayListClose}
         audios={audios}
-        add3Dots={add3Dots}
         audioIndex={audioIndex}
         onClickChangeMusic={onClickChangeMusic}
         isPlay={isPlay}
         hanldBotStatusList={hanldBotStatusList}
         active={active}
+        darkMode={darkMode}
       />
       <SideBarBot
         isPlay={isPlay}
         titleAudio={titleAudio}
         artistAudio={artistAudio}
-        add3Dots={add3Dots}
         formatDuration={formatDuration}
         duration={duration}
         currentTime={currentTime}
@@ -221,10 +221,12 @@ function DrawerAudio() {
         changeHoverVolumeBot={changeHoverVolumeBot}
         drawerBotPL={drawerBotPL}
         handleDrawerBotPlayList={handleDrawerBotPlayList}
+        darkMode={darkMode}
       />
       <audio
         ref={audioRef}
-        src={audios[audioIndex].src}
+        type="audio/mpeg"
+        src={audios[audioIndex].src}//'http://localhost:5000/audios/mp3' //
         onLoadedData={handleLoadedData}
         onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
         onEnded={handleRepeatRandom}

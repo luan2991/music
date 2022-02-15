@@ -9,13 +9,13 @@ import React from 'react';
 const style = {
   typographyroot: {
     '&.MuiTypography-root': {
-      fontSize: '13px',
+      fontSize: '0.8em',
     },
   },
 };
-function BotAudioSlider({ formatDuration, duration, currentTime, handleTimeSliderChange }) {
+function BotAudioSlider({ formatDuration, duration, currentTime, handleTimeSliderChange, darkMode }) {
   return (
-    <Box color="rgba(244,246,248,0.5)">
+    <Box color={ darkMode ? 'rgba(244,246,248,0.88)' : 'rgba(28,30,32,0.88)'}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Stack
           direction="row"
@@ -28,7 +28,11 @@ function BotAudioSlider({ formatDuration, duration, currentTime, handleTimeSlide
           alignItems="center"
           spacing={1}
         >
-          <Typography sx={style.typographyroot}>{formatDuration(currentTime)}</Typography>
+          <Typography
+            sx={style.typographyroot}
+          >
+            {formatDuration(currentTime)}
+          </Typography>
           <Slider
             max={duration}
             value={currentTime}

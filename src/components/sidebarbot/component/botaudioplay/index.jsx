@@ -11,14 +11,22 @@ import { IconButton, Stack, Tooltip } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-// BotAudioPlay.propTypes = {
+BotAudioPlay.propTypes = {
+  isPlay:PropTypes.bool.isRequired,
+  handlePausePlayClick:PropTypes.func.isRequired,
+  handlePrevNextClick:PropTypes.func.isRequired,
+  repeat:PropTypes.number,
+  onRepeat:PropTypes.func.isRequired,
+  random:PropTypes.bool,
+  onRandom:PropTypes.func.isRequired,
+  darkMode:PropTypes.bool,
+};
 
-// };
+const iconColorDark = 'rgba(244,246,248,0.5)';
 
-const iconColor = 'rgba(244,246,248,0.5)';
-
+const iconColorLight = 'rgba(28,30,32,0.5)';
 function BotAudioPlay({
   isPlay,
   handlePausePlayClick,
@@ -27,6 +35,7 @@ function BotAudioPlay({
   onRepeat,
   random,
   onRandom,
+  darkMode,
 }) {
   return (
     <Box>
@@ -37,7 +46,7 @@ function BotAudioPlay({
             <Box>
               {random === false && (
                 <IconButton onClick={() => onRandom(true)}>
-                  <Shuffle htmlColor={iconColor} />
+                  <Shuffle htmlColor={darkMode ? iconColorDark:iconColorLight} />
                 </IconButton>
               )}
               {random === true && (
@@ -51,7 +60,7 @@ function BotAudioPlay({
           {/*Prev Button*/}
           <Tooltip title="Bài trước" placement="top">
             <IconButton onClick={() => handlePrevNextClick(-1)}>
-              <SkipPrevious htmlColor={iconColor} />
+              <SkipPrevious htmlColor={darkMode ? iconColorDark:iconColorLight} />
             </IconButton>
           </Tooltip>
 
@@ -59,7 +68,7 @@ function BotAudioPlay({
           <Tooltip title={isPlay ? 'Tạm dừng' : 'Phát'} placement="top">
             <Box>
               <IconButton onClick={handlePausePlayClick}>
-                {!isPlay && <PlayCircleOutlined htmlColor={iconColor} sx={{ fontSize: 27 }} />}
+                {!isPlay && <PlayCircleOutlined htmlColor={darkMode ? iconColorDark:iconColorLight} sx={{ fontSize: 27 }} />}
                 {isPlay && <PauseCircleOutlined color="primary" sx={{ fontSize: 27 }} />}
               </IconButton>
             </Box>
@@ -68,7 +77,7 @@ function BotAudioPlay({
           {/*Next Button*/}
           <Tooltip title="Bài sau" placement="top">
             <IconButton onClick={() => handlePrevNextClick(1)}>
-              <SkipNext htmlColor={iconColor} />
+              <SkipNext htmlColor={darkMode ? iconColorDark:iconColorLight} />
             </IconButton>
           </Tooltip>
 
@@ -77,7 +86,7 @@ function BotAudioPlay({
             <Box>
               {repeat === 0 && (
                 <IconButton onClick={() => onRepeat(1)}>
-                  <RepeatRounded htmlColor={iconColor} />
+                  <RepeatRounded htmlColor={darkMode ? iconColorDark:iconColorLight} />
                 </IconButton>
               )}
               {repeat === 1 && (

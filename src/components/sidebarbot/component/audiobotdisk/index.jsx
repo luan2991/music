@@ -1,49 +1,55 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Box } from '@mui/system';
 import { makeStyles } from '@mui/styles';
 import { Stack, Typography } from '@mui/material';
 
-// BotAudioDisk.propTypes = {
-
-// };
+BotAudioDisk.propTypes = {
+  titleAudio:PropTypes.string,
+  artistAudio:PropTypes.string,
+  darkMode:PropTypes.bool,
+};
 const useStyles = makeStyles(() => ({
-  '@keyframes rotate': {
-    '100%': {
-      transform: 'rotate(-360deg)',
-    },
-  },
-  imgRotate: {
-    borderRadius: '200px',
-    animation: '$rotate 8s linear infinite',
+  imgSong: {
     width: '100%',
-    height: 'auto',
-    verticalAlign: 'middle',
+    height: '100%',
+    borderRadius:'0.5em',
   },
 }));
-function BotAudioDisk({ isPlay, titleAudio, artistAudio, add3Dots }) {
+function BotAudioDisk({ titleAudio, artistAudio, darkMode }) {
   const classes = useStyles();
   return (
     <Box>
       <Box>
         <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
-          <Box
-            sx={{ backgroundColor: '#989898', borderRadius: '200px' }}
-            padding="0.2rem 0.2rem 0.2rem 0.2rem"
-            width="55px"
-            height="55px"
-          >
+          <Box width="4em" height="4em">
             <img
-              className={`${classes.imgRotate}`}
-              style={{ animationPlayState: `${isPlay === true ? 'running' : 'paused'}` }}
-              alt="default disk"
+              className={classes.imgSong}
+              alt="song"
               src={require('./../../../sidebarright/components/musicdisk/note.jpg').default}
             />
           </Box>
-          <Box>
-            <Typography sx={{ color: 'rgba(244,246,248,0.88)' }}>{add3Dots(titleAudio,22)}</Typography>
-            <Typography sx={{ color: 'rgba(244, 246, 248, 0.5)' }} variant="caption">
-              {add3Dots(artistAudio,22)}
+          <Box
+            sx={{
+              width: { xs: '4em', sm: '10em', md: '18em', lg: '18em' },
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              transition: 'width 0.2s',
+            }}
+          >
+            <Typography
+              noWrap
+              sx={{ color: darkMode ? 'rgba(244,246,248,0.88)' : 'rgba(28,30,32,0.88)' }}
+            >
+              {titleAudio}
+            </Typography>
+            <Typography
+              noWrap
+              sx={{ color: darkMode ? 'rgba(244,246,248,0.88)' : 'rgba(28,30,32,0.88)' }}
+              variant="caption"
+            >
+              {artistAudio}
             </Typography>
           </Box>
         </Stack>

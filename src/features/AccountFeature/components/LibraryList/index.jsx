@@ -12,7 +12,7 @@ function LibraryList(props) {
     return (
         <Box width="100%" mt={1}>
         {Array.from({ length: 6 }, (index) => (
-          <LibraryItem />
+          <LibraryItem darkMode={props.darkMode}/>
         ))}
       </Box>
     );

@@ -2,15 +2,19 @@ import { Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import PlayListItemBot from '../item';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-// BotAudioList.propTypes = {
-
-// };
+BotAudioList.propTypes = {
+  audios:PropTypes.any,
+  audioIndex:PropTypes.number,
+  onClickChangeMusic:PropTypes.func.isRequired,
+  isPlay:PropTypes.bool,
+  hanldBotStatusList:PropTypes.func.isRequired,
+  active:PropTypes.bool,
+};
 
 function BotAudioList({
   audios,
-  add3Dots,
   audioIndex,
   onClickChangeMusic,
   isPlay,
@@ -84,7 +88,6 @@ function BotAudioList({
                     isPlay={isPlay}
                     index={index}
                     item={item}
-                    add3Dots={add3Dots}
                   />
                 </Box>
               ))}

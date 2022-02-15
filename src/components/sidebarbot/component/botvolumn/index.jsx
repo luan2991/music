@@ -15,6 +15,7 @@ function BotVolumn({
   changeHoverVolumeBot,
   volumeStatus,
   handleVolumeStatus,
+  darkMode,
 }) {
   return (
     <Box>
@@ -27,17 +28,25 @@ function BotVolumn({
       >
         <IconButton onClick={handleVolumeStatus}>
           {volume >= 0.6 && volumeStatus === false && (
-            <VolumeUpOutlined sx={{ fontSize: '24px' }} htmlColor="rgba(244,246,248,0.5)" />
+            <VolumeUpOutlined
+              sx={{ fontSize: '24px' }}
+              htmlColor={darkMode ? 'rgba(244,246,248,0.5)' : 'rgba(28,30,32,0.5)'}
+            />
           )}
           {volume > 0.0 && volumeStatus === false && volume < 0.6 && (
-            <VolumeDownOutlined sx={{ fontSize: '24px' }} htmlColor="rgba(244,246,248,0.5)" />
+            <VolumeDownOutlined
+              sx={{ fontSize: '24px' }}
+              htmlColor={darkMode ? 'rgba(244,246,248,0.5)' : 'rgba(28,30,32,0.5)'}
+            />
           )}
           {(volume === 0.0 || volumeStatus === true) && (
-            <VolumeMuteOutlined sx={{ fontSize: '24px' }} htmlColor="rgba(244,246,248,0.5)" />
+            <VolumeMuteOutlined
+              sx={{ fontSize: '24px' }}
+              htmlColor={darkMode ? 'rgba(244,246,248,0.5)' : 'rgba(28,30,32,0.5)'}
+            />
           )}
         </IconButton>
         <Slider
-        
           sx={{
             width: '80px',
             '&.MuiSlider-thumb.Mui-focusVisible, .MuiSlider-thumb:hover': {

@@ -17,6 +17,12 @@ function MusicRank(props) {
           margin: '0 auto',
           position: 'relative',
           width: '100%',
+          '&:hover': {
+            '& .allNew': {
+              opacity: 1,
+              transform: 'translateX(0px)',
+            },
+          },
         }}
       >
         <Box
@@ -28,13 +34,14 @@ function MusicRank(props) {
         >
           <Typography
             sx={{
-              color: '#FFFFFF',
+              color: props.darkMode ? '#FFFFFF' : '#353535',
             }}
             variant="h4"
             component="div"
           >
             BXH Bài Hát
           </Typography>
+          {props.allRankMusic('Tất cả')}
         </Box>
         {/* <Skeleton
           animation="wave"
@@ -57,7 +64,7 @@ function MusicRank(props) {
                   borderRadius: '10px',
                   width: '30%',
                   height: { xs: '140px', sm: '160px', md: '180px', lg: '200px' },
-                  bgcolor: '#353535',
+                  bgcolor: props.darkMode ? '#353535' : '',
                   transition:'height 0.2s',
                 }}
               />

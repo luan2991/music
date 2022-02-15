@@ -10,10 +10,10 @@ import React from 'react';
 
 const useStyles = makeStyles(() => ({
   backgroundBox: {
-    backgroundColor: 'rgb(24, 34, 45)',
+    backgroundColor: (props) => (props.darkMode ? 'rgb(24, 34, 45)' : '#fff'),
     justifyContent: 'center',
     height: '100vh',
-    color: 'rgba(244, 246, 248, 0.5)',
+    color: (props) => (props.darkMode ? 'rgba(244, 246, 248, 0.5)' : '#353535'),
   },
   whBox: {
     width: '272px',
@@ -25,8 +25,8 @@ const useStyles = makeStyles(() => ({
   rdBox: {
     marginTop: '16px',
     padding: '12px 0',
-
-    backgroundColor: 'rgba(244,246,248,0.02)',
+    borderRadius: '0.5em',
+    backgroundColor: (props) => (props.darkMode ? 'rgba(244,246,248,0.02)' : 'rgba(28,30,32,0.08)'),
   },
   whoutBox: {
     position: 'relative',
@@ -38,31 +38,19 @@ const useStyles = makeStyles(() => ({
   },
   whinBox: {
     position: 'relative',
-    width: '240px',
-    height: '240px',
+    width: '15em',
+    height: '15em',
     overflow: 'hidden',
     borderRadius: '0.4rem',
     boxShadow: '0 8px 16px rgb(0 0 0 / 20%)',
   },
-  '@keyframes rotate': {
-    '100%': {
-      transform: 'rotate(-360deg)',
-    },
-  },
-  imgRotate: {
-    borderRadius: '200px',
-    animation: '$rotate 8s linear infinite',
+  imageSong: {
     width: '100%',
-    height: 'auto',
-    verticalAlign: 'middle',
-  },
-  boxRotate: {
-    borderRadius: '200px',
-    animation: '$rotate 8s linear infinite',
+    height: '100%',
   },
 }));
-function MusicDisk({ isPlay, titleAudio, artistAudio }) {
-  const classes = useStyles();
+function MusicDisk({ isPlay, titleAudio, artistAudio, darkMode }) {
+  const classes = useStyles({ darkMode });
   return (
     <Box
       className={classes.backgroundBox}
@@ -72,19 +60,15 @@ function MusicDisk({ isPlay, titleAudio, artistAudio }) {
         <Box className={classes.whBox}>
           <Box className={classes.rdBox}>
             <Box className={classes.whoutBox}>
-              <Box
-                className={`${classes.whinBox}+${classes.boxRotate}`}
-                style={{ animationPlayState: `${isPlay === true ? 'running' : 'paused'}` }}
-              >
+              <Box className={classes.whinBox}>
                 <img
-                  className={`${classes.imgRotate}`}
-                  style={{ animationPlayState: `${isPlay === true ? 'running' : 'paused'}` }}
-                  alt="default disk"
+                className={classes.imageSong}
+                  alt="song"
                   src={require('./../../components/musicdisk/note.jpg').default}
                 />
               </Box>
               <Box mt={2}>
-                <Typography sx={{ color: 'rgba(244,246,248,0.88)' }}>
+                <Typography sx={{ color: darkMode ? 'rgba(244,246,248,0.88)' : '#353535' }}>
                   Bài hát: {titleAudio}
                 </Typography>
                 <Typography variant="caption"> Ca sĩ: {artistAudio}</Typography>
