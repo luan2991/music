@@ -3,14 +3,18 @@ import React from 'react';
 import { Box, Skeleton, Stack, Typography /*Typography*/ } from '@mui/material';
 
 // import { NavigateNext } from '@mui/icons-material';
-// import PropTypes from 'prop-types';
-// NewMusic.propTypes = {
-
-// };
+import PropTypes from 'prop-types';
+import NewMusicItem from './components/Item';
+NewMusic.propTypes = {
+  darkMode: PropTypes.bool.isRequired,
+  allNewMusic: PropTypes.any,
+  newSongList: PropTypes.array,
+};
+NewMusic.defaultProps = { newSongList: [] };
 
 function NewMusic(props) {
   return (
-    <Box width="100%" marginTop="30px">
+    <Box  pl={2} pr={2} marginTop="30px">
       <Box
         sx={{
           flexGrow: 1,
@@ -34,7 +38,7 @@ function NewMusic(props) {
         >
           <Typography
             sx={{
-              color: props.darkMode ? '#FFFFFF':'#353535',
+              color: props.darkMode ? '#FFFFFF' : '#353535',
             }}
             variant="h4"
             component="div"
@@ -54,21 +58,34 @@ function NewMusic(props) {
           }}
         /> */}
         <Box mt={2} position="relative">
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
-            {Array.from({ length: 4 }, (index) => (
-              <Skeleton
-                key={index}
-                animation="wave"
-                variant="rectangular"
-                sx={{
-                  borderRadius: '10px',
-                  height: { xs: '140px', sm: '160px', md: '180px', lg: '200px' },
-                  width: '23%',
-                  bgcolor: props.darkMode ? '#353535' : '',
-                  transition: 'height 0.2s',
-                }}
-              />
-            ))}
+          <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+            {typeof props.newSongList !== 'undefined' &&
+              props.newSongList.length > 0 &&
+              props.newSongList.map((item, index) => (
+                <Box
+                  sx={{
+                    borderRadius: '10px',
+                    width: '19%',                   
+                  }}
+                >
+                  <NewMusicItem key={index} item={item} darkMode={props.darkMode} handleChangeSong={props.handleChangeSong}/>
+                </Box>
+              ))}
+            {(typeof props.newSongList === 'undefined' || props.newSongList.length === 0) &&
+              Array.from({ length: 4 }, (item,index) => (
+                <Skeleton
+                  key={index}
+                  animation="wave"
+                  variant="rectangular"
+                  sx={{
+                    borderRadius: '10px',
+                    height: { xs: '140px', sm: '160px', md: '180px', lg: '200px' },
+                    width: '23%',
+                    bgcolor: props.darkMode ? '#353535' : '',
+                    transition: 'height 0.2s',
+                  }}
+                />
+              ))}
           </Stack>
         </Box>
       </Box>

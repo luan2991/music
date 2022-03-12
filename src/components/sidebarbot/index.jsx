@@ -10,27 +10,29 @@ import BotVolumn from './component/botvolumn';
 import PropTypes from 'prop-types';
 
 SideBarBot.propTypes = {
-  isPlay:PropTypes.bool.isRequired,
-  titleAudio:PropTypes.string,
-  artistAudio:PropTypes.string,
-  formatDuration:PropTypes.func.isRequired,
-  duration:PropTypes.number,
-  currentTime:PropTypes.number,
-  handleTimeSliderChange:PropTypes.func.isRequired,
-  handlePausePlayClick:PropTypes.func.isRequired,
-  handlePrevNextClick:PropTypes.func.isRequired,
-  repeat:PropTypes.number,
-  onRepeat:PropTypes.func.isRequired,
-  random:PropTypes.bool,
-  onRandom:PropTypes.func.isRequired,
-  volume:PropTypes.number,
-  handleVolumeAudio:PropTypes.func.isRequired,
-  hoverVolumeBot:PropTypes.bool,
-  changeHoverVolumeBot:PropTypes.func.isRequired,
-  handleDrawerBotPlayList:PropTypes.func.isRequired,
-  volumeStatus:PropTypes.bool,
-  handleVolumeStatus:PropTypes.func.isRequired,
-  darkMode:PropTypes.bool,
+  isPlay: PropTypes.bool.isRequired,
+  titleAudio: PropTypes.string,
+  artistAudio: PropTypes.array,
+  formatDuration: PropTypes.func.isRequired,
+  duration: PropTypes.number,
+  currentTime: PropTypes.number,
+  handleTimeSliderChange: PropTypes.func.isRequired,
+  handlePausePlayClick: PropTypes.func.isRequired,
+  handlePrevNextClick: PropTypes.func.isRequired,
+  repeat: PropTypes.number,
+  onRepeat: PropTypes.func.isRequired,
+  random: PropTypes.bool,
+  onRandom: PropTypes.func.isRequired,
+  volume: PropTypes.number,
+  handleVolumeAudio: PropTypes.func.isRequired,
+  hoverVolumeBot: PropTypes.bool,
+  changeHoverVolumeBot: PropTypes.func.isRequired,
+  handleDrawerBotPlayList: PropTypes.func.isRequired,
+  volumeStatus: PropTypes.bool,
+  handleVolumeStatus: PropTypes.func.isRequired,
+  darkMode: PropTypes.bool,
+  songId: PropTypes.string,
+  songImg:PropTypes.string,
 };
 const drawerHeight = 80;
 function SideBarBot({
@@ -55,6 +57,8 @@ function SideBarBot({
   volumeStatus,
   handleVolumeStatus,
   darkMode,
+  songId,
+  songImg,
 }) {
   return (
     <Box>
@@ -67,7 +71,7 @@ function SideBarBot({
             boxSizing: 'border-box',
             height: drawerHeight,
             zIndex: 1201,
-            backgroundColor:darkMode? 'rgb(24, 34, 45)':'#fff',
+            backgroundColor: darkMode ? 'rgb(24, 34, 45)' : '#fff',
           },
         }}
         open
@@ -76,7 +80,13 @@ function SideBarBot({
         <Box padding="0 2rem 0 2rem" display="flex" alignItems="center" height={drawerHeight}>
           {/*Stack side bar bot full*/}
           <Stack width="100%" direction="row" justifyContent="space-between" alignItems="center">
-            <BotAudioDisk titleAudio={titleAudio} artistAudio={artistAudio} darkMode={darkMode}/>
+            <BotAudioDisk
+              titleAudio={titleAudio}
+              artistAudio={artistAudio}
+              darkMode={darkMode}
+              songId={songId}
+              songImg={songImg}
+            />
             <Stack direction="column" alignItems="center">
               <BotAudioPlay
                 isPlay={isPlay}
@@ -121,7 +131,11 @@ function SideBarBot({
                 />
                 <IconButton
                   onClick={() => handleDrawerBotPlayList()}
-                  sx={{ '&:hover': { backgroundColor: darkMode ?'rgba(244,246,248,0.02)' :'rgba(0, 0, 0, 0.08)' } }}
+                  sx={{
+                    '&:hover': {
+                      backgroundColor: darkMode ? 'rgba(244,246,248,0.02)' : 'rgba(0, 0, 0, 0.08)',
+                    },
+                  }}
                   color="primary"
                 >
                   <QueueMusic onClick={() => handleDrawerBotPlayList()} />

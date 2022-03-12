@@ -14,19 +14,17 @@ import { setDarkTheme } from '../../redux/themeSlide';
 function HeaderBar(props) {
   const navigate = useNavigate();
   const darkMode = useSelector((state) => state.theme.darkMode);
-  console.log(darkMode);
+  
   const dispatch = useDispatch();
-  const handleThemeChange = () => {
-    
+  const handleThemeChange = () => {  
     dispatch(setDarkTheme());
-   
   };
   return (
     <Box>
       <AppBar
         position="fixed"
         sx={{
-          height: '60px',
+          height: '4em',
           backgroundColor: darkMode ? 'rgb(24, 35, 45)' : '#fff',
           width: {
             xs: 'calc(100% - 50px)',
@@ -56,9 +54,10 @@ function HeaderBar(props) {
           >
             <Search htmlColor={darkMode ? '#00b509' : 'rgba(28,30,32,0.5)'} />
             <InputBase
+            placeholder='Nhập Tên Bài Hát'
               sx={{
                 backgroundColor: darkMode ? '' : '',
-                color: darkMode ? '#fff' : '',
+                color: darkMode ? '#FFFFFF' : '',
               }}
             />
           </Stack>

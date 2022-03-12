@@ -11,7 +11,7 @@ import ItemPlayList from './components/Item';
 
 function AllPlayList(props) {
   return (
-    <Box>
+    <Box bgcolor='rgb(24, 35, 45)' pt='1em'>
       <Typography
         sx={{
           paddingTop: '40px',

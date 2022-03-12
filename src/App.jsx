@@ -7,8 +7,10 @@ import HeaderBar from './components/header';
 import SidebarLeft from './components/sidebarleft';
 import AccountFeature from './features/AccountFeature';
 import AllPlayList from './features/AllPlayList';
+import ArtistDetailPage from './features/ArtistFeature';
 import HomeFeature from './features/HomeFeature';
 import NewMusicFeature from './features/NewMusicFeature';
+import SongFeature from './features/SongFeature';
 import TopMusicFeature from './features/TopMusicFeature';
 import TopRankMusic from './features/TopRankMusic';
 
@@ -17,43 +19,37 @@ function App() {
   return (
     <BrowserRouter>
       <HeaderBar />
+      <Box sx={{backgroundColor: darkMode ? 'rgb(24, 34, 45)' : '#fff',}}>
       <SidebarLeft />
       <Box
         sx={{
-          bgcolor: darkMode ? 'rgb(24, 34, 45)': '#fff',
+          height: '100vh',
+          
           width: {
-            xs: 'calc(100% - 50px)',
-            sm: 'calc(100% - 50px)',
-            md: 'calc(100% - 50px)',
+            xs: 'calc(100% - 3.1em)',
+            sm: 'calc(100% - 3.1em)',
+            md: 'calc(100% - 3.1em)',
             lg: 'calc(100% - 560px)',
           },
-          marginRight: { xs: '50px', sm: '50px', md: '50px', lg: '320px' },
-          marginLeft: { xs: '50px', sm: '50px', md: '50px', lg: '240px' },
+          marginRight: { xs: '3.1em', sm: '3.1em', md: '3.1em', lg: '320px' },
+          marginLeft: { xs: '3.1em', sm: '3.1em', md: '3.1em', lg: '240px' },
         }}
       >
-        <Box
-          sx={{
-            width: {
-              xs: 'calc(100% - 10px)',
-              sm: 'calc(100% - 10px)',
-              md: 'calc(100% - 10px)',
-              lg: 'calc(100% - 20px)',
-            },
-            marginTop: '60px',
-          }}
-          margin="auto"
-        >
+        
           <Routes>
-            <Route path="/" element={<HomeFeature darkMode={darkMode}/>} />
+            <Route path="/" element={<HomeFeature darkMode={darkMode} />} />
             <Route path="top100/:area/:topic" element={<TopMusicFeature darkMode={darkMode} />} />
-            <Route path="rank/:area" element={<TopRankMusic darkMode={darkMode}/>} />
-            <Route path="playlist" element={<AllPlayList darkMode={darkMode}/>} />
-            <Route path="new-music" element={<NewMusicFeature darkMode={darkMode}/>} />
-            <Route path="account" element={<AccountFeature darkMode={darkMode}/>} />
+            <Route path="rank/:area" element={<TopRankMusic darkMode={darkMode} />} />
+            <Route path="playlist" element={<AllPlayList darkMode={darkMode} />} />
+            <Route path="new-music" element={<NewMusicFeature darkMode={darkMode} />} />
+            <Route path="account" element={<AccountFeature darkMode={darkMode} />} />
+            <Route path="song/:songId" element={<SongFeature darkMode={darkMode} />} />
+            <Route path="ca-si/:artistId" element={<ArtistDetailPage darkMode={darkMode} />} />
           </Routes>
-        </Box>
+        
       </Box>
       <DrawerAudio />
+      </Box>
     </BrowserRouter>
   );
 }

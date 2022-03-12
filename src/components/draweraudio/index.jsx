@@ -1,12 +1,14 @@
 import { Box } from '@mui/system';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRef } from 'react';
 import SideBarBot from '../sidebarbot';
 import PlayListBot from '../sidebarbot/component/playlistbot';
 import SidebarRight from '../sidebarright';
 import audios from './../audio';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPlay, setSong, setSongIdx } from '../../redux/songSlide';
+
 // import PropTypes from 'prop-types';
 
 // DrawerAudio.propTypes = {
@@ -14,17 +16,26 @@ import { useSelector } from 'react-redux';
 // };
 
 function DrawerAudio() {
+  const dispath = useDispatch();
   const darkMode = useSelector((state) => state.theme.darkMode);
+  const songIdx = useSelector((state) => state.music.songIndex);
+  const song = useSelector((state) => state.music.song);
+  const play = useSelector((state) => state.music.isPlay);
+  const playlist = useSelector((state) => state.music.playlist);
   const audioRef = useRef();
+  const [songSrc, setSongSrc] = useState(song === '' ? '' : song.src.replace('./', ''));
+  const [songImg, setSongImg] = useState(song === '' ? '' : song.simage);
+  const [songId, setSongId] = useState(song === '' ? '' : song._id);
+  // const [isLoading, setIsLoading] = useState(false);
   const [audioIndex, setAudioIndex] = useState(0);
   const [drawerBotPL, setDrawerBotPL] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volumeAudio, setVolumeAudio] = useState(1);
   const [volumeStatus, setVolumeStatus] = useState(false);
-  const [isPlay, setPlay] = useState(false);
-  const [titleAudio, setTitleAudio] = useState('');
-  const [artistAudio, setArtistAudio] = useState('');
+  const [isPlay, setIsPlay] = useState(false);
+  const [titleAudio, setTitleAudio] = useState(song === '' ? '' : song.title);
+  const [artistAudio, setArtistAudio] = useState(song === '' ? [] : song.artist);
   const [repeat, setRepeat] = useState(0);
   const [random, setRandom] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -34,7 +45,18 @@ function DrawerAudio() {
   const [hoverVolumeBot, setHoverVolumeBot] = useState(false);
   const [active, setActiveAudio] = useState(null);
 
-
+  useEffect(() => {
+    setSongSrc(song === '' ? '' : song.src.replace('./', ''));
+    setTitleAudio(song === '' ? '' : song.title);
+    setArtistAudio(song === '' ? [] : song.artist);
+    setSongImg(song === '' ? '' : song.simage);
+    setSongId(song === '' ? '' : song._id);
+    if (play) {
+      setIsPlay(true);
+    }
+    // setIsLoading(true);
+  }, [song, play]);
+  // console.log('ca si:',artistAudio.length);
   const hanldBotStatusList = (index) => {
     setActiveAudio(index);
   };
@@ -63,34 +85,41 @@ function DrawerAudio() {
   };
   const handleLoadedData = () => {
     setDuration(audioRef.current.duration);
-    setTitleAudio(audios[audioIndex].title);
-    setArtistAudio(audios[audioIndex].artist);
+    // setIsLoading(false);
+
     audioRef.current.volume = volumeAudio;
     if (isPlay) audioRef.current.play();
   };
   const handlePausePlayClick = () => {
-    if (isPlay) {
-      audioRef.current.pause();
+    if (song !== '') {
+      if (isPlay) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlay(!isPlay);
     } else {
-      audioRef.current.play();
+      console.log('chua co nhac');
     }
-    setPlay(!isPlay);
   };
 
   const handleTimeSliderChange = (value) => {
     audioRef.current.currentTime = value;
     setCurrentTime(value);
     if (!isPlay) {
-      setPlay(true);
+      setIsPlay(true);
       audioRef.current.play();
     }
   };
   const handlePrevNextClick = (value) => {
-    setAudioIndex(() => {
-      let audioIdx = (audioIndex + value) % audios.length;
-      if (audioIdx < 0) audioIdx = audios.length - 1;
-      return audioIdx;
-    });
+    let audioIdx = (songIdx + value) % playlist.song_list.length;
+    if (audioIdx < 0) audioIdx = playlist.song_list.length - 1;
+    console.log(audioIdx);
+    dispath(setSongIdx(audioIdx));
+    localStorage.setItem('song', JSON.stringify(playlist.song_list[audioIdx]));
+    dispath(setSong(playlist.song_list[audioIdx]));
+    dispath(setPlay(true));
+    setIsPlay(true);
   };
   const handleRepeatRandom = () => {
     if (random === false) {
@@ -147,9 +176,19 @@ function DrawerAudio() {
   const handlePopper = (event) => {
     setAnchorElList(anchorElList ? null : event.currentTarget);
   };
-  const onClickChangeMusic = (index) => {
-    setAudioIndex(index);
+  const formatView = (view) => {
+    if (view < 1e3) return view;
+    if (view>= 1e3 && view < 1e6) return +(view / 1e3).toFixed(1) + 'K';
+    if (view >= 1e6 && view < 1e9) return +(view / 1e6).toFixed(1) + 'M';
+    if (view >= 1e9 && view < 1e12) return +(view / 1e9).toFixed(1) + 'B';
+    if (view >= 1e12) return +(view / 1e12).toFixed(1) + 'T';
+  };
+  const onClickChangeMusic = (song, index) => {
+    localStorage.setItem('song', JSON.stringify(song));
+    dispath(setSong(song));
+    dispath(setSongIdx(index));
     setPlay(true);
+    setIsPlay(true);
   };
   const open = Boolean(anchorEl);
   const openList = Boolean(anchorElList);
@@ -170,7 +209,6 @@ function DrawerAudio() {
         handlePopoverClose={handlePopoverClose}
         handlePopperMoreOpen={handlePopperMoreOpen}
         handlePopperMoreClose={handlePopperMoreClose}
-        audios={audios}
         onClickChangeMusic={onClickChangeMusic}
         volumeAudio={volumeAudio}
         handleVolumeAudio={handleVolumeAudio}
@@ -187,6 +225,11 @@ function DrawerAudio() {
         random={random}
         onRandom={onRandom}
         darkMode={darkMode}
+        // isLoading={isLoading}
+        songImg={songImg}
+        songId={songId}
+        playlist={playlist.song_list}
+        formatView={formatView}
       />
       <PlayListBot
         drawerBotPL={drawerBotPL}
@@ -198,6 +241,7 @@ function DrawerAudio() {
         hanldBotStatusList={hanldBotStatusList}
         active={active}
         darkMode={darkMode}
+        playlist={playlist}
       />
       <SideBarBot
         isPlay={isPlay}
@@ -222,11 +266,13 @@ function DrawerAudio() {
         drawerBotPL={drawerBotPL}
         handleDrawerBotPlayList={handleDrawerBotPlayList}
         darkMode={darkMode}
+        songId={songId}
+        songImg={songImg}
       />
       <audio
         ref={audioRef}
         type="audio/mpeg"
-        src={audios[audioIndex].src}//'http://localhost:5000/audios/mp3' //
+        src={song === '' ? '#' : `http://localhost:5000/audios/${songSrc}`} //'http://localhost:5000/audios/mp3'
         onLoadedData={handleLoadedData}
         onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
         onEnded={handleRepeatRandom}

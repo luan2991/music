@@ -2,6 +2,7 @@ import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import React from 'react';
+import { Link } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 
 // MusicDisk.propTypes = {
@@ -34,7 +35,6 @@ const useStyles = makeStyles(() => ({
     height: '320px',
     margin: '0 auto',
     zIndex: '1',
-    cursor: 'pointer',
   },
   whinBox: {
     position: 'relative',
@@ -47,9 +47,10 @@ const useStyles = makeStyles(() => ({
   imageSong: {
     width: '100%',
     height: '100%',
+    cursor: 'pointer',
   },
 }));
-function MusicDisk({ isPlay, titleAudio, artistAudio, darkMode }) {
+function MusicDisk({  titleAudio, artistAudio, darkMode, songImg, songId }) {
   const classes = useStyles({ darkMode });
   return (
     <Box
@@ -61,17 +62,53 @@ function MusicDisk({ isPlay, titleAudio, artistAudio, darkMode }) {
           <Box className={classes.rdBox}>
             <Box className={classes.whoutBox}>
               <Box className={classes.whinBox}>
-                <img
-                className={classes.imageSong}
-                  alt="song"
-                  src={require('./../../components/musicdisk/note.jpg').default}
-                />
+                <Link to={`/song/${songId}`}>
+                  <img
+                    className={classes.imageSong}
+                    alt="song"
+                    src={
+                      songImg === ''
+                        ? require('./../musicdisk/note.jpg').default
+                        : `http://localhost:5000/images/songs/${songImg}`
+                    }
+                  />
+                </Link>
               </Box>
               <Box mt={2}>
-                <Typography sx={{ color: darkMode ? 'rgba(244,246,248,0.88)' : '#353535' }}>
-                  Bài hát: {titleAudio}
+                <Link to={`/song/${songId}`} style={{ textDecoration: 'none' }}>
+                  <Typography
+                    noWrap
+                    sx={{
+                      color: darkMode ? 'rgba(244,246,248,0.88)' : '#353535',
+                      '&:hover': {
+                        color: darkMode ? '#2DAAED' : '#353535',
+                      },
+                    }}
+                  >
+                    {titleAudio}
+                  </Typography>
+                </Link>
+                <Typography noWrap variant="caption">
+                  {artistAudio.length > 0 &&
+                    artistAudio.map((artistitem, index) => (
+                      <span key={index}>
+                        {index > 1 ? ', ' : ''}
+                        <Link to={`/ca-si/${artistitem._id}`} style={{ textDecoration: 'none' }}>
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              color: darkMode ? 'rgba(244,246,248,0.5)' : '#353535',
+                              '&:hover': {
+                                color: darkMode ? '#2DAAED' : '#353535',
+                              },
+                            }}
+                          >
+                            {artistitem.artist_name}
+                          </Typography>
+                        </Link>
+                      </span>
+                    ))}
                 </Typography>
-                <Typography variant="caption"> Ca sĩ: {artistAudio}</Typography>
               </Box>
             </Box>
           </Box>
