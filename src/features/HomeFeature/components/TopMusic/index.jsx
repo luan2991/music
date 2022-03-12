@@ -10,7 +10,7 @@ Typography} from '@mui/material';
 
 function TopMusic(props) {
   return (
-    <Box width="100%" marginTop="30px" height={500}>
+    <Box pl={2} pr={2} marginTop="30px" height={500}>
       <Box
         sx={{
           flexGrow: 1,
@@ -56,7 +56,7 @@ function TopMusic(props) {
         /> */}
         <Box mt={2} position="relative">
           <Stack direction="row" justifyContent="space-between" alignItems="center">
-            {Array.from({ length: 4 }, (index) => (
+            {Array.from({ length: 4 }, (item,index) => (
               <Skeleton
                 key={index}
                 animation="wave"

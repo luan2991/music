@@ -17,7 +17,7 @@ function AccountFeature(props) {
   //   setValueTab(newValue);
   // };
   return (
-    <Box>
+    <Box bgcolor='rgb(24, 35, 45)' pt='4em'>
       <Stack
         direction="column"
         spacing={2}
@@ -68,7 +68,7 @@ function AccountFeature(props) {
           height={120}
         />
       </Stack>
-      <Box mt={4} pb={12}>
+      <Box mt={4} pb={12} pl={2} pr={2}>
       <LibraryList darkMode={props.darkMode}/>
       </Box>
     </Box>

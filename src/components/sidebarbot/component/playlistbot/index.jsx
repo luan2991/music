@@ -24,18 +24,20 @@ function PlayListBot({
   onClickChangeMusic,
   hanldBotStatusList,
   active,
+  darkMode
 }) {
   return (
     <Box>
       <Drawer
+      
         BackdropProps={{ style: { opacity: 0 } }}
         sx={{
-          width: { xs: drawerWidth, sm: drawerWidth, md: drawerWidth, lg: 0 },
-
-          flexShrink: 0,
+          width: { xs: drawerWidth, sm: drawerWidth, md: drawerWidth, lg: drawerWidth },
+          
+          
           '& .MuiDrawer-paper': {
-            width: { xs: drawerWidth, sm: drawerWidth, md: drawerWidth, lg: 0 },
-            bgcolor: 'rgb(24, 34, 45)',
+            width: { xs: drawerWidth, sm: drawerWidth, md: drawerWidth, lg: drawerWidth },
+            bgcolor:darkMode ? 'rgb(24, 34, 45)':'#fff',
             boxSizing: 'border-box',
             transition: 'width 0.8s',
           },

@@ -10,13 +10,13 @@ import { Box, Skeleton, Stack /* Typography*/, Typography } from '@mui/material'
 
 function MusicRank(props) {
   return (
-    <Box width="100%" marginTop="30px">
+    <Box pl={2} pr={2} marginTop="30px">
       <Box
         sx={{
           flexGrow: 1,
           margin: '0 auto',
           position: 'relative',
-          width: '100%',
+          
           '&:hover': {
             '& .allNew': {
               opacity: 1,
@@ -55,7 +55,7 @@ function MusicRank(props) {
         /> */}
         <Box mt={2} position="relative">
           <Stack direction="row" justifyContent="space-between" alignItems="center">
-            {Array.from({ length: 3 }, (index) => (
+            {Array.from({ length: 3 }, (item,index) => (
               <Skeleton
                 key={index}
                 animation="wave"
