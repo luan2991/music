@@ -18,7 +18,11 @@ PlayList.propTypes = {
   songImg: PropTypes.string,
   songId: PropTypes.string,
   playlist: PropTypes.array,
-  formatView:PropTypes.func,
+  formatView: PropTypes.func,
+  handlePopperPLMoreClose: PropTypes.func,
+  openPLMore: PropTypes.bool,
+  anchorElPLMore: PropTypes.any,
+  handlePopperPLMoreOpen:PropTypes.func,
 };
 
 function PlayList({
@@ -33,8 +37,11 @@ function PlayList({
   songId,
   playlist,
   formatView,
+  handlePopperPLMoreClose, 
+  openPLMore,
+  anchorElPLMore,
+  handlePopperPLMoreOpen,
 }) {
-  
   return (
     <Box>
       <Grow in={openList} timeout={500} transformOrigin="bottom">
@@ -207,7 +214,7 @@ function PlayList({
             <Stack direction="column">
               <Box>
                 {playlist.map((item, index) => (
-                  <Box  key={index}>
+                  <Box key={index}>
                     <MusicItem
                       onClickChangeMusic={onClickChangeMusic}
                       songId={songId}
@@ -215,6 +222,10 @@ function PlayList({
                       index={index}
                       darkMode={darkMode}
                       formatView={formatView}
+                      handlePopperPLMoreOpen={handlePopperPLMoreOpen}
+                      handlePopperPLMoreClose={handlePopperPLMoreClose}
+                      openPLMore={openPLMore}
+                      anchorElPLMore={anchorElPLMore}
                     />
                   </Box>
                 ))}

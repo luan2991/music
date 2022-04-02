@@ -1,20 +1,36 @@
-import { Headphones, MoreVertRounded } from '@mui/icons-material';
-import { IconButton, Typography } from '@mui/material';
+import { Headphones, MoreVertRounded, MusicNoteRounded } from '@mui/icons-material';
+import { ClickAwayListener, Fade, IconButton, MenuItem, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Popper from '@mui/material/Popper';
 
 MusicItem.propTypes = {
-  item: PropTypes.array,
+  item: PropTypes.any,
   onClickChangeMusic: PropTypes.func,
   index: PropTypes.number,
   darkMode: PropTypes.bool,
   songId: PropTypes.string,
   formatView: PropTypes.func,
+  handlePopperPLMoreClose: PropTypes.func,
+  openPLMore: PropTypes.bool,
+  anchorElPLMore: PropTypes.any,
+  handlePopperPLMoreOpen:PropTypes.func,
 };
 
-function MusicItem({ item, onClickChangeMusic, index, darkMode, songId, formatView }) {
+function MusicItem({
+  item,
+  onClickChangeMusic,
+  index,
+  darkMode,
+  songId,
+  formatView,
+  handlePopperPLMoreClose,
+  openPLMore,
+  anchorElPLMore,
+  handlePopperPLMoreOpen,
+}) {
   return (
     <Box
       display="flex"
@@ -63,7 +79,6 @@ function MusicItem({ item, onClickChangeMusic, index, darkMode, songId, formatVi
         <Typography
           sx={{
             position: 'absolute',
-            zIndex: 1401,
             fontSize: '0.8em',
             '&:hover  .spansinger': {
               color: darkMode ? 'rgba(10, 118, 151, 0.96)' : '#353535',
@@ -93,24 +108,77 @@ function MusicItem({ item, onClickChangeMusic, index, darkMode, songId, formatVi
           ))}
         </Typography>
       </Box>
-      <Box display='flex' alignItems='center' justifyContent='center'>
-      <Box className='iconView' display='flex' alignItems='center' justifyContent='center'>
-      <Headphones sx={{fontSize:'0.8em'}} htmlColor={darkMode ? 'rgba(244,246,248,0.88)': 'rgba(28,30,32,0.5)'}/>
-      <Typography component="span" sx={{fontSize:'0.8em', paddingLeft:'0.2em',color: darkMode ? 'rgba(244, 246, 248, 0.5)': 'rgba(28,30,32,0.5)'}}>{formatView(11100)}</Typography>
-      </Box>
-      <IconButton
-        className="iconBtnMore"
-        sx={{
-          display: 'none',
-          '&:hover': {
-            backgroundColor: darkMode ? 'rgba(244,246,248,0.02)' : 'rgba(0, 0, 0, 0.04)',
-          },
-        }}
-      >
-        <MoreVertRounded
-          htmlColor={darkMode ? 'rgba(244, 246, 248, 0.5)' : 'rgba(0, 0, 0, 0.54)'}
-        />
-      </IconButton>
+      <Box display="flex" alignItems="center" justifyContent="center">
+       
+        <IconButton
+          className="iconBtnMore"
+          onClick={handlePopperPLMoreOpen}
+          sx={{
+            display: 'none',
+            '&:hover': {
+              backgroundColor: darkMode ? 'rgba(244,246,248,0.02)' : 'rgba(0, 0, 0, 0.04)',
+            },
+            '&:focus':{
+              display: 'flex',
+            },
+            '&:focus + .iconView':{
+              display: 'none',
+            },
+          }}
+        >
+          <MoreVertRounded
+            htmlColor={darkMode ? 'rgba(244, 246, 248, 0.5)' : 'rgba(0, 0, 0, 0.54)'}
+          />
+          <Popper
+            open={openPLMore}
+            anchorEl={anchorElPLMore}
+            placement="top-end"
+            transition
+            disablePortal
+          >
+            {({ TransitionProps }) => (
+              <ClickAwayListener onClickAway={handlePopperPLMoreClose}>
+                <Fade {...TransitionProps} timeout={350}>
+                  <Paper
+                    sx={{
+                      color: darkMode ? 'rgba(244,246,248,0.5)' : '#353535',
+                      zIndex: 1230,
+                      borderRadius: '6px',
+                      backgroundColor: darkMode ? 'rgba(24,1,45,1)' : '#fff',
+                      
+                    }}
+                  >
+                    <MenuItem>
+                      <MusicNoteRounded
+                        htmlColor={darkMode ? 'rgba(244,246,248,0.5)' : 'rgba(28,30,32,0.5)'}
+                        fontSize="small"
+                      />
+                      <Typography sx={{ fontSize: '1em', paddingLeft: '0.5em' }}>
+                        Đi đến bài hát
+                      </Typography>
+                    </MenuItem>
+                  </Paper>
+                </Fade>
+              </ClickAwayListener>
+            )}
+          </Popper>
+        </IconButton>
+        <Box className="iconView" display="flex" alignItems="center" justifyContent="center">
+          <Headphones
+            sx={{ fontSize: '0.8em' }}
+            htmlColor={darkMode ? 'rgba(244,246,248,0.88)' : 'rgba(28,30,32,0.5)'}
+          />
+          <Typography
+            component="span"
+            sx={{
+              fontSize: '0.8em',
+              paddingLeft: '0.2em',
+              color: darkMode ? 'rgba(244, 246, 248, 0.5)' : 'rgba(28,30,32,0.5)',
+            }}
+          >
+            {formatView(11100)}
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

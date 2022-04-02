@@ -1,30 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box } from '@mui/system';
+import NewMusicListItem from '../Item';
 import { Grid, Skeleton } from '@mui/material';
-import ItemPlayList from '../Item';
 
-AllPlaylistList.propTypes = {
+NewSongList.propTypes = {
   darkMode: PropTypes.bool,
-  handleChangePlaylist: PropTypes.func,
-  playlist: PropTypes.array,
+  songList: PropTypes.array,
+  handleChangeSong: PropTypes.func,
 };
 
-function AllPlaylistList(props) {
+function NewSongList(props) {
   return (
     <Box pl={2} pr={2}>
       <Grid container spacing={2}>
-        {props.playlist.map((playlistitem, index) => (
+        {props.songList.map((songitem, index) => (
           <Grid key={index} item xs={3}>
-            <ItemPlayList
-              playlistitem={playlistitem}
+            <NewMusicListItem
+              songitem={songitem}
               darkMode={props.darkMode}
-              handleChangePlaylist={() => props.handleChangePlaylist(playlistitem._id)}
+              handleChangeSong={props.handleChangeSong}
             />
           </Grid>
         ))}
-        {props.playlist.length < 1 &&
-          Array.from({ length: 30 }, (item, index) => (
+        {props.songList.length < 1 &&
+          Array.from({ length: 30 }, (item, index) =>(
             <Grid key={index} item xs={3}>
               <Skeleton
                 key={index}
@@ -38,11 +38,12 @@ function AllPlaylistList(props) {
                   transition: 'height 0.2s',
                 }}
               />
-            </Grid>
-          ))}
+              </Grid>
+            )
+          )}
       </Grid>
     </Box>
   );
 }
 
-export default AllPlaylistList;
+export default NewSongList;

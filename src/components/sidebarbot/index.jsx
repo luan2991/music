@@ -32,7 +32,7 @@ SideBarBot.propTypes = {
   handleVolumeStatus: PropTypes.func.isRequired,
   darkMode: PropTypes.bool,
   songId: PropTypes.string,
-  songImg:PropTypes.string,
+  songImg: PropTypes.string,
 };
 const drawerHeight = 80;
 function SideBarBot({
@@ -106,7 +106,16 @@ function SideBarBot({
                 darkMode={darkMode}
               />
             </Stack>
-            <Box>
+            <Box
+              sx={{
+                display: {
+                  xs: 'none',
+                  sm: 'none',
+                  md:'block',
+                  lg:'block',
+                },
+              }}
+            >
               <Stack
                 direction="row"
                 divider={
@@ -138,7 +147,7 @@ function SideBarBot({
                   }}
                   color="primary"
                 >
-                  <QueueMusic onClick={() => handleDrawerBotPlayList()} />
+                  <QueueMusic />
                 </IconButton>
               </Stack>
             </Box>

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Box, Skeleton, Stack /* Typography*/, Typography } from '@mui/material';
+import { Box, Stack /* Typography*/, Typography } from '@mui/material';
+
 // import { NavigateNext } from '@mui/icons-material';
 
 // import PropTypes from 'prop-types';
@@ -16,7 +17,7 @@ function MusicRank(props) {
           flexGrow: 1,
           margin: '0 auto',
           position: 'relative',
-          
+
           '&:hover': {
             '& .allNew': {
               opacity: 1,
@@ -41,7 +42,6 @@ function MusicRank(props) {
           >
             BXH Bài Hát
           </Typography>
-          {props.allRankMusic('Tất cả')}
         </Box>
         {/* <Skeleton
           animation="wave"
@@ -53,9 +53,106 @@ function MusicRank(props) {
           }}
           variant="rectangular"
         /> */}
+        {}
         <Box mt={2} position="relative">
           <Stack direction="row" justifyContent="space-between" alignItems="center">
-            {Array.from({ length: 3 }, (item,index) => (
+            <Box
+              sx={{
+                cursor: 'pointer',
+                borderRadius: '10px',
+                overflow: 'hidden',
+                width: '30%',
+                height: { xs: '140px', sm: '160px', md: '180px', lg: '200px' },
+              }}
+            >
+              <Box
+                sx={{
+                  opacity: 0.7,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundImage: `url(${require('./../../images/vn_rank.png').default})`,
+                  backgroundSize: 'cover',
+                  width: '100%',
+                  height: '100%',
+                  '&:hover': {
+                    transform: `scale(1.1)`,
+                    transition: 'transform 0.5s',
+                  },
+                }}
+              >
+                <Typography
+                  sx={{ opacity: 1, fontSize: '2em', color: '#FFFFFF', fontWeight: '500' }}
+                >
+                  Việt Nam
+                </Typography>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                cursor: 'pointer',
+                borderRadius: '10px',
+                overflow: 'hidden',
+                width: '30%',
+                height: { xs: '140px', sm: '160px', md: '180px', lg: '200px' },
+              }}
+            >
+              <Box
+                sx={{
+                  opacity: 0.7,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                  backgroundImage: `url(${require('./../../images/usuk_rank.jpg').default})`,
+                  backgroundSize: 'cover',
+                  '&:hover': {
+                    transform: `scale(1.1)`,
+                    transition: 'transform 0.5s',
+                  },
+                }}
+              >
+                <Typography
+                  sx={{ opacity: 1, fontSize: '2em', color: '#FFFFFF', fontWeight: '500' }}
+                >
+                  Âu Mỹ
+                </Typography>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                cursor: 'pointer',
+                borderRadius: '10px',
+                width: '30%',
+                overflow: 'hidden',
+                height: { xs: '140px', sm: '160px', md: '180px', lg: '200px' },
+              }}
+            >
+              <Box
+                sx={{
+                  opacity: 0.7,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                  backgroundImage: `url(${require('./../../images/kpop_rank.jpg').default})`,
+                  backgroundSize: 'cover',
+                  '&:hover': {
+                    transform: `scale(1.1)`,
+                    transition: 'transform 0.5s',
+                  },
+                }}
+              >
+                <Typography
+                  sx={{ opacity: 1, fontSize: '2em', color: '#FFFFFF', fontWeight: '500' }}
+                >
+                  KPOP
+                </Typography>
+              </Box>
+            </Box>
+            {/* {Array.from({ length: 3 }, (item,index) => (
               <Skeleton
                 key={index}
                 animation="wave"
@@ -68,7 +165,7 @@ function MusicRank(props) {
                   transition:'height 0.2s',
                 }}
               />
-            ))}
+            ))} */}
           </Stack>
         </Box>
       </Box>

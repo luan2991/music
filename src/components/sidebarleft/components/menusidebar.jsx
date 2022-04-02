@@ -63,7 +63,7 @@ function MenuSideBar(props) {
             />
           </ListItemButton>
         </Link>
-        <Link style={style.link} to="/new-music">
+        <Link style={style.link} to="/new-music?page=1">
           <ListItemButton
             sx={{
               fontSize: '0.8rem',
@@ -131,7 +131,7 @@ function MenuSideBar(props) {
             />
           </ListItemButton>
         </Link>
-        <Link style={style.link} to="/playlist">
+        <Link style={style.link} to="/new-playlist?page=1">
           <ListItemButton
             sx={{
               fontSize: '0.8rem',
