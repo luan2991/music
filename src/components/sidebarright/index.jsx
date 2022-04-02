@@ -7,46 +7,52 @@ import MusicStatus from './components/musicstatus';
 import PlayList from './components/playlist';
 
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 SidebarRight.propTypes = {
-  isPlay:PropTypes.bool,
-        titleAudio:PropTypes.string,
-        artistAudio:PropTypes.array,
-        open:PropTypes.bool,
-        openMore:PropTypes.bool,
-        anchorEl:PropTypes.any,
-        openList:PropTypes.bool,
-        anchorElList:PropTypes.any,
-        anchorElMore:PropTypes.any,
-        handlePopper:PropTypes.func,
-        handlePopoverOpen:PropTypes.func,
-        handlePopoverClose:PropTypes.func,
-        handlePopperMoreOpen:PropTypes.func,
-        handlePopperMoreClose:PropTypes.func,
-        onClickChangeMusic:PropTypes.func,
-        volumeAudio:PropTypes.number,
-        handleVolumeAudio:PropTypes.func,
-        volumeStatus:PropTypes.bool,
-        handleVolumeStatus:PropTypes.func,
-        formatDuration:PropTypes.func,
-        duration:PropTypes.number,
-        currentTime:PropTypes.number,
-        handleTimeSliderChange:PropTypes.func,
-        handlePausePlayClick:PropTypes.func,
-        handlePrevNextClick:PropTypes.func,
-        repeat:PropTypes.number,
-        onRepeat:PropTypes.func,
-        random:PropTypes.bool,
-        onRandom:PropTypes.func,
-        darkMode:PropTypes.bool,
-        songImg:PropTypes.string,
-        songId:PropTypes.string,
-        playlist:PropTypes.array,
-        formatView:PropTypes.func,
+  isPlay: PropTypes.bool,
+  titleAudio: PropTypes.string,
+  artistAudio: PropTypes.array,
+  open: PropTypes.bool,
+  openMore: PropTypes.bool,
+  anchorEl: PropTypes.any,
+  openList: PropTypes.bool,
+  anchorElList: PropTypes.any,
+  anchorElMore: PropTypes.any,
+  handlePopper: PropTypes.func,
+  handlePopoverOpen: PropTypes.func,
+  handlePopoverClose: PropTypes.func,
+  handlePopperMoreOpen: PropTypes.func,
+  handlePopperMoreClose: PropTypes.func,
+  onClickChangeMusic: PropTypes.func,
+  volumeAudio: PropTypes.number,
+  handleVolumeAudio: PropTypes.func,
+  volumeStatus: PropTypes.bool,
+  handleVolumeStatus: PropTypes.func,
+  formatDuration: PropTypes.func,
+  duration: PropTypes.number,
+  currentTime: PropTypes.number,
+  handleTimeSliderChange: PropTypes.func,
+  handlePausePlayClick: PropTypes.func,
+  handlePrevNextClick: PropTypes.func,
+  repeat: PropTypes.number,
+  onRepeat: PropTypes.func,
+  random: PropTypes.bool,
+  onRandom: PropTypes.func,
+  darkMode: PropTypes.bool,
+  songImg: PropTypes.string,
+  songId: PropTypes.string,
+  playlist: PropTypes.array,
+  formatView: PropTypes.func,
+  handlePopperPLMoreClose: PropTypes.func,
+  openPLMore: PropTypes.bool,
+  anchorElPLMore: PropTypes.any,
+  handlePopperPLMoreOpen: PropTypes.func,
 };
 
 const drawerWidth = 320;
 function SidebarRight(props) {
+  const widthModal = useSelector((state) => state.theme.widthModal);
   return (
     <Box
       sx={{
@@ -61,8 +67,10 @@ function SidebarRight(props) {
           // display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
+            marginRight: { sx: 0, sm: 0, md: 0, lg: `${widthModal}px` },
             borderColor: props.darkMode ? 'rgb(24, 56, 50)' : 'rgba(28,30,32,0.05)',
             width: { xs: 0, sm: 0, md: 0, lg: drawerWidth },
+
             transition: 'width 0.2s',
           },
           zIndex: 1205,
@@ -90,6 +98,10 @@ function SidebarRight(props) {
           songId={props.songId}
           playlist={props.playlist}
           formatView={props.formatView}
+          handlePopperPLMoreOpen={props.handlePopperPLMoreOpen}
+          handlePopperPLMoreClose={props.handlePopperPLMoreClose}
+          openPLMore={props.openPLMore}
+          anchorElPLMore={props.anchorElPLMore}
         />
         <MusicStatus
           openMore={props.openMore}

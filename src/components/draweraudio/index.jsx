@@ -17,17 +17,19 @@ import { setPlay, setSong, setSongIdx } from '../../redux/songSlide';
 
 function DrawerAudio() {
   const dispath = useDispatch();
+ 
   const darkMode = useSelector((state) => state.theme.darkMode);
   const songIdx = useSelector((state) => state.music.songIndex);
   const song = useSelector((state) => state.music.song);
   const play = useSelector((state) => state.music.isPlay);
   const playlist = useSelector((state) => state.music.playlist);
   const audioRef = useRef();
+
   const [songSrc, setSongSrc] = useState(song === '' ? '' : song.src.replace('./', ''));
   const [songImg, setSongImg] = useState(song === '' ? '' : song.simage);
   const [songId, setSongId] = useState(song === '' ? '' : song._id);
   // const [isLoading, setIsLoading] = useState(false);
-  const [audioIndex, setAudioIndex] = useState(0);
+
   const [drawerBotPL, setDrawerBotPL] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -40,10 +42,13 @@ function DrawerAudio() {
   const [random, setRandom] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMore, setOpenMore] = useState(false);
+  const [openPLMore, setOpenPLMore] = useState(false);
+  const [openPLMoreBot, setOpenPLMoreBot] = useState(false);
   const [anchorElMore, setAnchorElMore] = useState(null);
   const [anchorElList, setAnchorElList] = useState(null);
+  const [anchorElPLMore, setAnchorElPLMore] = useState(null);
+  const [anchorElPLMoreBot, setAnchorElPLMoreBot] = useState(null);
   const [hoverVolumeBot, setHoverVolumeBot] = useState(false);
-  const [active, setActiveAudio] = useState(null);
 
   useEffect(() => {
     setSongSrc(song === '' ? '' : song.src.replace('./', ''));
@@ -57,9 +62,7 @@ function DrawerAudio() {
     // setIsLoading(true);
   }, [song, play]);
   // console.log('ca si:',artistAudio.length);
-  const hanldBotStatusList = (index) => {
-    setActiveAudio(index);
-  };
+
   const changeHoverVolumeBot = (status) => {
     setHoverVolumeBot(status);
   };
@@ -114,7 +117,7 @@ function DrawerAudio() {
   const handlePrevNextClick = (value) => {
     let audioIdx = (songIdx + value) % playlist.song_list.length;
     if (audioIdx < 0) audioIdx = playlist.song_list.length - 1;
-    console.log(audioIdx);
+
     dispath(setSongIdx(audioIdx));
     localStorage.setItem('song', JSON.stringify(playlist.song_list[audioIdx]));
     dispath(setSong(playlist.song_list[audioIdx]));
@@ -124,7 +127,8 @@ function DrawerAudio() {
   const handleRepeatRandom = () => {
     if (random === false) {
       if (repeat === 0) {
-        setPlay(false);
+        dispath(setPlay(false));
+        setIsPlay(false);
       }
       if (repeat === 1) {
         handlePrevNextClick(1);
@@ -133,17 +137,17 @@ function DrawerAudio() {
         audioRef.current.currentTime = 0;
         audioRef.current.play();
       }
-    }
-    if (random === true) {
-      setAudioIndex(() => {
-        let audio = randomAudio(audios);
-        let audioIdx = audios.indexOf(audio);
-        while (audioIdx === audioIndex) {
-          audio = randomAudio(audios);
-          audioIdx = audios.indexOf(audio);
-        }
-        return audioIdx;
-      });
+    } else {
+      let audio = randomAudio(playlist.song_list);
+      let audioIdx = playlist.song_list.indexOf(audio);
+      while (audioIdx === songIdx) {
+        audio = randomAudio(audios);
+        audioIdx = audios.indexOf(audio);
+      }
+
+      localStorage.setItem('song', JSON.stringify(audio));
+      dispath(setSong(audio));
+      dispath(setSongIdx(audioIdx));
     }
   };
   const randomAudio = (list) => {
@@ -172,13 +176,30 @@ function DrawerAudio() {
   const handlePopperMoreClose = () => {
     setOpenMore(false);
   };
+  const handlePopperPLMoreOpen = (event) => {
+    setAnchorElPLMore(event.currentTarget);
+    setOpenPLMore(!openPLMore);
+  };
+  const handlePopperPLMoreClose = () => {
+    setAnchorElPLMore(null);
+    setOpenPLMore(false);
+  };
+
+  const handlePopperPLMoreBotOpen = (event) => {
+    setAnchorElPLMoreBot(event.currentTarget);
+    setOpenPLMoreBot(!openPLMoreBot);
+  };
+  const handlePopperPLMoreBotClose = () => {
+    setAnchorElPLMoreBot(null);
+    setOpenPLMoreBot(false);
+  };
 
   const handlePopper = (event) => {
     setAnchorElList(anchorElList ? null : event.currentTarget);
   };
   const formatView = (view) => {
     if (view < 1e3) return view;
-    if (view>= 1e3 && view < 1e6) return +(view / 1e3).toFixed(1) + 'K';
+    if (view >= 1e3 && view < 1e6) return +(view / 1e3).toFixed(1) + 'K';
     if (view >= 1e6 && view < 1e9) return +(view / 1e6).toFixed(1) + 'M';
     if (view >= 1e9 && view < 1e12) return +(view / 1e9).toFixed(1) + 'B';
     if (view >= 1e12) return +(view / 1e12).toFixed(1) + 'T';
@@ -192,6 +213,7 @@ function DrawerAudio() {
   };
   const open = Boolean(anchorEl);
   const openList = Boolean(anchorElList);
+
   return (
     <Box>
       <SidebarRight
@@ -230,18 +252,25 @@ function DrawerAudio() {
         songId={songId}
         playlist={playlist.song_list}
         formatView={formatView}
+        handlePopperPLMoreOpen={handlePopperPLMoreOpen}
+        handlePopperPLMoreClose={handlePopperPLMoreClose}
+        openPLMore={openPLMore}
+        anchorElPLMore={anchorElPLMore}
       />
       <PlayListBot
         drawerBotPL={drawerBotPL}
         handleDrawerBotPlayListClose={handleDrawerBotPlayListClose}
         audios={audios}
-        audioIndex={audioIndex}
         onClickChangeMusic={onClickChangeMusic}
         isPlay={isPlay}
-        hanldBotStatusList={hanldBotStatusList}
-        active={active}
         darkMode={darkMode}
-        playlist={playlist}
+        playlist={playlist.song_list}
+        formatView={formatView}
+        songId={songId}
+        handlePopperPLMoreBotOpen={handlePopperPLMoreBotOpen}
+        handlePopperPLMoreBotClose={handlePopperPLMoreBotClose}
+        openPLMoreBot={openPLMoreBot}
+        anchorElPLMoreBot={anchorElPLMoreBot}
       />
       <SideBarBot
         isPlay={isPlay}

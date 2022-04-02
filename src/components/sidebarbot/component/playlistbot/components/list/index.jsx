@@ -5,21 +5,32 @@ import PlayListItemBot from '../item';
 import PropTypes from 'prop-types';
 
 BotAudioList.propTypes = {
-  audios:PropTypes.any,
-  audioIndex:PropTypes.number,
-  onClickChangeMusic:PropTypes.func.isRequired,
-  isPlay:PropTypes.bool,
-  hanldBotStatusList:PropTypes.func.isRequired,
-  active:PropTypes.bool,
+  audios: PropTypes.any,
+  audioIndex: PropTypes.number,
+  onClickChangeMusic: PropTypes.func.isRequired,
+  isPlay: PropTypes.bool,
+  
+  active: PropTypes.bool,
+  playlist: PropTypes.array,
+  formatView: PropTypes.func,
+  songId: PropTypes.string,
+  handlePopperPLMoreBotClose: PropTypes.func,
+  openPLMoreBot: PropTypes.bool,
+  handlePopperPLMoreBotOpen:PropTypes.func,
+  anchorElPLMoreBot: PropTypes.any,
 };
 
 function BotAudioList({
-  audios,
-  audioIndex,
+  darkMode,
   onClickChangeMusic,
   isPlay,
-  hanldBotStatusList,
-  active,
+  playlist,
+  formatView,
+  songId,
+  handlePopperPLMoreBotClose,
+  openPLMoreBot,
+  anchorElPLMoreBot,
+  handlePopperPLMoreBotOpen,
 }) {
   return (
     <Box>
@@ -67,27 +78,19 @@ function BotAudioList({
               justifyContent="center"
               alignItems="flex-start"
             >
-              {audios.map((item, index) => (
-                <Box
-                  onMouseEnter={() => hanldBotStatusList(index)}
-                  onMouseLeave={() => hanldBotStatusList(null)}
-                  width="100%"
-                  sx={{
-                    bgcolor: `${audioIndex === index ? '#7200a1' : ''}`,
-                    borderRadius: '6px',
-                    '&:hover': {
-                      bgcolor: `${audioIndex === index ? '#7200a1' : 'rgba(85,87,90,255)'}`,
-                    },
-                  }}
-                  key={index}
-                  onClick={() => onClickChangeMusic(index)}
-                >
+              {playlist.map((item, index) => (
+                <Box width="100%" key={index}>
                   <PlayListItemBot
-                    active={active}
-                    audioIndex={audioIndex}
-                    isPlay={isPlay}
+                    darkMode={darkMode}
                     index={index}
                     item={item}
+                    formatView={formatView}
+                    onClickChangeMusic={onClickChangeMusic}
+                    songId={songId}
+                    handlePopperPLMoreBotOpen={handlePopperPLMoreBotOpen}
+                    handlePopperPLMoreBotClose={handlePopperPLMoreBotClose}
+                    openPLMoreBot={openPLMoreBot}
+                    anchorElPLMoreBot={anchorElPLMoreBot}
                   />
                 </Box>
               ))}

@@ -11,8 +11,14 @@ PlayListBot.propTypes = {
   audioIndex: PropTypes.number,
   isPlay: PropTypes.bool,
   onClickChangeMusic: PropTypes.func.isRequired,
-  hanldBotStatusList: PropTypes.func.isRequired,
   active: PropTypes.bool,
+  playlist: PropTypes.array,
+  formatView: PropTypes.func,
+  songId: PropTypes.string,
+  handlePopperPLMoreBotOpen: PropTypes.func,
+  handlePopperPLMoreBotClose: PropTypes.func,
+  openPLMoreBot: PropTypes.bool,
+  anchorElPLMoreBot: PropTypes.any,
 };
 const drawerWidth = 320;
 function PlayListBot({
@@ -22,22 +28,26 @@ function PlayListBot({
   audioIndex,
   isPlay,
   onClickChangeMusic,
-  hanldBotStatusList,
   active,
-  darkMode
+  darkMode,
+  playlist,
+  formatView,
+  songId,
+  handlePopperPLMoreBotOpen,
+  handlePopperPLMoreBotClose,
+  openPLMoreBot,
+  anchorElPLMoreBot,
 }) {
   return (
     <Box>
       <Drawer
-      
         BackdropProps={{ style: { opacity: 0 } }}
         sx={{
           width: { xs: drawerWidth, sm: drawerWidth, md: drawerWidth, lg: drawerWidth },
-          
-          
+
           '& .MuiDrawer-paper': {
             width: { xs: drawerWidth, sm: drawerWidth, md: drawerWidth, lg: drawerWidth },
-            bgcolor:darkMode ? 'rgb(24, 34, 45)':'#fff',
+            bgcolor: darkMode ? 'rgb(24, 34, 45)' : '#fff',
             boxSizing: 'border-box',
             transition: 'width 0.8s',
           },
@@ -51,8 +61,15 @@ function PlayListBot({
           audioIndex={audioIndex}
           isPlay={isPlay}
           onClickChangeMusic={onClickChangeMusic}
-          hanldBotStatusList={hanldBotStatusList}
           active={active}
+          playlist={playlist}
+          formatView={formatView}
+          darkMode={darkMode}
+          songId={songId}
+          handlePopperPLMoreBotOpen={handlePopperPLMoreBotOpen}
+          handlePopperPLMoreBotClose={handlePopperPLMoreBotClose}
+          openPLMoreBot={openPLMoreBot}
+          anchorElPLMoreBot={anchorElPLMoreBot}
         />
       </Drawer>
     </Box>

@@ -50,8 +50,8 @@ function ListTop({ area, topic, darkMode }) {
         </Stack>
       </Box>
       <Box width="100%" mt={1}>
-        {Array.from({ length: 8 }, (index) => (
-          <ItemTop darkMode={darkMode} />
+        {Array.from({ length: 8 }, (item,index) => (
+          <ItemTop key={index} darkMode={darkMode} />
         ))}
       </Box>
     </Box>

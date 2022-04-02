@@ -42,7 +42,7 @@ function TopMusic(props) {
         >
          Top 100
         </Typography>
-        {props.allTopMusic('Tất cả')}
+       
       </Box>
         {/* <Skeleton
           animation="wave"

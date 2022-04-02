@@ -23,8 +23,8 @@ function ListRank(props) {
       />
 
       <Box width="100%" mt={1}>
-        {Array.from({ length: 4 }, (index) => (
-          <ItemRank  darkMode={props.darkMode}/>
+        {Array.from({ length: 4 }, (item, index) => (
+          <ItemRank key={index} darkMode={props.darkMode}/>
         ))}
       </Box>
     </Box>
