@@ -12,10 +12,11 @@ SongDetail.propTypes = {
 };
 
 function SongDetail(props) {
+  console.log(props.songData);
   return (
     <Box pt={3}>
       <Grid container spacing={{ xs: 5, sm: 5, md: 6 }}>
-        <Grid item xs={3.5} sm={3.5}>
+        <Grid item xs={3} sm={3}>
           {/* Anh cua nhac */}
           <Box
             className="imageBox"
@@ -89,51 +90,54 @@ function SongDetail(props) {
                 {props.songData[0]?.title}
               </Typography>
               <Stack direction="row" spacing={2} alignItems="center" justifyContent="center">
-                <Box
-                  width={40}
-                  height={40}
-                  sx={{ border: '3px solid #2DAAED', borderRadius: '10em' }}
-                >
-                  <Link
-                    style={{ textDecoration: 'none' }}
-                    to={`/ca-si/${props.songData[0]?.artist[0]._id}`}
+                {props.songData[0].artist.map((artistitem, index) => (
+                  <Stack
+                    key={index}
+                    direction="row"
+                    spacing={2}
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    <img
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        borderRadius: '10em',
-                      }}
-                      className="imageArtsit"
-                      src={`http://localhost:5000/${props.songData[0].artist[0].artist_image.replace(
-                        './',
-                        ''
-                      )}`}
-                      alt="ca sĩ"
-                    />
-                  </Link>
-                </Box>
-                <Link
-                  style={{ textDecoration: 'none' }}
-                  to={`/ca-si/${props.songData[0]?.artist[0]._id}`}
-                >
-                  <Typography
-                    noWrap
-                    sx={{
-                      color: props.darkMode ? 'rgba(244,246,248,0.88)' : '',
-                      '&:hover': {
-                        color: '#2DAAED',
-                      },
-                    }}
-                  >
-                    {props.songData[0].artist.map((artistitem, index) => (
-                      <span key={index}>
-                        {index > 1 ? ', ' : ''}
+                    <Box
+                      width={40}
+                      height={40}
+                      sx={{ border: '3px solid #2DAAED', borderRadius: '10em' }}
+                    >
+                      <Link
+                        style={{ textDecoration: 'none' }}
+                        to={`/ca-si/${props.songData[0]?.artist[0]._id}`}
+                      >
+                        <img
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            borderRadius: '10em',
+                          }}
+                          className="imageArtsit"
+                          src={
+                            props.songData.length > 0
+                              ? `http://localhost:5000/images/artist/${artistitem.artist_image}`
+                              : 'http://localhost:5000/images/artist/default_user.png'
+                          }
+                          alt="ca sĩ"
+                        />
+                      </Link>
+                    </Box>
+                    <Link style={{ textDecoration: 'none' }} to={`/ca-si/${artistitem._id}`}>
+                      <Typography
+                        noWrap
+                        sx={{
+                          color: props.darkMode ? 'rgba(244,246,248,0.88)' : '',
+                          '&:hover': {
+                            color: '#2DAAED',
+                          },
+                        }}
+                      >
                         {artistitem.artist_name}
-                      </span>
-                    ))}
-                  </Typography>
-                </Link>
+                      </Typography>
+                    </Link>
+                  </Stack>
+                ))}
               </Stack>
             </Stack>
           )}

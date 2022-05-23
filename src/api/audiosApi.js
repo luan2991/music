@@ -12,25 +12,36 @@ const audiosApi = {
     const url = `/audios/new-song`;
     return axiosClients.get(url, { params });
   },
+  addNewSong(formData, form, setProgress) {
+    const url = `/audios/add`;
+    return axiosClients.post(url, formData, {
+      headers: {
+        'Content-Type': `multipart/form-data; boundary=${form._boundary}`,
+      },
+      onUploadProgress: function (progressEvent) {
+        var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 
-  //   getById(id) {
-  //     const url = `/posts/${id}`;
-  //     return axiosClients.get(url);
-  //   },
+        setProgress(percentCompleted);
+      },
+    });
+  },
+  updateSong(formData, form, setProgress) {
+    const url = `/audios/update`;
 
-  //   add(data) {
-  //     const url = '/posts';
-  //     return axiosClients.post(url, data);
-  //   },
+    return axiosClients.post(url, formData, {
+      headers: {
+        'Content-Type': `multipart/form-data; boundary=${form._boundary}`,
+      },
+      onUploadProgress: function (progressEvent) {
+        var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 
-  //   update(data) {
-  //     const url = `/posts/${data.id}`;
-  //     return axiosClients.put(url, data);
-  //   },
-
-  //   remove(id) {
-  //     const url = `/posts/${id}`;
-  //     return axiosClients.delete(url);
-  //   },
+        setProgress(percentCompleted);
+      },
+    });
+  },
+  getSongList(params) {
+    const url = `/audios/song-list`;
+    return axiosClients.get(url, { params });
+  },
 };
 export default audiosApi;

@@ -15,7 +15,6 @@ InputField.propTypes = {
   inputProps: PropTypes.object,
   sx: PropTypes.any,
   endadornment: PropTypes.any,
- 
 };
 InputField.defaultProps = {
   label: '',
@@ -24,26 +23,14 @@ InputField.defaultProps = {
   type: 'text',
   size: 'small',
   inputLabelProps: {},
-  sx: '',
+  sx: {},
   inputProps: {},
   endadornment: [],
- 
 };
 
 function InputField(props) {
-  const {
-    name,
-    type,
-    label,
-    form,
-    disabled,
-    size,
-    inputLabelProps,
-    sx,
-    inputProps,
-    endadornment,
-   
-  } = props;
+  const { name, type, label, form, disabled, size, inputLabelProps, sx, inputProps, endadornment } =
+    props;
   const { errors } = form.formState;
   const errorsMessage = errors[name]?.message;
   const hasErrors = !!errorsMessage;
@@ -53,7 +40,7 @@ function InputField(props) {
       <Controller
         name={name}
         control={form.control}
-        render={({ field: { onChange, onBlur } }) => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <TextField
             onChange={onChange}
             onBlur={onBlur}
@@ -61,6 +48,7 @@ function InputField(props) {
             disabled={disabled}
             fullWidth
             label={label}
+            value={value}
             variant="outlined"
             error={!!hasErrors}
             helperText={errorsMessage}

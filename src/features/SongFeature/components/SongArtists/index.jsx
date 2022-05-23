@@ -34,24 +34,31 @@ function SongArtists(props) {
               height: '14em',
             }}
           >
-            <Link style={{textDecoration:'none'}} to={`/ca-si/${props.songData[0]?.artist[0]._id}`}>
-            <img
-              style={{
-                width: '100%',
-                height: '100%',
-                borderRadius: '10em',
-                boxShadow: '0 8px 16px rgb(0 0 0 / 20%)',
-              }}
-              className="imageArtsit"
-              src={`http://localhost:5000/${props.songData[0]?.artist[0].artist_image.replace(
-                './',
-                ''
-              )}`}
-              alt="ca sĩ"
-            />
+            <Link
+              style={{ textDecoration: 'none' }}
+              to={`/ca-si/${props.songData[0]?.artist[0]._id}`}
+            >
+              <img
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '10em',
+                  boxShadow: '0 8px 16px rgb(0 0 0 / 20%)',
+                }}
+                className="imageArtsit"
+                src={
+                  props.songData.length > 0
+                    ? `http://localhost:5000/images/artist/${props.songData[0]?.artist[0].artist_image}`
+                    : 'http://localhost:5000/images/artist/default_user.png'
+                }
+                alt="ca sĩ"
+              />
             </Link>
           </Box>
-          <Link style={{textDecoration:'none'}} to={`/ca-si/${props.songData[0]?.artist[0]._id}`}>
+          <Link
+            style={{ textDecoration: 'none' }}
+            to={`/ca-si/${props.songData[0]?.artist[0]._id}`}
+          >
             <Typography
               noWrap
               sx={{

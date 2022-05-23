@@ -64,7 +64,6 @@ function SidebarRight(props) {
       <Drawer
         variant="permanent"
         sx={{
-          // display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' },
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             marginRight: { sx: 0, sm: 0, md: 0, lg: `${widthModal}px` },

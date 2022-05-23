@@ -4,25 +4,32 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import InputField from '../../../../components/FormField/InputField';
-import { Send } from '@mui/icons-material';
-import { Button, Stack } from '@mui/material';
+import { Check, Send } from '@mui/icons-material';
+import { Button, FormHelperText, Stack } from '@mui/material';
 import { Box } from '@mui/system';
-import useCountdown from '../../../../custom_hook/countdown';
 PasswordOtpForm.propTypes = {
   darkMode: PropTypes.bool,
   inputPropStyle: PropTypes.object,
   sxInput: PropTypes.object,
   handleOtpFormSubmit: PropTypes.func,
+
+  handleSendMailFormSubmit: PropTypes.func,
+  minutes: PropTypes.number,
+  seconds: PropTypes.number,
 };
 
 function PasswordOtpForm(props) {
-  const date = new Date();
-  const time = parseInt(props.timeOtp.exp - date.getTime() / 1000);
-  const [minutes, seconds] = useCountdown(time);
-  console.log(minutes + 'm : ' + seconds + 's');
-
-  const { inputPropStyle, darkMode, sxInput, handleFormSubmit } = props;
-  const noSxInput = { ...sxInput, width: '50%',paddingLeft:'2rem' };
+  const {
+    inputPropStyle,
+    darkMode,
+    sxInput,
+    handleFormSubmit,
+    email,
+    handleSendMailFormSubmit,
+    minutes,
+    seconds,
+  } = props;
+  const noSxInput = { ...sxInput, width: '50%', paddingLeft: '2rem' };
   const schema = yup
     .object()
     .shape({
@@ -120,17 +127,40 @@ function PasswordOtpForm(props) {
         sx={{
           width: '100%',
           display: 'flex',
+          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
+        {minutes === 0 && seconds === 0 && (
+          <FormHelperText sx={{ color: '#d32f2f', mb: '1rem' }}>Mã otp hết hiệu lực</FormHelperText>
+        )}
         <Button
           onClick={form.handleSubmit(handleFormSubmit)}
           type="button"
           variant="contained"
-          startIcon={<Send htmlColor={darkMode ? 'rgba(244,246,248,0.88)' : '#fff'} />}
+          disabled={minutes === 0 && seconds === 0 ? true : false}
+          startIcon={<Check htmlColor={darkMode ? 'rgba(244,246,248,0.88)' : '#fff'} />}
+          sx={{ mb: '1rem' }}
         >
           Xác nhận OTP
+        </Button>
+
+        <Button
+          onClick={() => handleSendMailFormSubmit({ emailInput: email })}
+          type="button"
+          disabled={minutes === 0 && seconds === 0 ? false : true}
+          variant="contained"
+          sx={{
+            '&.Mui-disabled': {
+              color: 'rgba(0, 0, 0, 0.6)',
+              boxShadow: 'none',
+              backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            },
+          }}
+          startIcon={<Send htmlColor={darkMode ? 'rgba(244,246,248,0.88)' : '#fff'} />}
+        >
+          Gửi lại mã OTP
         </Button>
       </Box>
     </form>

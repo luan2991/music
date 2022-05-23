@@ -25,13 +25,22 @@ const authApi = {
     );
   },
   signUpUser(body) {
-    
     const url = `/auth/registration`;
-    return axiosClients.post(url,body);
+    return axiosClients.post(url, body);
   },
   sendEmailPassword(body) {
     const url = `/auth/forget-password/send-mail`;
     return axiosClients.post(url, { email: body.emailInput }, { withCredentials: true });
+  },
+  verifyOtpPassword(body) {
+    console.log(body);
+    const url = `/auth/forget-password/verify-otp`;
+    return axiosClients.post(url, { otp: body.otp, uid: body.uid });
+  },
+  changePassword(body) {
+    console.log(body);
+    const url = `/auth/forget-password/change-password`;
+    return axiosClients.post(url, { uid: body.uid, newpassword: body.passwordInput });
   },
 };
 export default authApi;
