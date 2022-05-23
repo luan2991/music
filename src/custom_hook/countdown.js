@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 
-export default function useCountdown(initialSeconds = 0) {
- 
+export default function useCountdown(initialSeconds = 60) {
   const [minutes, setMinutes] = useState(parseInt(Math.floor(initialSeconds / 60)));
   const [seconds, setSeconds] = useState(
     parseInt(initialSeconds - Math.floor(initialSeconds / 60) * 60)
   );
 
+  useEffect(() => {
+    setMinutes(parseInt(Math.floor(initialSeconds / 60)));
+    setSeconds(parseInt(initialSeconds - Math.floor(initialSeconds / 60) * 60));
+  }, [initialSeconds]);
   
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (seconds > 0) {

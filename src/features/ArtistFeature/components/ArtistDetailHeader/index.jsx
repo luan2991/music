@@ -25,7 +25,6 @@ function ArtistDetailHeader(props) {
           <Grid item xs={3.5} sm={3.5}>
             {/* Anh cua ca si */}
             <Box
-           
               className="imageBox"
               sx={{
                 position: 'relative',
@@ -42,7 +41,7 @@ function ArtistDetailHeader(props) {
                   borderRadius: '10em',
                   boxShadow: '0 8px 16px rgb(0 0 0 / 20%)',
                 }}
-                src={`http://localhost:5000/${props.artistData[0]?.artist_image.replace('./', '')}`}
+                src={`http://localhost:5000/images/artist/${props.artistData[0]?.artist_image}`}
                 alt="casi"
               />
             </Box>

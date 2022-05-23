@@ -95,7 +95,7 @@ function NewMusicFeature(props) {
               },
             }}
             onChange={onChangePage}
-            count={metadata[0].total / limit}
+            count={parseInt(metadata[0].total / limit)}
             page={parseInt(searchParams.get('page')) || 1}
             color="primary"
             shape="rounded"

@@ -2,6 +2,8 @@ import { Drawer } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import MenuSideBarAdmin from '../sidebarleftAdmin/components';
 import MenuSideBar from './components/menusidebar';
 // import PropTypes from 'prop-types';
 
@@ -10,6 +12,9 @@ import MenuSideBar from './components/menusidebar';
 // const drawerWidth = 240;
 function SidebarLeft(props) {
   const darkMode = useSelector((state) => state.theme.darkMode);
+  const user = useSelector((state) => state.auth.currentUser);
+  const { pathname } = useLocation();
+  console.log(!!user);
   return (
     <Drawer
       sx={{
@@ -33,7 +38,12 @@ function SidebarLeft(props) {
           fontSize: '8px',
         }}
       >
-        <MenuSideBar darkMode={darkMode} />
+        {(pathname.includes('admin') === false || !!user === false) && (
+          <MenuSideBar darkMode={darkMode} />
+        )}
+        {pathname.includes('admin') === true && user.admin === true && (
+          <MenuSideBarAdmin darkMode={darkMode} />
+        )}
       </Box>
     </Drawer>
   );

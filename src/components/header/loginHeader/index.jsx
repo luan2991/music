@@ -13,7 +13,7 @@ import {
   Stack,
   Divider,
 } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
+import { AccountCircle, SupervisedUserCircle } from '@mui/icons-material';
 import InputField from '../../FormField/InputField';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -243,6 +243,17 @@ function LoginHeader(props) {
       )}
       {user !== '' && (
         <Box>
+          {user.admin === true && (
+            <Link to={'/admin'} style={{ textDecoration: 'none' }}>
+              <IconButton>
+                <SupervisedUserCircle
+                  sx={{ fontSize: '40px' }}
+                  htmlColor={darkMode ? '#fff' : 'rgba(28,30,32,0.5)'}
+                  titleAccess="Admin"
+                />
+              </IconButton>
+            </Link>
+          )}
           <Link to={'/account'} style={{ textDecoration: 'none' }}>
             <IconButton>
               <AccountCircle

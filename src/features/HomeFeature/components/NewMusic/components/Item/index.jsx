@@ -100,21 +100,25 @@ function NewMusicItem(props) {
             {props.item.title}
           </Typography>
         </Link>
-        <Typography noWrap sx={{ fontSize: '0.8em' }}>
+        <Typography
+          noWrap
+          sx={{ fontSize: '0.8em', color: props.darkMode ? 'rgba(244,246,248,0.5)' : '#353535' }}
+        >
           {props.item.artist.map((artistitem, index) => (
             <span key={index}>
-              {index > 1 ? ', ' : ''}
+              {index > 0 ? ', ' : ''}
               <Link to={`/ca-si/${artistitem._id}`} style={{ textDecoration: 'none' }}>
-                <span
-                  style={{
-                    color: props.darkMode ? 'rgba(244,246,248,0.5)' : '',
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: props.darkMode ? 'rgba(244,246,248,0.5)' : '#353535',
                     '&:hover': {
                       color: props.darkMode ? '#2DAAED' : '#353535',
                     },
                   }}
                 >
                   {artistitem.artist_name}
-                </span>
+                </Typography>
               </Link>
             </span>
           ))}

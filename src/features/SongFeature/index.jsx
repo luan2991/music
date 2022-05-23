@@ -15,6 +15,7 @@ function SongFeature(props) {
   let { songId } = useParams();
   const dispath = useDispatch();
   const [songData, setSongData] = useState([]);
+  console.log(songData);
   useEffect(() => {
     (async () => {
       try {
@@ -30,11 +31,10 @@ function SongFeature(props) {
     })();
   }, [songId]);
   const handlePlaySong = (song) => {
-    console.log(song);
     localStorage.setItem('song', JSON.stringify(song));
     dispath(setSong(song));
   };
-  console.log(songData[0]?.artist[0]);
+
   return (
     <Box mt="4em" mr={2} ml={2} sx={{ minHeight: '100vh' }}>
       <SongDetail darkMode={props.darkMode} songData={songData} handlePlaySong={handlePlaySong} />

@@ -16,6 +16,10 @@ import SongFeature from './features/SongFeature';
 import TopMusicFeature from './features/TopMusicFeature';
 import TopRankMusic from './features/TopRankMusic';
 
+import AdminSonglistPage from './features/AdminFeature/page/AdminSonglistPage';
+import AdminSingerslistPage from './features/AdminFeature/page/AdminSingerslistPage';
+import AdminPlayListPage from './features/AdminFeature/page/AdminPlayListPage';
+
 function PrivateLoginRoute({ children }) {
   const user = useSelector((state) => state.auth.currentUser);
 
@@ -26,14 +30,15 @@ function PrivateRoute({ children }) {
 
   return user === '' ? children : <Navigate to="/" />;
 }
+
 function App() {
   const darkMode = useSelector((state) => state.theme.darkMode);
-
+  const user = useSelector((state) => state.auth.currentUser);
   return (
     <BrowserRouter>
       <Box sx={{ backgroundColor: darkMode ? 'rgb(24, 34, 45)' : '#fff' }}>
         <HeaderBar />
-        <DrawerAudio />
+        {/* <DrawerAudio /> */}
         <SidebarLeft />
 
         <Box
@@ -43,7 +48,7 @@ function App() {
               xs: 'calc(100% - 3.1em)',
               sm: 'calc(100% - 3.1em)',
               md: 'calc(100% - 3.1em)',
-              lg: 'calc(100% - 560px)',
+              lg: 'calc(100%-240px)', //user?.admin === true ? 'calc(100%-240px)' : 'calc(100% - 560px)',
             },
             // paddingRight: { xs: '3.1em', sm: '3.1em', md: '3.1em', lg: '320px' },
             paddingLeft: { xs: '3.1em', sm: '3.1em', md: '3.1em', lg: '240px' },
@@ -74,6 +79,22 @@ function App() {
                 </PrivateRoute>
               }
             />
+            <Route path="admin/song-list" element={<AdminSonglistPage darkMode={darkMode} />} />
+            <Route
+              path="admin/singer-list"
+              element={<AdminSingerslistPage darkMode={darkMode} />}
+            />
+            <Route path="admin/playlist" element={<AdminPlayListPage darkMode={darkMode} />} />
+            {/* {user?.admin === true
+              ? [
+                  <Route
+                    path="admin/song-list"
+                    element={<AdminSonglistPage darkMode={darkMode} />}
+                  />,
+                ]
+              : null} */}
+            <Route path="/song-list" element={<AdminSonglistPage darkMode={darkMode} />} />
+            <Route path={'*'} element={<Navigate replace to={'/'} />} />
           </Routes>
         </Box>
       </Box>

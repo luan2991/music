@@ -8,7 +8,7 @@ import SidebarRight from '../sidebarright';
 import audios from './../audio';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlay, setSong, setSongIdx } from '../../redux/songSlide';
-
+import { useLocation } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 
 // DrawerAudio.propTypes = {
@@ -17,7 +17,8 @@ import { setPlay, setSong, setSongIdx } from '../../redux/songSlide';
 
 function DrawerAudio() {
   const dispath = useDispatch();
- 
+  const { pathname } = useLocation();
+  const user = useSelector((state) => state.auth.currentUser);
   const darkMode = useSelector((state) => state.theme.darkMode);
   const songIdx = useSelector((state) => state.music.songIndex);
   const song = useSelector((state) => state.music.song);
@@ -216,96 +217,100 @@ function DrawerAudio() {
 
   return (
     <Box>
-      <SidebarRight
-        isPlay={isPlay}
-        titleAudio={titleAudio}
-        artistAudio={artistAudio}
-        open={open}
-        openMore={openMore}
-        anchorEl={anchorEl}
-        openList={openList}
-        anchorElList={anchorElList}
-        anchorElMore={anchorElMore}
-        handlePopper={handlePopper}
-        handlePopoverOpen={handlePopoverOpen}
-        handlePopoverClose={handlePopoverClose}
-        handlePopperMoreOpen={handlePopperMoreOpen}
-        handlePopperMoreClose={handlePopperMoreClose}
-        onClickChangeMusic={onClickChangeMusic}
-        volumeAudio={volumeAudio}
-        handleVolumeAudio={handleVolumeAudio}
-        volumeStatus={volumeStatus}
-        handleVolumeStatus={handleVolumeStatus}
-        formatDuration={formatDuration}
-        duration={duration}
-        currentTime={currentTime}
-        handleTimeSliderChange={handleTimeSliderChange}
-        handlePausePlayClick={handlePausePlayClick}
-        handlePrevNextClick={handlePrevNextClick}
-        repeat={repeat}
-        onRepeat={onRepeat}
-        random={random}
-        onRandom={onRandom}
-        darkMode={darkMode}
-        // isLoading={isLoading}
-        songImg={songImg}
-        songId={songId}
-        playlist={playlist.song_list}
-        formatView={formatView}
-        handlePopperPLMoreOpen={handlePopperPLMoreOpen}
-        handlePopperPLMoreClose={handlePopperPLMoreClose}
-        openPLMore={openPLMore}
-        anchorElPLMore={anchorElPLMore}
-      />
-      <PlayListBot
-        drawerBotPL={drawerBotPL}
-        handleDrawerBotPlayListClose={handleDrawerBotPlayListClose}
-        audios={audios}
-        onClickChangeMusic={onClickChangeMusic}
-        isPlay={isPlay}
-        darkMode={darkMode}
-        playlist={playlist.song_list}
-        formatView={formatView}
-        songId={songId}
-        handlePopperPLMoreBotOpen={handlePopperPLMoreBotOpen}
-        handlePopperPLMoreBotClose={handlePopperPLMoreBotClose}
-        openPLMoreBot={openPLMoreBot}
-        anchorElPLMoreBot={anchorElPLMoreBot}
-      />
-      <SideBarBot
-        isPlay={isPlay}
-        titleAudio={titleAudio}
-        artistAudio={artistAudio}
-        formatDuration={formatDuration}
-        duration={duration}
-        currentTime={currentTime}
-        handleTimeSliderChange={handleTimeSliderChange}
-        handlePausePlayClick={handlePausePlayClick}
-        handlePrevNextClick={handlePrevNextClick}
-        repeat={repeat}
-        onRepeat={onRepeat}
-        random={random}
-        onRandom={onRandom}
-        volume={volumeAudio}
-        handleVolumeAudio={handleVolumeAudio}
-        volumeStatus={volumeStatus}
-        handleVolumeStatus={handleVolumeStatus}
-        hoverVolumeBot={hoverVolumeBot}
-        changeHoverVolumeBot={changeHoverVolumeBot}
-        drawerBotPL={drawerBotPL}
-        handleDrawerBotPlayList={handleDrawerBotPlayList}
-        darkMode={darkMode}
-        songId={songId}
-        songImg={songImg}
-      />
-      <audio
-        ref={audioRef}
-        type="audio/mpeg"
-        src={song === '' ? '#' : `http://localhost:5000/audios/${songSrc}`} //'http://localhost:5000/audios/mp3'
-        onLoadedData={handleLoadedData}
-        onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
-        onEnded={handleRepeatRandom}
-      />
+      {(pathname.includes('admin') === false || !!user === false) && (
+        <Box>
+          <SidebarRight
+            isPlay={isPlay}
+            titleAudio={titleAudio}
+            artistAudio={artistAudio}
+            open={open}
+            openMore={openMore}
+            anchorEl={anchorEl}
+            openList={openList}
+            anchorElList={anchorElList}
+            anchorElMore={anchorElMore}
+            handlePopper={handlePopper}
+            handlePopoverOpen={handlePopoverOpen}
+            handlePopoverClose={handlePopoverClose}
+            handlePopperMoreOpen={handlePopperMoreOpen}
+            handlePopperMoreClose={handlePopperMoreClose}
+            onClickChangeMusic={onClickChangeMusic}
+            volumeAudio={volumeAudio}
+            handleVolumeAudio={handleVolumeAudio}
+            volumeStatus={volumeStatus}
+            handleVolumeStatus={handleVolumeStatus}
+            formatDuration={formatDuration}
+            duration={duration}
+            currentTime={currentTime}
+            handleTimeSliderChange={handleTimeSliderChange}
+            handlePausePlayClick={handlePausePlayClick}
+            handlePrevNextClick={handlePrevNextClick}
+            repeat={repeat}
+            onRepeat={onRepeat}
+            random={random}
+            onRandom={onRandom}
+            darkMode={darkMode}
+            // isLoading={isLoading}
+            songImg={songImg}
+            songId={songId}
+            playlist={playlist.song_list}
+            formatView={formatView}
+            handlePopperPLMoreOpen={handlePopperPLMoreOpen}
+            handlePopperPLMoreClose={handlePopperPLMoreClose}
+            openPLMore={openPLMore}
+            anchorElPLMore={anchorElPLMore}
+          />
+          <PlayListBot
+            drawerBotPL={drawerBotPL}
+            handleDrawerBotPlayListClose={handleDrawerBotPlayListClose}
+            audios={audios}
+            onClickChangeMusic={onClickChangeMusic}
+            isPlay={isPlay}
+            darkMode={darkMode}
+            playlist={playlist.song_list}
+            formatView={formatView}
+            songId={songId}
+            handlePopperPLMoreBotOpen={handlePopperPLMoreBotOpen}
+            handlePopperPLMoreBotClose={handlePopperPLMoreBotClose}
+            openPLMoreBot={openPLMoreBot}
+            anchorElPLMoreBot={anchorElPLMoreBot}
+          />
+          <SideBarBot
+            isPlay={isPlay}
+            titleAudio={titleAudio}
+            artistAudio={artistAudio}
+            formatDuration={formatDuration}
+            duration={duration}
+            currentTime={currentTime}
+            handleTimeSliderChange={handleTimeSliderChange}
+            handlePausePlayClick={handlePausePlayClick}
+            handlePrevNextClick={handlePrevNextClick}
+            repeat={repeat}
+            onRepeat={onRepeat}
+            random={random}
+            onRandom={onRandom}
+            volume={volumeAudio}
+            handleVolumeAudio={handleVolumeAudio}
+            volumeStatus={volumeStatus}
+            handleVolumeStatus={handleVolumeStatus}
+            hoverVolumeBot={hoverVolumeBot}
+            changeHoverVolumeBot={changeHoverVolumeBot}
+            drawerBotPL={drawerBotPL}
+            handleDrawerBotPlayList={handleDrawerBotPlayList}
+            darkMode={darkMode}
+            songId={songId}
+            songImg={songImg}
+          />
+          <audio
+            ref={audioRef}
+            type="audio/mpeg"
+            src={song === '' ? '#' : `http://localhost:5000/audios/songs/${songSrc}`} //'http://localhost:5000/audios/mp3'
+            onLoadedData={handleLoadedData}
+            onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
+            onEnded={handleRepeatRandom}
+          />
+        </Box>
+      )}
     </Box>
   );
 }

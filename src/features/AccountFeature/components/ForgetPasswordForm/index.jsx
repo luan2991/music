@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InputField from '../../../components/FormField/InputField';
+import InputField from '../../../../components/FormField/InputField';
 import { Box } from '@mui/system';
 import { Send } from '@mui/icons-material';
 import { Button } from '@mui/material';
@@ -36,7 +36,7 @@ function ForgetPasswordFrom(props) {
   });
 
   return (
-    <form  autoComplete="off">
+    <form autoComplete="off">
       <InputField
         name="emailInput"
         label="Email"
@@ -60,6 +60,9 @@ function ForgetPasswordFrom(props) {
         }}
       >
         <Button
+          onKeyPress={(e) => {
+            e.key === 'Enter' && e.preventDefault();
+          }}
           onClick={form.handleSubmit(handleFormSubmit)}
           type="button"
           variant="contained"

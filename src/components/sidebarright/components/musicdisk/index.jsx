@@ -92,7 +92,7 @@ function MusicDisk({  titleAudio, artistAudio, darkMode, songImg, songId }) {
                   {artistAudio.length > 0 &&
                     artistAudio.map((artistitem, index) => (
                       <span key={index}>
-                        {index > 1 ? ', ' : ''}
+                        {index > 0 ? ', ' : ''}
                         <Link to={`/ca-si/${artistitem._id}`} style={{ textDecoration: 'none' }}>
                           <Typography
                             variant="caption"
