@@ -6,9 +6,25 @@ import { Divider, IconButton, Paper, Stack, Typography } from '@mui/material';
 import SongPlaylistItem from '../SongPlaylistItem';
 import { Box } from '@mui/system';
 import { NavigateBefore, NavigateNext } from '@mui/icons-material';
-AddSongPlaylist.propTypes = {};
+AddSongPlaylist.propTypes = {
+  songAddList: PropTypes.array,
+  songList: PropTypes.array,
+  handleAddSongToList: PropTypes.func,
+  handleRemoveSong: PropTypes.func,
+  pageSong: PropTypes.number,
+  handleNextPageAddSong: PropTypes.func,
+  handlePrevPageAddSong: PropTypes.func,
+};
 
-function AddSongPlaylist({ songAddList, songList, handleAddSongToList }) {
+function AddSongPlaylist({
+  songAddList,
+  songList,
+  handleAddSongToList,
+  handleRemoveSong,
+  pageSong,
+  handleNextPageAddSong,
+  handlePrevPageAddSong,
+}) {
   return (
     <Stack
       justifyContent={'space-between'}
@@ -28,19 +44,23 @@ function AddSongPlaylist({ songAddList, songList, handleAddSongToList }) {
         >
           <List dense>
             {songList.map((song, index) => (
-              <Box key={index}>
-                <AddSongPlaylistItem song={song} handleAddSongToList={handleAddSongToList} />
+              <Box key={index} sx={{ bgcolor: index % 2 === 0 ? '#f9dba6' : '#fff' }}>
+                <AddSongPlaylistItem
+                  song={song}
+                  index={index}
+                  handleAddSongToList={handleAddSongToList}
+                />
                 <Divider />
               </Box>
             ))}
           </List>
         </Paper>
         <Stack justifyContent={'center'} alignItems={'center'} flexDirection={'row'}>
-          <IconButton>
+          <IconButton onClick={handlePrevPageAddSong} disabled={pageSong === 1 ? true : false}>
             <NavigateBefore />
           </IconButton>
-          <Typography variant="caption">page</Typography>
-          <IconButton>
+          <Typography variant="caption">{pageSong}</Typography>
+          <IconButton onClick={handleNextPageAddSong}>
             <NavigateNext />
           </IconButton>
         </Stack>
@@ -50,11 +70,14 @@ function AddSongPlaylist({ songAddList, songList, handleAddSongToList }) {
         <Typography sx={{ fontSize: '1em', fontWeight: '500' }} variant="caption">
           Nhạc được thêm vào playlist:
         </Typography>
-        <Paper sx={{ width: '100%', maxWidth: 360, height: '90%' }} elevation={5}>
+        <Paper
+          sx={{ width: '100%', maxWidth: 360, height: '90%', overflow: 'hidden scroll' }}
+          elevation={5}
+        >
           <List dense>
             {songAddList.map((song, index) => (
-              <Box key={index}>
-                <SongPlaylistItem songAddList={songAddList} />
+              <Box key={index} sx={{ bgcolor: index % 2 === 0 ? '#f9dba6' : '#fff' }}>
+                <SongPlaylistItem song={song} index={index} handleRemoveSong={handleRemoveSong} />
                 <Divider />
               </Box>
             ))}

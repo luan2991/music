@@ -21,6 +21,12 @@ AddNewPlaylistDialog.propTypes = {
   addLoading: PropTypes.bool,
   songList: PropTypes.array,
   songAddList: PropTypes.array,
+  handleAddSongToList: PropTypes.func,
+  handleRemoveSong: PropTypes.func,
+  handleSearchSongTermChange: PropTypes.func,
+  pageSong: PropTypes.number,
+  handleNextPageAddSong: PropTypes.func,
+  handlePrevPageAddSong: PropTypes.func,
 };
 
 function AddNewPlaylistDialog(props) {
@@ -40,6 +46,12 @@ function AddNewPlaylistDialog(props) {
     progressAdd,
     country,
     addLoading,
+    handleAddSongToList,
+    handleRemoveSong,
+    handleSearchSongTermChange,
+    pageSong,
+    handleNextPageAddSong,
+    handlePrevPageAddSong,
   } = props;
   return (
     <Dialog
@@ -47,7 +59,7 @@ function AddNewPlaylistDialog(props) {
         '& .MuiDialog-container': {
           '& .MuiPaper-root': {
             width: '100%',
-            maxWidth: '1000px', // Set your width here
+            maxWidth: '1000px',
           },
         },
       }}
@@ -55,7 +67,7 @@ function AddNewPlaylistDialog(props) {
       onClose={handleCloseAddDialog}
     >
       <DialogTitle sx={{ m: 0, p: 2 }}>
-        Thêm Ca sĩ/Nhóm nhạc Mới
+        Thêm playlist mới
         <IconButton
           aria-label="close"
           onClick={handleCloseAddDialog}
@@ -75,6 +87,9 @@ function AddNewPlaylistDialog(props) {
       )}
       <DialogContent dividers>
         <AddPlaylistForm
+          pageSong={pageSong}
+          handleNextPageAddSong={handleNextPageAddSong}
+          handlePrevPageAddSong={handlePrevPageAddSong}
           handleFormSubmit={handleFormSubmit}
           handleChangeCountry={handleChangeCountry}
           open={open}
@@ -86,6 +101,9 @@ function AddNewPlaylistDialog(props) {
           addLoading={addLoading}
           songAddList={songAddList}
           songList={songList}
+          handleAddSongToList={handleAddSongToList}
+          handleRemoveSong={handleRemoveSong}
+          handleSearchSongTermChange={handleSearchSongTermChange}
         />
       </DialogContent>
     </Dialog>

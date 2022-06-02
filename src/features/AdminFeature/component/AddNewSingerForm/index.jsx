@@ -69,9 +69,9 @@ function AddSingerForm(props) {
       fileImage: yup
         .mixed()
         .required('Bạn cần phải thêm 1 file hình ảnh')
-        .test('fileType', 'Loại file không hợp lệ', (value) =>
-          ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type)
-        ),
+        .test('fileType', 'Loại file không hợp lệ',  (value) => {
+          ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type);
+        }),
     })
     .required();
   const form = useForm({
