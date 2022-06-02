@@ -90,7 +90,7 @@ function AdminSonglistPage(props) {
   const [addLoading, setAddLoading] = useState(false);
   const [updateLoading, setUpdateLoading] = useState(false);
   const [transition, setTransition] = useState(undefined);
-  
+
   const [message, setMessage] = useState('');
   const [currentSong, setCurrentSong] = useState({
     id: '',
@@ -307,8 +307,8 @@ function AdminSonglistPage(props) {
         setLoading(true);
         setAddLoading(true);
         const formData = new FormData();
-        formData.append('file[]', value.fileImage);
-        formData.append('file[]', value.fileSong);
+        formData.append('file[]', value.fileImage[0]);
+        formData.append('file[]', value.fileSong[0]);
         formData.append('songName', value.songName);
         formData.append('singerList', JSON.stringify(...addIdList));
 
@@ -318,6 +318,7 @@ function AdminSonglistPage(props) {
           setAddLoading(false);
           setMessage('Thêm nhạc thành công');
           handleSnackBar(TransitionLeft);
+          handleCloseAddDialog();
           setProgress(0);
         }
       } catch (error) {
@@ -335,7 +336,8 @@ function AdminSonglistPage(props) {
     //Thay dổi nước
     setCountryList(event.target.value);
   };
-  const handleUpdateFormSubmit = (value, form) => {//Cập nhật thông tin ca sĩ/nhóm nhạc
+  const handleUpdateFormSubmit = (value, form) => {
+    //Cập nhật thông tin ca sĩ/nhóm nhạc
     (async () => {
       try {
         setLoading(true);
@@ -344,11 +346,11 @@ function AdminSonglistPage(props) {
         formData.append('songId', currentSong.id);
 
         if (filesImage.length > 0) {
-          formData.append('file[]', value.fileUpdateImage);
+          formData.append('file[]', value.fileUpdateImage[0]);
           formData.append('simage', currentSong.image);
         }
         if (filesMp.length > 0) {
-          formData.append('file[]', value.fileUpdateSong);
+          formData.append('file[]', value.fileUpdateSong[0]);
           formData.append('src', currentSong.src);
         }
         formData.append('title', value.updateSongName);

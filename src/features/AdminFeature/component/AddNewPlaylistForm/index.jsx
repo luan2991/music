@@ -49,7 +49,7 @@ const countryList = [
 ];
 AddPlaylistForm.propTypes = {
   filesImage: PropTypes.array,
-  formSubmit: PropTypes.func,
+  handleFormSubmit: PropTypes.func,
   handleDropFileImage: PropTypes.func,
   handleChangeCountry: PropTypes.func,
   open: PropTypes.bool,
@@ -57,11 +57,17 @@ AddPlaylistForm.propTypes = {
   handleCloseSelect: PropTypes.func,
   songAddList: PropTypes.array,
   songList: PropTypes.array,
+  handleAddSongToList: PropTypes.func,
+  handleRemoveSong: PropTypes.func,
+  handleSearchSongTermChange: PropTypes.func,
+  pageSong: PropTypes.number,
+  handleNextPageAddSong: PropTypes.func,
+  handlePrevPageAddSong: PropTypes.func,
 };
 
 function AddPlaylistForm({
   filesImage,
-  formSubmit,
+  handleFormSubmit,
   handleDropFileImage,
   addLoading,
   handleChangeCountry,
@@ -70,7 +76,13 @@ function AddPlaylistForm({
   open,
   country,
   songAddList,
+  handleAddSongToList,
   songList,
+  handleSearchSongTermChange,
+  handleRemoveSong,
+  pageSong,
+  handleNextPageAddSong,
+  handlePrevPageAddSong,
 }) {
   const schema = yup
     .object()
@@ -79,9 +91,9 @@ function AddPlaylistForm({
       fileImage: yup
         .mixed()
         .required('Bạn cần phải thêm 1 file hình ảnh')
-        .test('fileType', 'Loại file không hợp lệ', (value) =>
-          ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type)
-        ),
+        .test('fileType', 'Loại file không hợp lệ', (value) => {
+          ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type);
+        }),
     })
     .required();
   const form = useForm({
@@ -91,6 +103,10 @@ function AddPlaylistForm({
     mode: 'onBlur',
     resolver: yupResolver(schema),
   });
+
+  const formSubmit = (value) => {
+    handleFormSubmit(value, form);
+  };
   return (
     <form autoComplete="off">
       <InputField name="playlistTitle" label="Tiêu đề playlist" form={form} />
@@ -105,7 +121,7 @@ function AddPlaylistForm({
       >
         <TextField
           name="searchSingers"
-          // onChange={handleSearchTermChange}
+          onChange={handleSearchSongTermChange}
           label="Tìm kiếm nhạc"
           fullWidth
         />
@@ -133,8 +149,15 @@ function AddPlaylistForm({
           </Select>
         </FormControl>
       </Box>
-      <AddSongPlaylist songAddList={songAddList} songList={songList} />
-
+      <AddSongPlaylist
+        songAddList={songAddList}
+        songList={songList}
+        handleAddSongToList={handleAddSongToList}
+        handleRemoveSong={handleRemoveSong}
+        pageSong={pageSong}
+        handleNextPageAddSong={handleNextPageAddSong}
+        handlePrevPageAddSong={handlePrevPageAddSong}
+      />
       <Stack justifyContent={'flex-start'} alignItems={'flex-start'} flexDirection={'column'}>
         <Typography variant="caption" sx={{ fontSize: '1em' }}>
           Cập nhật ảnh playlist (Bạn chỉ có thể thả 1 file hình ảnh vào đây):
@@ -157,7 +180,7 @@ function AddPlaylistForm({
           variant="contained"
           startIcon={<Create />}
         >
-          Thêm ca sĩ/nhóm nhạc
+          Tạo Playlist mới
         </Button>
       </Box>
     </form>

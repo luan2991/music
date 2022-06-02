@@ -1,6 +1,6 @@
 const { FormControl, FormHelperText, Box, Typography } = require('@mui/material');
 
-const { useEffect } = require('react');
+const { useEffect, useCallback } = require('react');
 const { useDropzone } = require('react-dropzone');
 const { Controller } = require('react-hook-form');
 
@@ -14,33 +14,30 @@ const DropzoneField = ({ name, form, handleDropFile, ...rest }) => {
       <Controller
         render={({ field: { onChange } }) => (
           <Dropzone
+            form={form}
+            name={name}
             handleDropFile={handleDropFile}
             onChange={(e) => onChange(e.target.files[0])}
             {...rest}
+            defaultValue=""
           />
         )}
         name={name}
         control={form.control}
-        defaultValue=""
       />
       <FormHelperText>{errorsMessage}</FormHelperText>
     </FormControl>
-  );
+  );  
 };
 
-const Dropzone = ({ files, handleDropFile, onChange, ...rest }) => {
-  const onDrop = (acceptedFiles) => {
-    console.log(acceptedFiles);
-    handleDropFile(acceptedFiles);
-  };
+const Dropzone = ({ files, handleDropFile, onChange, name, form, ...rest }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     maxFiles: 1,
     accept: rest.accept,
     onDrop: (acceptedFiles) => {
-      // if (!handleDropFile)
-      onDrop(acceptedFiles);
-
-      // setFiles(fileslist);
+      console.log(acceptedFiles);
+      form.setValue(name, acceptedFiles);
+      handleDropFile(acceptedFiles);
     },
   });
 
@@ -66,7 +63,7 @@ const Dropzone = ({ files, handleDropFile, onChange, ...rest }) => {
         <div style={{ display: 'flex', minWidth: 0, overflow: 'hidden' }}>
           <img
             src={file.type === 'audio/mpeg' ? require('./pngegg.png').default : file.preview}
-            alt="song" //require('./pngegg.png').default
+            alt="images" //require('./pngegg.png').default
             style={{ display: 'block', width: 'auto', height: '100%' }}
           />
         </div>
@@ -79,7 +76,7 @@ const Dropzone = ({ files, handleDropFile, onChange, ...rest }) => {
 
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks
-    files.forEach((file) => URL.revokeObjectURL(file.preview));
+    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, [files]);
   return (
     <Box>
@@ -101,7 +98,7 @@ const Dropzone = ({ files, handleDropFile, onChange, ...rest }) => {
           transition: 'border .24s ease-in-out',
           cursor: 'pointer',
         }}
-        {...getRootProps({ className: 'dropzone' })}
+        {...getRootProps()}
       >
         <input {...getInputProps({ onChange })} />
         {isDragActive ? <p>{rest.label}</p> : <p>{rest.defaultlabel}</p>}

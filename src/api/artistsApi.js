@@ -20,9 +20,6 @@ const artistApi = {
   addNewSinger(formData, form, setProgress) {
     const url = `/artist/add`;
     return axiosClients.post(url, formData, {
-      headers: {
-        'Content-Type': `multipart/form-data; boundary=${form._boundary}`,
-      },
       onUploadProgress: function (progressEvent) {
         var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
 

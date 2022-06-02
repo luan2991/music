@@ -75,11 +75,12 @@ function AdminPlaylistPage(props) {
   const [progressUpdate, setProgressUpdate] = useState(0);
   const [progressAdd, setProgressAdd] = useState(0);
   const [snackBar, setSnakeBar] = useState(false);
-  const [singersList, setSingersList] = useState([]);
+  const [severity, setSeverity] = useState('success');
   const [countryList, setCountryList] = useState('all');
   const [country, setCountry] = useState('all');
   const [openAdd, setOpenAdd] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
+  const [searchAddSong, setSearchAddSong] = useState('');
   const [filter, setFilter] = useState({
     title: '',
     timeCreated: 'desc',
@@ -110,25 +111,33 @@ function AdminPlaylistPage(props) {
       )
     );
   };
-  const handleOpenUpdateDialog = (data) => {
-    //Mở update dialog
-    console.log(data);
-    // setCurrentSinger({});
-    setOpenUpdate(true);
-  };
+  // const handleOpenUpdateDialog = (data) => {
+  //   //Mở update dialog
+  //   setCurrentPlaylist({
+  //     id: data._id,
+  //     title: data.playlist_title,
+  //     image: data.playlist_img,
+  //   });
+  //   (async () => {
+  //     const
+  //   })();
+  //   setSongAddList([data.song_list]);
+  //   setOpenUpdate(true);
+  // };
   const handleCloseUpdateSingerDialog = () => {
     //Đóng update dialog
     setOpenUpdate(false);
   };
   const handleCloseAddDialog = () => {
     setOpenAdd(false);
+    setSongAddList([]);
   };
   const handleOpenAddDialog = () => {
     //Mở add singer dialog
     setOpenAdd(true);
     getSongList(pageSong, limit, countryList);
   };
-  
+
   const getSongList = (pageSong, limit, countryList) => {
     (async () => {
       try {
@@ -138,7 +147,6 @@ function AdminPlaylistPage(props) {
           song_name: 'asc',
           country: countryList,
         });
-
         if (data) {
           setSongList(data[0].data);
           setIsLoading(false);
@@ -148,6 +156,20 @@ function AdminPlaylistPage(props) {
         console.log(errors);
       }
     })();
+  };
+  const handleAddSongToList = (song) => {
+    if (songAddList.find((item) => item._id === song._id)) {
+      setMessage('Nhạc đã có trong danh sách playlist');
+      setSeverity('error');
+      setSnakeBar(true);
+    }
+    if (!songAddList.find((item) => item._id === song._id)) {
+      setSongList(songList.filter((item) => item._id !== song._id));
+      setSongAddList([...songAddList, song]);
+    }
+  };
+  const handleRemoveSong = (song) => {
+    setSongAddList(songAddList.filter((item) => item._id !== song._id));
   };
   const handleCloseSnackBar = () => {
     //Đóng snack bar
@@ -188,6 +210,61 @@ function AdminPlaylistPage(props) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  const handleNextPageAddSong = () => {
+    (async () => {
+      try {
+        setPageSong(pageSong + 1);
+        const { data } = await audiosApi.getSongList(
+          searchAddSong !== ''
+            ? {
+                title: searchAddSong,
+                page: pageSong + 1,
+                limit: limit,
+              }
+            : {
+                page: pageSong + 1,
+                limit: limit,
+                song_name: 'asc',
+                country: countryList,
+              }
+        );
+        if (data) {
+          setSongList(data[0].data);
+          setCount(data[0].metadata[0].total);
+        }
+      } catch (error) {
+        console.log('failed to fretch song list', error);
+      }
+    })();
+  };
+  const handlePrevPageAddSong = () => {
+    (async () => {
+      try {
+        setPageSong(pageSong - 1);
+        const { data } = await audiosApi.getSongList(
+          searchAddSong !== ''
+            ? {
+                title: searchAddSong,
+                page: pageSong - 1,
+                limit: limit,
+              }
+            : {
+                page: pageSong - 1,
+                limit: limit,
+                song_name: 'asc',
+                country: countryList,
+              }
+        );
+        if (data) {
+          setSongList(data[0].data);
+          setCount(data[0].metadata[0].total);
+        }
+      } catch (error) {
+        console.log('failed to fretch song list', error);
+      }
+    })();
+  };
+
   const formatView = (view) => {
     if (view < 1e3) return view;
     if (view >= 1e3 && view < 1e6) return +(view / 1e3).toFixed(1) + 'K';
@@ -195,7 +272,7 @@ function AdminPlaylistPage(props) {
     if (view >= 1e9 && view < 1e12) return +(view / 1e9).toFixed(1) + 'B';
     if (view >= 1e12) return +(view / 1e12).toFixed(1) + 'T';
   };
-  const handleSearchSingerTermChange = (e) => {
+  const handleSearchTermChange = (e) => {
     const value = e.target.value;
 
     //set -- 100 -- clear -- set--300 -->submit
@@ -205,14 +282,16 @@ function AdminPlaylistPage(props) {
     typingTimeoutRef.current = setTimeout(() => {
       (async () => {
         try {
-          const { data } = await artistApi.getSingerList({
-            search: value,
-            page: page,
-            limit: rowsPerPage,
+          const { data } = await audiosApi.getSongList({
+            title: value,
+            page: pageSong,
+            limit: limit,
           });
           if (data) {
-            setSingersList(data[0].data);
+            setSongList(data[0].data);
             setCount(data[0].metadata[0].total);
+            setSearchAddSong(value);
+            setPageSong(0);
           }
         } catch (error) {
           console.log('failed to fretch song list', error);
@@ -221,25 +300,36 @@ function AdminPlaylistPage(props) {
     }, 800);
   };
   const handleAddFormSubmit = (value, form) => {
+    // Thêm playlist mới
     (async () => {
-      try {
-        setLoading(true);
-        setAddLoading(true);
-        const formData = new FormData();
-        formData.append('file[]', value.fileImage);
+      console.log(value);
+      if (songAddList.length > 0) {
+        try {
+          const songList = songAddList.map((song) => song._id);
+          setLoading(true);
+          setAddLoading(true);
+          const formData = new FormData();
 
-        formData.append('tittle', value.singerName);
+          formData.append('title', value.playlistTitle);
+          formData.append('song_list', JSON.stringify(songList));
+          formData.append('file[]', value.fileImage[0]);
 
-        const { data } = await playlistApi.addNewSinger(formData, form, setProgressUpdate);
-        if (data) {
-          setLoading(false);
-          setAddLoading(false);
-          setMessage('Thêm playlist thành công');
-          handleSnackBar(TransitionLeft);
-          setProgressAdd(0);
+          const { data } = await playlistApi.addNewPlaylist(formData, form, setProgressUpdate);
+          if (data) {
+            setLoading(false);
+            setAddLoading(false);
+            setMessage('Thêm playlist thành công');
+            handleSnackBar(TransitionLeft);
+            setProgressAdd(0);
+          }
+        } catch (error) {
+          console.log('failed to add playlist ', error);
         }
-      } catch (error) {
-        console.log('failed to update singers ', error);
+      }
+      if (songAddList.length <= 0) {
+        setMessage('Danh sách nhạc còn trống');
+        setSeverity('error');
+        setSnakeBar(true);
       }
     })();
   };
@@ -250,16 +340,19 @@ function AdminPlaylistPage(props) {
         setAddLoading(true);
         const formData = new FormData();
         formData.append('singerName', value.singerName);
-
+        if (filesImage.length > 0) {
+          formData.append('playlist_img', currentPlaylist.image);
+          formData.append('file[]', value.fileImage);
+        }
         if (filesImage.length > 0) {
           formData.append('file[]', value.fileImage);
         }
 
-        const { data } = await playlistApi.updateSinger(formData, form, setProgressAdd);
+        const { data } = await playlistApi.addNewPlaylist(formData, form, setProgressAdd);
         if (data) {
           setLoading(false);
           setUpdateLoading(false);
-          setMessage('Cập nhật ca sĩ/nhóm nhạc thành công');
+          setMessage('Thêm playlist thành công');
           handleSnackBar(TransitionLeft);
           setProgressAdd(0);
           setFilter({ ...filter, refresh: !filter.refresh });
@@ -312,6 +405,7 @@ function AdminPlaylistPage(props) {
           Thêm Playlist Mới
         </Button>
         <AddNewPlaylistDialog
+          handleAddSongToList={handleAddSongToList}
           openAdd={openAdd}
           open={openAddCountry}
           addLoading={addLoading}
@@ -326,7 +420,12 @@ function AdminPlaylistPage(props) {
           handleCloseSelect={handleCloseSelect}
           handleOpenSelect={handleOpenSelect}
           songAddList={songAddList}
+          pageSong={pageSong}
           progressAdd={progressAdd}
+          handleSearchSongTermChange={handleSearchTermChange}
+          handleRemoveSong={handleRemoveSong}
+          handlePrevPageAddSong={handlePrevPageAddSong}
+          handleNextPageAddSong={handleNextPageAddSong}
         />
         <UpdateSingerDialog
           filesImage={filesImage}
@@ -343,12 +442,12 @@ function AdminPlaylistPage(props) {
         <TextField
           name="searchSingers"
           size="small"
-          onChange={handleSearchSingerTermChange}
+          onChange={handleSearchTermChange}
           label="Tìm kiếm tiêu đề playlist"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Search htmlColor={darkMode ? '#fff' : ''} />
+                <Search htmlColor={darkMode ? '#fff' : '#4A4A87'} />
               </InputAdornment>
             ),
           }}
@@ -410,7 +509,7 @@ function AdminPlaylistPage(props) {
           </Select>
         </FormControl>
       </Stack>
-      <AdminPlaylistTable
+      {/* <AdminPlaylistTable
         formatView={formatView}
         page={page}
         isLoading={isLoading}
@@ -421,7 +520,7 @@ function AdminPlaylistPage(props) {
         rows={singersList}
         count={count}
         darkMode={darkMode}
-      />
+      /> */}
       <Snackbar
         open={snackBar}
         onClose={handleCloseSnackBar}
@@ -432,7 +531,7 @@ function AdminPlaylistPage(props) {
       >
         <Alert
           onClose={handleCloseSnackBar}
-          severity="success"
+          severity={severity}
           sx={{
             width: '100%',
             bgcolor: '#2e7d32',

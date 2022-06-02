@@ -90,7 +90,7 @@ function AdminSingerslistPage(props) {
   const [message, setMessage] = useState('');
   const typingTimeoutRef = useRef(null);
   const handleChangeCountry = (event) => {
-    setCurrentSinger({ ...currentSinger, country: event.target.value });
+    setCountry(event.target.value);
   };
   const handleOpenSelect = () => {
     setOpen(true);
@@ -190,12 +190,14 @@ function AdminSingerslistPage(props) {
       try {
         setLoading(true);
         setAddLoading(true);
+
         const formData = new FormData();
-        formData.append('file[]', value.fileImage);
+
         formData.append('singerName', value.singerName);
         formData.append('country', country);
+        formData.append('file[]', value.fileImage[0]);
 
-        const { data } = await artistApi.addNewSinger(formData, form, setProgressUpdate);
+        const { data } = await artistApi.addNewSinger(formData, form, setProgressAdd);
         if (data) {
           setLoading(false);
           setAddLoading(false);
@@ -223,7 +225,7 @@ function AdminSingerslistPage(props) {
 
         if (filesImage.length > 0) {
           formData.append('image', currentSinger.image);
-          formData.append('file[]', value.fileImage);
+          formData.append('file[]', value.fileImage[0]);
         }
         formData.append('country', currentSinger.country);
 

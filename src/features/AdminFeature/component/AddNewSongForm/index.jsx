@@ -85,13 +85,15 @@ function AddNewSongForm(props) {
       fileImage: yup
         .mixed()
         .required('Bạn cần phải thêm 1 file hình ảnh')
-        .test('fileType', 'Loại file không hợp lệ', (value) =>
-          ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type)
-        ),
+        .test('fileType', 'Loại file không hợp lệ', (value) => (value) => {
+          ['image/jpeg', 'image/png', 'image/jpg'].includes(value.type);
+        }),
       fileSong: yup
         .mixed()
-        .required('Bạn cần phải thêm 1 file mp3')
-        .test('fileType', 'Loại file không hợp lệ', (value) => ['audio/mpeg'].includes(value.type)),
+        .required('Bạn cần phải thêm 1 file hình ảnh')
+        .test('fileType', 'Loại file không hợp lệ', (value) => (value) => {
+          ['audio/mpeg'].includes(value.type);
+        }),
     })
     .required();
   const form = useForm({
